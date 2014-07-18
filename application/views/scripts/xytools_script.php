@@ -1,0 +1,1 @@
+<script src="<?php echo base_url(); ?>public/js/xytools.js"></script>
