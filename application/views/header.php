@@ -159,7 +159,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                         <i class="fa fa-fire"></i> <span>Team Builder</span>
                     </a>
                 </li>
-                <?php //if ($is_logged_in): ?>
+                <?php if ($is_logged_in): ?>
                 <li <?php echo(($selected == 'edit_database') ? 'class="active treeview"' : 'class="treeview"'); ?>>
                     <a href="#">
                         <i class="fa fa-pencil"></i>
@@ -219,7 +219,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                         <i class="fa fa-compress"></i> <span>Import data</span>
                     </a>
                 </li>
-                <?php //endif ?>
+                <?php endif ?>
                 <li <?php echo(($selected == 'faqs') ? 'class="active treeview"' : 'class=""'); ?>>
                     <a href="<?php echo site_url('faqs') ?>">
                         <i class="fa fa-question"></i> <span>FAQs</span>
