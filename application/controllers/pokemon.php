@@ -116,28 +116,28 @@ class Pokemon extends CI_Controller {
     }
 
     public function id($value = false) {
-        if ($value) {
-            $data = array();
-            $data['selected'] = 'view';
-            $data['sub_selected'] = 'view_pokemon';
-            $data['main_script'] = $this->load->view('scripts/main_script', null, true);
-            $data['title'] = $this->pokemon_model->get_pkm_name($value);
-            $pokemon = array();
-            $pokemon['single'] = $this->pokemon_model->get_pkm_by_id($value);
-            $pokemon['pkm_list'] = $this->pokemon_model->get_pkm_list();
-            $this->load->view('header', $data);
-            $this->load->view('single_pkm', $pokemon);
-            $this->load->view('footer');
-        } else {
-            show_404();
-        }
+        // if ($value) {
+        //     $data = array();
+        //     $data['selected'] = 'view';
+        //     $data['sub_selected'] = 'view_pokemon';
+        //     $data['main_script'] = $this->load->view('scripts/main_script', null, true);
+        //     $data['title'] = $this->pokemon_model->get_pkm_name($value);
+        //     $pokemon = array();
+        //     $pokemon['single'] = $this->pokemon_model->get_pkm_by_id($value);
+        //     $pokemon['pkm_list'] = $this->pokemon_model->get_pkm_list();
+        //     $this->load->view('header', $data);
+        //     $this->load->view('single_pkm', $pokemon);
+        //     $this->load->view('footer');
+        // } else {
+        //     show_404();
+        // }
     }
     public function change_pokemon($id = false) {
-        if ($id) {
-            $pokemon = array();
-            $pokemon['single'] = $this->pokemon_model->get_pkm_by_id($id);
-            $pokemon['pkm_list'] = $this->pokemon_model->get_pkm_list();
-            echo $this->load->view('single_pkm', $pokemon, true);
-        }
+        // if ($id) {
+        //     $pokemon = array();
+        //     $pokemon['single'] = $this->pokemon_model->get_pkm_by_id($id);
+        //     $pokemon['pkm_list'] = $this->pokemon_model->get_pkm_list();
+        //     echo $this->load->view('single_pkm', $pokemon, true);
+        // }
     }
 }

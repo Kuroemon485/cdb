@@ -41,7 +41,7 @@ $stats = array(
 						            				<tr>
 						            					<th>Ability</th>
 						            					<td>
-						            						<a href="<?php echo $ab_uri ?>" class="ability" data-toggle="tooltip" data-original-title="" data-ab-id="<?php echo $ab_id ?>">
+						            						<a href="<?php echo $ab_uri ?>" class="ability" data-toggle="popover" data-content="" data-ab-id="<?php echo $ab_id ?>">
 									                    		<?php if ($ab_type == "H"): ?>
 									                    			<i class="text-red"><?php echo $ab_name ?></i>
 									                    		<?php else: ?>
@@ -115,7 +115,7 @@ $stats = array(
 								                                </td>
 						            							<td id="ev_<?php echo $key ?>"><?php echo $strategy->{'ev_'.$key} ?></td>
 						            							<td id="iv_<?php echo $key ?>"><?php echo $strategy->{'iv_'.$key} ?></td>
-						            							<td><span class="text-green" id="total-<?php echo $key ?>"></span></td>
+						            							<td><span class="" id="total-<?php echo $key ?>"></span></td>
 						            						</tr>
 						            					<?php endforeach ?>
 						            				</tbody>

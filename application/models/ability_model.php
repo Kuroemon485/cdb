@@ -69,19 +69,19 @@ class Ability_Model extends CI_Model {
 		return $response;
 	}
 	// import from PokeAPI
-	function add_ability_pokeAPI($data) {
-		$this->db->where('name', $data['name']);
-		$query = $this->db->get('ability_list');
-		if (count($query->result()) > 0) {
-			$this->db->where('name', $data['name']);
-			$this->db->update('ability_list', array('id' => $data['id']));
+	// function add_ability_pokeAPI($data) {
+	// 	$this->db->where('name', $data['name']);
+	// 	$query = $this->db->get('ability_list');
+	// 	if (count($query->result()) > 0) {
+	// 		$this->db->where('name', $data['name']);
+	// 		$this->db->update('ability_list', array('id' => $data['id']));
 
-			echo "Ability ".$data['name']." exist, updated it. <br>";
-		} else {
-			$this->db->insert('ability_list', $data);
-			echo "added ability ". $data['name'] . " successfully <br>";
-		}
-	}
+	// 		echo "Ability ".$data['name']." exist, updated it. <br>";
+	// 	} else {
+	// 		$this->db->insert('ability_list', $data);
+	// 		echo "added ability ". $data['name'] . " successfully <br>";
+	// 	}
+	// }
 }
 
  ?>

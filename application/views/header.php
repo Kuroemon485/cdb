@@ -1,3 +1,7 @@
+<?php
+$imii = '<img src="'.base_url().'public/img/inactive.png" alt="">';
+$amii = '<img src="'.base_url().'public/img/active.png" alt="">'
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,6 +74,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
+        <?php //echo $login_user; ?>
         <div class="fb-like" data-href="competitiondb.io" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true" style="margin-top: 12px; margin-left: 65px;"></div>
     </nav>
 
@@ -91,38 +96,38 @@
             <ul class="sidebar-menu">
                 <li <?php echo(($selected == 'view') ? 'class="active treeview"' : 'class="treeview"'); ?>>
                     <a href="#">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-book text-blue"></i>
                         <span>Codex</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
                         <li <?php echo((isset($sub_selected) && $sub_selected == 'view_pokedex') ? 'class="active"' : ""); ?>>
                             <a href="<?php echo site_url('pokedex') ?>">
-                                <i class="fa fa-bug"></i>
+                                <?php echo((isset($sub_selected) && $sub_selected == 'view_pokedex') ? $amii : $imii); ?>
                                 <span>Pokedex</span>
                             </a>
                         </li>
                         <li <?php echo((isset($sub_selected) && $sub_selected == 'view_move') ? 'class="active"' : ""); ?>>
                             <a href="<?php echo site_url('move') ?>">
-                                <i class="fa fa-ge"></i>
+                                <?php echo((isset($sub_selected) && $sub_selected == 'view_move') ? $amii : $imii); ?>
                                 <span>Attack Dex</span>
                             </a>
                         </li>
                         <li <?php echo((isset($sub_selected) && $sub_selected == 'view_ability') ? 'class="active"' : ""); ?>>
                             <a href="<?php echo site_url('ability') ?>">
-                                <i class="fa fa-gift"></i>
+                                <?php echo((isset($sub_selected) && $sub_selected == 'view_ability') ? $amii : $imii); ?>
                                 <span>Abilities Dex</span>
                             </a>
                         </li>
                         <li <?php echo((isset($sub_selected) && $sub_selected == 'view_item') ? 'class="active"' : ""); ?>>
                             <a href="<?php echo site_url('item') ?>">
-                                <i class="fa fa-key"></i>
+                                <?php echo((isset($sub_selected) && $sub_selected == 'view_item') ? $amii : $imii); ?>
                                 <span>Items Dex</span>
                             </a>
                         </li>
                         <li <?php echo((isset($sub_selected) && $sub_selected == 'view_type') ? 'class="active"' : ""); ?>>
                             <a href="<?php echo site_url('type') ?>">
-                                <i class="fa fa-fire"></i>
+                                <?php echo((isset($sub_selected) && $sub_selected == 'view_type') ? $amii : $imii); ?>
                                 <span>Types</span>
                             </a>
                         </li>
@@ -130,7 +135,7 @@
                 </li>
                 <li <?php echo(($selected == 'tools') ? 'class="active treeview"' : 'class="treeview"'); ?>>
                     <a href="#">
-                        <i class="fa fa-briefcase"></i>
+                        <i class="fa fa-cog text-blue"></i>
                         <span>Tools</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
@@ -154,6 +159,7 @@
                         <i class="fa fa-fire"></i> <span>Team Builder</span>
                     </a>
                 </li>
+                <?php //if ($is_logged_in): ?>
                 <li <?php echo(($selected == 'edit_database') ? 'class="active treeview"' : 'class="treeview"'); ?>>
                     <a href="#">
                         <i class="fa fa-pencil"></i>
@@ -213,6 +219,7 @@
                         <i class="fa fa-compress"></i> <span>Import data</span>
                     </a>
                 </li>
+                <?php //endif ?>
                 <li <?php echo(($selected == 'faqs') ? 'class="active treeview"' : 'class=""'); ?>>
                     <a href="<?php echo site_url('faqs') ?>">
                         <i class="fa fa-question"></i> <span>FAQs</span>

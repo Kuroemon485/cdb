@@ -3,6 +3,7 @@
 	var data_table_full = $('.data-table-full');
 	var data_table = $('.data-table');
 	stats = ['hp', 'atk', 'def', 'sp_atk', 'sp_def', 'spd'];
+
 	var nmod_calc = function(nature, stat) {
 		var natures = {
 			Adamant:{atk:1.1,sp_atk:0.9},
@@ -108,12 +109,23 @@
 			event.preventDefault();
 		});
 		$('.ability').hover(function() {
-			var desc = "";
-			desc = get_ab_desc($(this).attr('data-ab-id')).done(function(response) {
-				desc = response;
-			})
-			$(this).attr('data-original-title', desc.responseText);
+			if ($(this).attr('data-content') == "") {
+				var desc = "";
+				desc = get_ab_desc($(this).attr('data-ab-id')).done(function(response) {
+					desc = response;
+				})
+				$(this).attr('data-content', desc.responseText);
+			};
 		});
+		var poptions = {
+	    	placement: 'top',
+		    animation: true,
+		    selector: false,
+            trigger: 'hover',
+            delay: 0,
+            html: true,
+		};
+		$('.ability').popover(poptions);
 		stat_calc();
 		stat_calc_by_lv(100);
 		$.each($('.str-stat'), function() {
@@ -122,10 +134,10 @@
 			$.each(stats, function(index, val) {
 				var nmod = nmod_calc(nature, val);
 				if (nmod == 1.1) {
-					$(' <i class="fa fa-arrow-up"></i>').insertAfter(stat_table.find('#base_'+val).parent());
+					stat_table.find('#total-'+val).addClass('text-red');
 				};
 				if (nmod == 0.9) {
-					$(' <i class="fa fa-arrow-down"></i>').insertAfter(stat_table.find('#base_'+val).parent());
+					stat_table.find('#total-'+val).addClass('text-blue');
 				};
 			});
 		});

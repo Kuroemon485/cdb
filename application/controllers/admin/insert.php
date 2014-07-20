@@ -55,21 +55,19 @@ class Insert extends CI_Controller
         $this->load->view('/admin/insert_ability');
         $this->load->view('footer');
     }
-    public function recommend() {
-        $this->load->model('pokemon_model');
-        $this->load->model('ability_model');
-        $this->load->model('move_model');
+    public function item() {
+        $this->load->model('item_model');
         $data = array();
-        $data['title'] = "Insert Recommended Build";
-        $data['selected'] = "insert_database";
-        $data['sub_selected'] = "insert_recommended";
+        $data['title'] = 'Insert Item';
+        $data['selected'] = 'insert_database';
+        $data['sub_selected'] = 'insert_item';
         $data['admin_script'] = $this->load->view('admin/admin_script', null, true);
 
         $this->load->view('header', $data);
-        $this->load->view('/admin/insert_recommended_build');
+        $this->load->view('/admin/insert_item');
         $this->load->view('footer');
     }
-    public function something() {
+    public function insert_data() {
         $data = $this->input->post();
         // print_r($data);
         $model = $data['model'];

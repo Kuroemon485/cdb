@@ -21,7 +21,7 @@ class Type extends CI_Controller {
         $this->load->view('footer');
 	}
 
-	function name($type = false) {
+	function id($type = false) {
 		if ($type) {
 			$data = array();
 			$type_data = array();

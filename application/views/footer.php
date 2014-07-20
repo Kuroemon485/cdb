@@ -28,5 +28,6 @@
 <?php if (isset($tools_script)) echo $tools_script; ?>
 <?php if (isset($builder_script)) echo $builder_script ?>
 <?php if (isset($xytools_script)) echo $xytools_script  ?>
+<?php if (isset($account_script)) echo $account_script  ?>
 </body>
 </html>

@@ -65,26 +65,6 @@ class Move_Model extends CI_Model {
 		}
 		return $response;
 	}
-	// import from PokeAPI
-	function add_move_pokeAPI($data) {
-		$query = $this->db->get_where('move_list', array('name'=>$data['name']));
-		if (count($query->result()) > 0) {
-			$response = new stdClass();
-			$response->success = false;
-			$response->message = "{$data['name']} has already been added, skipped.";
-		} else {
-			$move_uri = 'http://pokeapi.co/api/v1/move/'.$data['id'];
-            $move_data = json_decode(file_get_contents($move_uri));
-            $data['category'] = $move_data->category;
-            $data['pp'] = $move_data->pp;
-            $data['power'] = $move_data->power;
-            $data['accuracy'] = $move_data->accuracy;
-            $data['effect'] = $move_data->description;
-			$this->db->insert('move_list', $data);
-			echo 'added move '.$data['name'].' successfully <br>';
-		}
-
-	}
 	function edit_move($data) {
 		$this->db->where('id', $data['id']);
 		$query = $this->db->update('move_list', $data);
@@ -94,26 +74,47 @@ class Move_Model extends CI_Model {
 			return array('success'=>false, 'message' => "Move can not be updated");
 		}
 	}
-	function fix_move_list($data) {
-		$this->db->where('name', str_replace('-', ' ', $data->name));
-		$query = $this->db->get('move_list');
-		if (count($query->result())>0) {
-			$this->db->where('name', str_replace('-', ' ', $data->name));
-			$query = $this->db->update('move_list', array('id' => $data->id, 'effect' => $data->description));
-			if ($query == 1) {
-				echo "Updated";
-			} else {
-				echo "Updating failed";
-			}
-		} else {
-			$query = $this->db->insert('move_list', array('id' => $data->id, 'category' => $data->category, 'accuracy' => $data->accuracy, 'name'=>$data->name, 'type'=>"", 'power'=>$data->power, 'pp'=>$data->pp, 'effect' => $data->description, 'description'=>""));
-			if ($query == 1) {
-				echo "added";
-			} else {
-				echo "adding failed";
-			}
-		}
-	}
+	// import from PokeAPI
+	// function add_move_pokeAPI($data) {
+	// 	$query = $this->db->get_where('move_list', array('name'=>$data['name']));
+	// 	if (count($query->result()) > 0) {
+	// 		$response = new stdClass();
+	// 		$response->success = false;
+	// 		$response->message = "{$data['name']} has already been added, skipped.";
+	// 	} else {
+	// 		$move_uri = 'http://pokeapi.co/api/v1/move/'.$data['id'];
+ //            $move_data = json_decode(file_get_contents($move_uri));
+ //            $data['category'] = $move_data->category;
+ //            $data['pp'] = $move_data->pp;
+ //            $data['power'] = $move_data->power;
+ //            $data['accuracy'] = $move_data->accuracy;
+ //            $data['effect'] = $move_data->description;
+	// 		$this->db->insert('move_list', $data);
+	// 		echo 'added move '.$data['name'].' successfully <br>';
+	// 	}
+
+	// }
+	
+	// function fix_move_list($data) {
+	// 	$this->db->where('name', str_replace('-', ' ', $data->name));
+	// 	$query = $this->db->get('move_list');
+	// 	if (count($query->result())>0) {
+	// 		$this->db->where('name', str_replace('-', ' ', $data->name));
+	// 		$query = $this->db->update('move_list', array('id' => $data->id, 'effect' => $data->description));
+	// 		if ($query == 1) {
+	// 			echo "Updated";
+	// 		} else {
+	// 			echo "Updating failed";
+	// 		}
+	// 	} else {
+	// 		$query = $this->db->insert('move_list', array('id' => $data->id, 'category' => $data->category, 'accuracy' => $data->accuracy, 'name'=>$data->name, 'type'=>"", 'power'=>$data->power, 'pp'=>$data->pp, 'effect' => $data->description, 'description'=>""));
+	// 		if ($query == 1) {
+	// 			echo "added";
+	// 		} else {
+	// 			echo "adding failed";
+	// 		}
+	// 	}
+	// }
 }
 
  ?>

@@ -43,30 +43,30 @@ class Common extends CI_Controller {
 		} else echo "Cant find any description for this ability";
 	}
 	public function rename_m_sprites() {
-		$pkm_list = $this->pokemon_model->get_pkm_list();
-        foreach ($pkm_list as $pkm) {
-        	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'.png')) {
-        		$fn = './public/images/minisprites/'.$pkm->dex_id.'.png';
-				$new_fn = './public/images/minisprites/'.$pkm->species.'.png';
-				rename($fn, $new_fn);
-			}
+		// $pkm_list = $this->pokemon_model->get_pkm_list();
+  //       foreach ($pkm_list as $pkm) {
+  //       	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'.png')) {
+  //       		$fn = './public/images/minisprites/'.$pkm->dex_id.'.png';
+		// 		$new_fn = './public/images/minisprites/'.$pkm->species.'.png';
+		// 		rename($fn, $new_fn);
+		// 	}
 			
-			if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-m.png')) {
-				$fn = './public/images/minisprites/'.$pkm->dex_id.'-m.png';
-				$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega.png';
-				rename($fn, $new_fn);
-			}
-			if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-mx.png')) {
-				$fn = './public/images/minisprites/'.$pkm->dex_id.'-mx.png';
-				$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega-X.png';
-				rename($fn, $new_fn);
-			}
-			if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-my.png')) {
-				$fn = './public/images/minisprites/'.$pkm->dex_id.'-my.png';
-				$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega-Y.png';
-				rename($fn, $new_fn);
-			}
-		}
+		// 	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-m.png')) {
+		// 		$fn = './public/images/minisprites/'.$pkm->dex_id.'-m.png';
+		// 		$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega.png';
+		// 		rename($fn, $new_fn);
+		// 	}
+		// 	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-mx.png')) {
+		// 		$fn = './public/images/minisprites/'.$pkm->dex_id.'-mx.png';
+		// 		$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega-X.png';
+		// 		rename($fn, $new_fn);
+		// 	}
+		// 	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-my.png')) {
+		// 		$fn = './public/images/minisprites/'.$pkm->dex_id.'-my.png';
+		// 		$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega-Y.png';
+		// 		rename($fn, $new_fn);
+		// 	}
+		// }
 	}
 }
 ?>

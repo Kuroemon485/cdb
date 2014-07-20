@@ -107,9 +107,9 @@ $no = $info->no;
                                         $id = $ab->id;
                                         ?>
                                         <?php if ($id == "H"): ?>
-                                            <i><a class="text-red ability" data-toggle="tooltip" data-original-title="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a></i>
+                                            <i><a class="text-red ability" data-toggle="popover" data-content="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a></i>
                                         <?php else: ?>
-                                            <a class="ability" data-toggle="tooltip" data-original-title="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a>
+                                            <a class="ability" data-toggle="popover" data-content="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a>
                                         <?php endif; $i++ ?>
                                     <?php endforeach; ?>
                                     </td>

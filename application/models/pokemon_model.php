@@ -391,7 +391,7 @@ class Pokemon_Model extends CI_Model {
     function edit_pkm_type($data) {
         
     }
-    function edit_pkm_move($data) {
+    function delete_pkm_move($data) {
        
     }
     function edit_pkm_strategy($id, $data) {

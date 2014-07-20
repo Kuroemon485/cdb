@@ -1,0 +1,1 @@
+<script src="<?php echo base_url(); ?>public/js/admin_account.js"></script>

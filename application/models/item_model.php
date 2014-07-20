@@ -52,6 +52,9 @@ class Item_Model extends CI_Model {
 		}
 		return $response;
 	}
+	function edit_item($id, $data) {
+		
+	}
 }
 
 ?>

@@ -3404,3 +3404,7 @@ fieldset[disabled] .btn-vk.active {
   color: #587ea3;
   background-color: #ffffff;
 }
+.skin-blue .treeview-menu > li span,
+.skin-blue .treeview-menu > li img {
+  vertical-align: middle;
+}

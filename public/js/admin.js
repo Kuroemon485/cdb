@@ -98,7 +98,7 @@
 	}
 	var insert_data = function(model, func, data) {
 		return $.ajax({
-			url: base_url+'admin/insert/something',
+			url: base_url+'admin/insert/insert_data',
 			type: 'post',
 			dataType: 'json',
 			// async: false,

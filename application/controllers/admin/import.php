@@ -160,106 +160,106 @@ class Import extends CI_controller {
         return $record;
     }
 
-    public function get_pokeAPI() {
-        $api = $this->input->post('api');
-        $url = 'http://pokeapi.co'.$api;
-        $table = $this->input->post('table');
-        echo $data = json_decode(file_get_contents($url));
-        if ($object) {
-            $this->process_pokeAPI($table, $data);
-        }
-    }
-    private function process_pokeAPI($object, $data) {
-        $url = 'http://pokeapi.co/';
-        switch ($table) {
-            case 'pokedex':
-                $all_pkm = $data->pokemon;
-                $uri = array();
-                foreach ($all_pkm as $pkm) {
-                    $uri[] = $pkm->resource_uri;
-                }
-                echo json_encode($uri);
-                break;
-            case 'pokemon':
-                $this->load->model('pokemon');
-                $this->load->model('move');
-                $this->load->model('ability');
+    // public function get_pokeAPI() {
+    //     $api = $this->input->post('api');
+    //     $url = 'http://pokeapi.co'.$api;
+    //     $table = $this->input->post('table');
+    //     echo $data = json_decode(file_get_contents($url));
+    //     if ($object) {
+    //         $this->process_pokeAPI($table, $data);
+    //     }
+    // }
+    // private function process_pokeAPI($object, $data) {
+    //     $url = 'http://pokeapi.co/';
+    //     switch ($table) {
+    //         case 'pokedex':
+    //             $all_pkm = $data->pokemon;
+    //             $uri = array();
+    //             foreach ($all_pkm as $pkm) {
+    //                 $uri[] = $pkm->resource_uri;
+    //             }
+    //             echo json_encode($uri);
+    //             break;
+    //         case 'pokemon':
+    //             $this->load->model('pokemon');
+    //             $this->load->model('move');
+    //             $this->load->model('ability');
 
-                //insert PKM basic information
-                $keys = array("pkdx_id", "national_id", "name", "hp", "attack", "defense", "sp_atk", "sp_def", "speed");
-                $basic = array();
-                foreach ($keys as $k) {
-                 $basic[$k] = $data->{$k};
-                }
-                $this->{$object}->add_pkm_basic($basic);
-                print_r($basic);
+    //             //insert PKM basic information
+    //             $keys = array("pkdx_id", "national_id", "name", "hp", "attack", "defense", "sp_atk", "sp_def", "speed");
+    //             $basic = array();
+    //             foreach ($keys as $k) {
+    //              $basic[$k] = $data->{$k};
+    //             }
+    //             $this->{$object}->add_pkm_basic($basic);
+    //             print_r($basic);
 
-                //insert PKM type
-                $types = array();
-                foreach ($data->types as $type) {
-                    $types['pkdx_id'] = $data->pkdx_id;
-                    $types['type'] = $type->name;
-                    $this->pokemon->add_pkm_type($types);
-                    // echo "PKM->type: ";print_r($types);
-                }
-                // insert PKM ability
-                $pkm_ability = array();
-                $abilities = array();
-                foreach ($data->abilities as $ability) {
-                    $ab_uri = 'http://pokeapi.co'.$ability->resource_uri;
-                    $ability_data = json_decode(file_get_contents($ab_uri));
+    //             //insert PKM type
+    //             $types = array();
+    //             foreach ($data->types as $type) {
+    //                 $types['pkdx_id'] = $data->pkdx_id;
+    //                 $types['type'] = $type->name;
+    //                 $this->pokemon->add_pkm_type($types);
+    //                 // echo "PKM->type: ";print_r($types);
+    //             }
+    //             // insert PKM ability
+    //             $pkm_ability = array();
+    //             $abilities = array();
+    //             foreach ($data->abilities as $ability) {
+    //                 $ab_uri = 'http://pokeapi.co'.$ability->resource_uri;
+    //                 $ability_data = json_decode(file_get_contents($ab_uri));
 
-                    //  For PKM - Ability relationship
-                    $pkm_ability['pkdx_id'] = $data->pkdx_id;
-                    $pkm_ability['ability_id'] = $ability_data->id;
-                    $this->pokemon->add_pkm_ability($pkm_ability);
-                    // echo "PKM->Ability: ";print_r($pkm_ability);
+    //                 //  For PKM - Ability relationship
+    //                 $pkm_ability['pkdx_id'] = $data->pkdx_id;
+    //                 $pkm_ability['ability_id'] = $ability_data->id;
+    //                 $this->pokemon->add_pkm_ability($pkm_ability);
+    //                 // echo "PKM->Ability: ";print_r($pkm_ability);
 
-                    // For ability list
-                    $abilities['id'] = $ability_data->id;
-                    $abilities['name'] = str_replace('-', ' ', $ability_data->name);
-                    $abilities['description'] = $ability_data->description;
-                    // echo "ability->detail: ". print_r($abilities);
-                    $this->ability->add_ability($abilities);
-                }
-                //  insert PKM move
-                $pkm_move = array();
-                $moves = array();
-                foreach ($data->moves as $move) {
-                    // For Pokemon-move relationship
-                    $pkm_move['national_id'] = $data->national_id;
-                    preg_match_all('!\d+!', $move->resource_uri, $matches);
-                    $pkm_move['move_id'] = $matches[0][1];
-                    $pkm_move['learn_type'] = $move->learn_type;
-                    $this->pokemon->add_pkm_move($pkm_move);
-                    // echo "PKM->Move: ";print_r($pkm_move);
+    //                 // For ability list
+    //                 $abilities['id'] = $ability_data->id;
+    //                 $abilities['name'] = str_replace('-', ' ', $ability_data->name);
+    //                 $abilities['description'] = $ability_data->description;
+    //                 // echo "ability->detail: ". print_r($abilities);
+    //                 $this->ability->add_ability($abilities);
+    //             }
+    //             //  insert PKM move
+    //             $pkm_move = array();
+    //             $moves = array();
+    //             foreach ($data->moves as $move) {
+    //                 // For Pokemon-move relationship
+    //                 $pkm_move['national_id'] = $data->national_id;
+    //                 preg_match_all('!\d+!', $move->resource_uri, $matches);
+    //                 $pkm_move['move_id'] = $matches[0][1];
+    //                 $pkm_move['learn_type'] = $move->learn_type;
+    //                 $this->pokemon->add_pkm_move($pkm_move);
+    //                 // echo "PKM->Move: ";print_r($pkm_move);
                     
-                    // For move_list table
-                    $moves['id'] = $pkm_move['move_id'];
-                    $moves['name'] = str_replace('-', ' ', $move->name);
-                    $this->move->add_move($moves);
-                    // echo "Move->detail: ";print_r($moves);
-                    // echo "<br />";
-                }
-                break;
+    //                 // For move_list table
+    //                 $moves['id'] = $pkm_move['move_id'];
+    //                 $moves['name'] = str_replace('-', ' ', $move->name);
+    //                 $this->move->add_move($moves);
+    //                 // echo "Move->detail: ";print_r($moves);
+    //                 // echo "<br />";
+    //             }
+    //             break;
 
-                case 'move':
-                    $this->load->model('move');
-                    $this->move->fix_move_list($data);
-                    echo 'src: ';
-                    print_r($data);
-                break;
+    //             case 'move':
+    //                 $this->load->model('move');
+    //                 $this->move->fix_move_list($data);
+    //                 echo 'src: ';
+    //                 print_r($data);
+    //             break;
 
-                case 'ability':
-                    $this->load->model('ability');
-                    $this->ability->fix_ability_list($data);
-                    echo 'src: ';
-                    print_r($data);
-                    break;
-            default:
-                break;
-        }
-    }
+    //             case 'ability':
+    //                 $this->load->model('ability');
+    //                 $this->ability->fix_ability_list($data);
+    //                 echo 'src: ';
+    //                 print_r($data);
+    //                 break;
+    //         default:
+    //             break;
+    //     }
+    // }
 }
 
 

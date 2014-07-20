@@ -1,20 +1,17 @@
 <?php
-/**
- * Author: Quang Pham
- * File: homepage.php
- * Date: 4/15/14
- * Time: 4:46 PM
- */
 
 class Home extends CI_Controller{
+ 	public function __construct() {
+        parent::__construct();
+        $this->load->helper('url');
+        // $this->load->model('news');
+        // $config = array();
+    }
 
     public function index() {
-        $data = array();
-
-        $data['title']  = 'Dashboard';
-        $data['selected'] = 'homepage';
-        $this->load->helper('url');
-        $this->load->view('header', $data);
+        $config['title']  = 'Dashboard';
+        $config['selected'] = 'homepage';
+        $this->load->view('header', $config);
         $this->load->view('homepage');
         $this->load->view('footer');
     }

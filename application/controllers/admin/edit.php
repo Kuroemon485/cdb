@@ -68,7 +68,19 @@ class Edit extends CI_Controller {
         $this->load->view('/admin/edit_ability', $abilities);
         $this->load->view('footer');
     }
+    public function item() {
+        $data = array();
+        $data['title'] = 'Edit Item';
+        $data['selected'] = 'edit_database';
+        $data['sub_selected'] = 'edit_item';
+        $data['admin_script'] = $this->load->view('admin/admin_script', null, true);
 
+        $this->load->view('header', $data);
+        $item = array();
+        $item['all_item'] = $this->item->get_item_list();
+        $this->load->view('/admin/edit_item', $item);
+        $this->load->view('footer');
+    }
     public function update() {
         $model = $this->input->post('model');
         $function = 'edit_'.$this->input->post('object');
