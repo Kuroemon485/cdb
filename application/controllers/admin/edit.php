@@ -4,11 +4,15 @@ class Edit extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->helper('url');
-        $this->load->model('ability_model');
-        $this->load->model('pokemon_model');
-        $this->load->model('move_model');
-        $this->load->model('item_model');
+        $is_logged_in = check_login();
+        if ($is_logged_in) {
+            $this->load->model('ability_model');
+            $this->load->model('pokemon_model');
+            $this->load->model('move_model');
+            $this->load->model('item_model');
+        } else {
+            show_404();
+        }
     }
 
     public function index() {

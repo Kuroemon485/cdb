@@ -1,21 +1,21 @@
 <?php
-
+    
 class Account extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->helper('url');
         $this->load->model('user_model');
     }
     public function competition_db_admin_login() {
-        $login_user = $this->input->cookie('login_user');
-        if ($login_user) {
+        $is_logged_in = check_login();
+        if ($is_logged_in) {
             redirect('', 301);
         } else {
+            echo $is_logged_in;
             $config['title'] = "Admin Login";
             $config['selected'] = "admin";
             $config['sub_selected'] = "login";
-            $config['is_logged_in'] = false;
+            $config['is_logged_in'] = $is_logged_in;
             $config['account_script'] = $this->load->view('admin/account_script', null, true);
             $this->load->view('header', $config);
             $this->load->view('admin/login.php');
@@ -33,7 +33,7 @@ class Account extends CI_Controller {
                 'name'   => 'login_user',
                 'value'  => $username,
                 'expire' => '86500',
-            );
+                );
             $this->input->set_cookie($cookie);
             // echo "cookies has been set";
         }
@@ -45,9 +45,10 @@ class Account extends CI_Controller {
             'name'   => 'login_user',
             'value'  => $username,
             'expire' => '-86500',
-        );
+            );
         $this->input->set_cookie($cookie);
         // echo "cookies has been set";
         redirect('admin/account/competition_db_admin_login', 301);
     }
+    
 }

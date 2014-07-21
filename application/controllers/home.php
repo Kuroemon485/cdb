@@ -1,25 +1,24 @@
 <?php
 
 class Home extends CI_Controller{
- 	public function __construct() {
-        parent::__construct();
-        $this->load->helper('url');
+	private $option;
+	public function __construct() {
+		parent::__construct();
         // $this->load->model('news');
-        // $config = array();
-    }
+        // $option = array();
+        $login_user = check_login();
+		if ($login_user) {
+			$this->option['is_logged_in'] = $login_user;
+		} else {
+			$this->option['is_logged_in'] = false;
+		}
+	}
 
-    public function index() {
-    	$login_user = $this->input->cookie('login_user');
-    	if ($login_user) {
-            $config['is_logged_in'] = true;
-            $config['user'] = $login_user;
-    	} else {
-    		$config['is_logged_in'] = false;
-    	}
-        $config['title']  = 'Dashboard';
-        $config['selected'] = 'homepage';
-        $this->load->view('header', $config);
-        $this->load->view('homepage');
-        $this->load->view('footer');
-    }
+	public function index() {
+		$this->option['title']  = 'Dashboard';
+		$this->option['selected'] = 'homepage';
+		$this->load->view('header', $this->option);
+		$this->load->view('homepage');
+		$this->load->view('footer');
+	}
 }

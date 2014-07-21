@@ -23,6 +23,18 @@ class User_Model extends CI_Model {
 		}
 		return $response;
 	}
+
+	function get_user($username) {
+		$data = ["username"=>$username];
+		$this->db->select('username, user_type');
+		$this->db->where($data);
+		$query = $this->db->get('users');
+		if ($query->num_rows() == 1) {
+			return $query->result()[0];
+		} else {
+			return false;
+		}
+	}
 }
 
  ?>

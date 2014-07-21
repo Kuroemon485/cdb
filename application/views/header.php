@@ -75,7 +75,43 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
             <span class="icon-bar"></span>
         </a>
         <?php //echo $login_user; ?>
-        <div class="fb-like" data-href="competitiondb.io" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true" style="margin-top: 12px; margin-left: 65px;"></div>
+<!--         <div class="fb-like" data-href="competitiondb.io" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true" style="margin-top: 12px; margin-left: 65px;"></div> -->
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <?php if ($is_logged_in): ?>
+                    <?php
+                        // print_r($is_logged_in);
+                        $username = $is_logged_in->username;
+                        $user_type = $is_logged_in->user_type;
+                    ?>
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="<?php echo base_url() ?>public/img/maste-ball.png" alt=""> 
+                            <span><?php echo $username ?> <i class="caret"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header bg-light-blue">
+                                <img src="<?php echo base_url() ?>public/img/avatar04.png" class="img-circle" alt="User Image" />
+                                <p>
+                                    <?php echo $username." - ".$user_type ?>
+                                    <!-- <small>Member since Nov. 2012</small> -->
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="<?php echo base_url() ?>admin/account/logout" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                <?php endif ?>
+            </ul>
+        </div>
     </nav>
 
 </header>

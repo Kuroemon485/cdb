@@ -1,17 +1,26 @@
 <?php 
 
 class Import extends CI_controller {
+    private $option;
 	public function __construct() {
 		parent::__construct();
-		$this->load->helper('url');
+		$is_logged_in = check_login();
+        if ($is_logged_in) {
+            $this->option['is_logged_in'] = $is_logged_in;
+            $this->load->model('ability_model');
+            $this->load->model('pokemon_model');
+            $this->load->model('move_model');
+            $this->load->model('item_model');
+        } else {
+            show_404();
+        }
 	}
 	public function index() {
-        $data = array();
-        $data['title'] = 'Import Database';
-        $data['selected'] = 'import_database';
-        $data['admin_script'] = $this->load->view('admin/admin_script', null, true);
-        $data['data_script'] = $this->load->view('scripts/data_script', null, true);
-        $this->load->view('header', $data);
+        $this->option['title'] = 'Import Database';
+        $this->option['selected'] = 'import_database';
+        $this->option['admin_script'] = $this->load->view('admin/admin_script', null, true);
+        $this->option['data_script'] = $this->load->view('scripts/data_script', null, true);
+        $this->load->view('header', $this->option);
         $this->load->view('/admin/import');
         $this->load->view('footer');
     }
