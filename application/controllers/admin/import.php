@@ -4,9 +4,9 @@ class Import extends CI_controller {
     private $option;
 	public function __construct() {
 		parent::__construct();
-		$is_logged_in = check_login();
-        if ($is_logged_in) {
-            $this->option['is_logged_in'] = $is_logged_in;
+		$this->option['is_logged_in'] = is_logged_in();
+        if (is_logged_in()) {
+            $this->option['current_user'] = current_user();
             $this->load->model('ability_model');
             $this->load->model('pokemon_model');
             $this->load->model('move_model');

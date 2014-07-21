@@ -81,8 +81,8 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                 <?php if ($is_logged_in): ?>
                     <?php
                         // print_r($is_logged_in);
-                        $username = $is_logged_in->username;
-                        $user_type = $is_logged_in->user_type;
+                        $username = $current_user->username;
+                        $user_type = $current_user->position;
                     ?>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -92,7 +92,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header bg-light-blue">
-                                <img src="<?php echo base_url() ?>public/img/avatar04.png" class="img-circle" alt="User Image" />
+                                <img src="<?php echo base_url() ?>public/img/avatar06.png" class="img-circle" alt="User Image" />
                                 <p>
                                     <?php echo $username." - ".$user_type ?>
                                     <!-- <small>Member since Nov. 2012</small> -->
@@ -132,7 +132,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
             <ul class="sidebar-menu">
                 <li <?php echo(($selected == 'view') ? 'class="active treeview"' : 'class="treeview"'); ?>>
                     <a href="#">
-                        <i class="fa fa-book text-blue"></i>
+                        <i class="fa fa-book text-green"></i>
                         <span>Codex</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
@@ -192,68 +192,30 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                 </li>
                 <li <?php echo (($selected == "team_builder") ? 'class="active treeview"' : 'class=""') ?>>
                     <a href="<?php echo site_url('teambuilder') ?>">
-                        <i class="fa fa-fire"></i> <span>Team Builder</span>
+                        <i class="fa fa-fire text-red"></i> <span>Team Builder</span>
                     </a>
                 </li>
                 <?php if ($is_logged_in): ?>
-                <li <?php echo(($selected == 'edit_database') ? 'class="active treeview"' : 'class="treeview"'); ?>>
+                <li <?php echo(($selected == 'admin') ? 'class="active treeview"' : 'class="treeview"'); ?>>
                     <a href="#">
-                        <i class="fa fa-pencil"></i>
-                        <span>Edit Database</span>
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span>Admin</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li <?php echo((isset($sub_selected) && $sub_selected == 'edit_pkm') ? 'class="active"' : ""); ?>>
-                            <a href="<?php echo site_url('admin/edit/pokemon') ?>">
-                                <i class="fa  fa-pencil-square-o"></i>
-                                <span>Edit Pokemon</span>
+                        <li <?php echo((isset($sub_selected) && $sub_selected == 'database_control') ? 'class="active"' : ""); ?>>
+                            <a href="<?php echo site_url('admin/control_panel/database') ?>">
+                                <i class="fa fa-database"></i>
+                                <span>Manage Database</span>
                             </a>
                         </li>
-                        <li <?php echo((isset($sub_selected) && $sub_selected == 'edit_move') ? 'class="active"' : ""); ?>>
-                            <a href="<?php echo site_url('admin/edit/move') ?>">
-                                <i class="fa  fa-pencil-square-o"></i>
-                                <span>Edit Move</span>
-                            </a>
-                        </li>
-                        <li <?php echo((isset($sub_selected) && $sub_selected == 'edit_ability') ? 'class="active"' : ""); ?>>
-                            <a href="<?php echo site_url('admin/edit/ability') ?>">
-                                <i class="fa  fa-pencil-square-o"></i>
-                                <span>Edit Ability</span>
+                        <li <?php echo((isset($sub_selected) && $sub_selected == 'users_control') ? 'class="active"' : ""); ?>>
+                            <a href="<?php echo site_url('admin/control_panel/users') ?>">
+                                <i class="glyphicon glyphicon-user"></i>
+                                <span>Manage Users</span>
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li <?php echo(($selected == 'insert_database') ? 'class="active treeview"' : 'class="treeview"'); ?>>
-                    <a href="#">
-                        <i class="fa fa-file"></i>
-                        <span>Insert Database</span>
-                        <i class="fa fa-angle-right pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li <?php echo((isset($sub_selected) && $sub_selected == 'insert_pkm') ? 'class="active"' : ""); ?>>
-                            <a href="<?php echo site_url('admin/insert/pokemon') ?>">
-                                <i class="fa fa-file-text"></i>
-                                <span>Insert Pokemon</span>
-                            </a>
-                        </li>
-                        <li <?php echo((isset($sub_selected) && $sub_selected == 'insert_move') ? 'class="active"' : ""); ?>>
-                            <a href="<?php echo site_url('admin/insert/move') ?>">
-                                <i class="fa fa-file-text"></i>
-                                <span>Insert Move</span>
-                            </a>
-                        </li>
-                        <li <?php echo((isset($selected) && $selected == 'import_database') ? 'class="active"' : ""); ?>>
-                            <a href="<?php echo site_url('admin/insert/ability') ?>">
-                                <i class="fa fa-file-text"></i>
-                                <span>Insert Ability</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li <?php echo(($selected == 'import_database') ? 'class="active treeview"' : ""); ?>>
-                    <a href="<?php echo site_url('admin/import/') ?>">
-                        <i class="fa fa-compress"></i> <span>Import data</span>
-                    </a>
                 </li>
                 <?php endif ?>
                 <li <?php echo(($selected == 'faqs') ? 'class="active treeview"' : 'class=""'); ?>>

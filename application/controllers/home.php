@@ -6,11 +6,9 @@ class Home extends CI_Controller{
 		parent::__construct();
         // $this->load->model('news');
         // $option = array();
-        $login_user = check_login();
-		if ($login_user) {
-			$this->option['is_logged_in'] = $login_user;
-		} else {
-			$this->option['is_logged_in'] = false;
+		$this->option['is_logged_in'] = is_logged_in();
+		if (is_logged_in()) {
+			$this->option['current_user'] = current_user();
 		}
 	}
 

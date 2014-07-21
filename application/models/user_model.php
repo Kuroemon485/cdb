@@ -23,10 +23,20 @@ class User_Model extends CI_Model {
 		}
 		return $response;
 	}
-
+	function check_logged_user($username) {
+		$data = ["username"=>$username];
+		$this->db->select('username');
+		$this->db->where($data);
+		$query = $this->db->get('users');
+		if ($query->num_rows() == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	function get_user($username) {
 		$data = ["username"=>$username];
-		$this->db->select('username, user_type');
+		$this->db->select('username, position, lv');
 		$this->db->where($data);
 		$query = $this->db->get('users');
 		if ($query->num_rows() == 1) {

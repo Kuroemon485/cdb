@@ -1,21 +1,24 @@
 <?php
 class Teambuilder extends CI_Controller {
+	private $option;
 	function __construct() {
 		parent::__construct();
-		$this->load->helper('url');
 		$this->load->model('pokemon_model');
 		$this->load->model('item_model');
 		$this->load->model('ability_model');
 		$this->load->model('move_model');
+		$this->option['is_logged_in'] = is_logged_in();
+		if (is_logged_in()) {
+		    $this->option['current_user'] = current_user();
+		}
 	}
 
 	function index() {
-		$config_data = array();
-		$config_data['title'] = "Team Builder";
-		$config_data['selected'] = "team_builder";
-		$config_data['main_script'] = $this->load->view('scripts/main_script', null, true);
-		$config_data['builder_script'] = $this->load->view('scripts/team_builder_script', null, true);
-		$this->load->view('header', $config_data);
+		$this->option['title'] = "Team Builder";
+		$this->option['selected'] = "team_builder";
+		$this->option['main_script'] = $this->load->view('scripts/main_script', null, true);
+		$this->option['builder_script'] = $this->load->view('scripts/team_builder_script', null, true);
+		$this->load->view('header', $this->option);
 
 		$builder_data = array();
 		$builder_data['pkm_list'] = $this->pokemon_model->get_pkm_list();

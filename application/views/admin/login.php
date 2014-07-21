@@ -20,9 +20,9 @@
                 <div class="form-group">
                     <input type="password" name="password" class="form-control" placeholder="Password"/>
                 </div>          
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <input type="checkbox" name="remember-me"/> Remember me
-                </div>
+                </div> -->
             </div>
             <div class="footer">                                                               
                 <button type="submit" class="btn bg-olive btn-block" id="login-submit">Sign me in</button>

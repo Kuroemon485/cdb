@@ -1,30 +1,32 @@
 <?php 
 
 class Pokemon extends CI_Controller {
-
+    private $option;
     function __construct() {
         parent::__construct();
-        $this->load->helper('url');
         $this->load->model('pokemon_model');
         $this->load->model('ability_model');
         $this->load->model('item_model');
         $this->load->model('move_model');
+        $this->option['is_logged_in'] = is_logged_in();
+        if (is_logged_in()) {
+            $this->option['current_user'] = current_user();
+        }
     }
-    function index() {
+    // function index() {
         
-    }
+    // }
     public function species($species_id = false) {
         if ($species_id) {
             $pokemon = array();
             $basic = $this->pokemon_model->get_pkm_by_species($species_id);
             if ($basic) {
-                // config data for header
-                $config = array();
-                $config['selected'] = 'view';
-                $config['sub_selected'] = 'view_pokemon';
-                $config['main_script'] = $this->load->view('scripts/main_script', null, true);
-                $config['title'] = $basic->species;
-                $this->load->view('header', $config);
+                // this->option data for header
+                $this->option['selected'] = 'view';
+                $this->option['sub_selected'] = 'view_pokemon';
+                $this->option['main_script'] = $this->load->view('scripts/main_script', null, true);
+                $this->option['title'] = $basic->species;
+                $this->load->view('header', $this->option);
                 // load header - done
 
                 // data for top section of the page
