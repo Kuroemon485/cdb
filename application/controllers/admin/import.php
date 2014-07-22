@@ -35,7 +35,7 @@ class Import extends CI_controller {
         switch ($table) {
             case 'pokedex':
                 $species_id = $object;
-                $record = $this->process_pkm_data($data);
+                $record = $this->process_pokemon_data($data);
                 $record->basic['species_id'] = $species_id;
                 $result = $this->pokemon_model->add_pokemon($record->basic);
                 echo json_encode($result);
@@ -67,21 +67,21 @@ class Import extends CI_controller {
                 break;
             case 'learn_set':
                 $species_id = $object;
-                $record = $this->process_pkm_learnset($data);
-                $result = $this->pokemon_model->add_pkm_learnset($species_id, $record);
+                $record = $this->process_pokemon_learnset($data);
+                $result = $this->pokemon_model->add_pokemon_learnset($species_id, $record);
                 echo json_encode($result);
                 // print_r($record);
                 break;
             case 'abilities_set':
                 $species_id = $object;
-                $record = $this->process_pkm_data($data);
-                $result = $this->pokemon_model->add_pkm_ability($species_id, $record->abilities);
+                $record = $this->process_pokemon_data($data);
+                $result = $this->pokemon_model->add_pokemon_ability($species_id, $record->abilities);
                 echo json_encode($result);
                 break;
             case 'types_set':
                 $species_id = $object;
-                $record = $this->process_pkm_data($data);
-                $result = $this->pokemon_model->add_pkm_type($species_id, $record->types);
+                $record = $this->process_pokemon_data($data);
+                $result = $this->pokemon_model->add_pokemon_type($species_id, $record->types);
                 echo json_encode($result);
                 break;
             default:
@@ -90,7 +90,7 @@ class Import extends CI_controller {
         }
     }
 
-    private function process_pkm_data($data) {
+    private function process_pokemon_data($data) {
         $record = new stdClass();
         $record->basic = array();
         $record->abilities = array();
@@ -161,7 +161,7 @@ class Import extends CI_controller {
             return false;
         }
     }
-    private function process_pkm_learnset($data) {
+    private function process_pokemon_learnset($data) {
         $record = array();
         foreach ($data['learnset'] as $move => $method) {
             $record[] = $move;
@@ -182,10 +182,10 @@ class Import extends CI_controller {
     //     $url = 'http://pokeapi.co/';
     //     switch ($table) {
     //         case 'pokedex':
-    //             $all_pkm = $data->pokemon;
+    //             $all_pokemon = $data->pokemon;
     //             $uri = array();
-    //             foreach ($all_pkm as $pkm) {
-    //                 $uri[] = $pkm->resource_uri;
+    //             foreach ($all_pokemon as $pokemon) {
+    //                 $uri[] = $pokemon->resource_uri;
     //             }
     //             echo json_encode($uri);
     //             break;
@@ -194,35 +194,35 @@ class Import extends CI_controller {
     //             $this->load->model('move');
     //             $this->load->model('ability');
 
-    //             //insert PKM basic information
+    //             //insert pokemon basic information
     //             $keys = array("pkdx_id", "national_id", "name", "hp", "attack", "defense", "sp_atk", "sp_def", "speed");
     //             $basic = array();
     //             foreach ($keys as $k) {
     //              $basic[$k] = $data->{$k};
     //             }
-    //             $this->{$object}->add_pkm_basic($basic);
+    //             $this->{$object}->add_pokemon_basic($basic);
     //             print_r($basic);
 
-    //             //insert PKM type
+    //             //insert pokemon type
     //             $types = array();
     //             foreach ($data->types as $type) {
     //                 $types['pkdx_id'] = $data->pkdx_id;
     //                 $types['type'] = $type->name;
-    //                 $this->pokemon->add_pkm_type($types);
-    //                 // echo "PKM->type: ";print_r($types);
+    //                 $this->pokemon->add_pokemon_type($types);
+    //                 // echo "pokemon->type: ";print_r($types);
     //             }
-    //             // insert PKM ability
-    //             $pkm_ability = array();
+    //             // insert pokemon ability
+    //             $pokemon_ability = array();
     //             $abilities = array();
     //             foreach ($data->abilities as $ability) {
     //                 $ab_uri = 'http://pokeapi.co'.$ability->resource_uri;
     //                 $ability_data = json_decode(file_get_contents($ab_uri));
 
-    //                 //  For PKM - Ability relationship
-    //                 $pkm_ability['pkdx_id'] = $data->pkdx_id;
-    //                 $pkm_ability['ability_id'] = $ability_data->id;
-    //                 $this->pokemon->add_pkm_ability($pkm_ability);
-    //                 // echo "PKM->Ability: ";print_r($pkm_ability);
+    //                 //  For pokemon - Ability relationship
+    //                 $pokemon_ability['pkdx_id'] = $data->pkdx_id;
+    //                 $pokemon_ability['ability_id'] = $ability_data->id;
+    //                 $this->pokemon->add_pokemon_ability($pokemon_ability);
+    //                 // echo "pokemon->Ability: ";print_r($pokemon_ability);
 
     //                 // For ability list
     //                 $abilities['id'] = $ability_data->id;
@@ -231,20 +231,20 @@ class Import extends CI_controller {
     //                 // echo "ability->detail: ". print_r($abilities);
     //                 $this->ability->add_ability($abilities);
     //             }
-    //             //  insert PKM move
-    //             $pkm_move = array();
+    //             //  insert pokemon move
+    //             $pokemon_move = array();
     //             $moves = array();
     //             foreach ($data->moves as $move) {
     //                 // For Pokemon-move relationship
-    //                 $pkm_move['national_id'] = $data->national_id;
+    //                 $pokemon_move['national_id'] = $data->national_id;
     //                 preg_match_all('!\d+!', $move->resource_uri, $matches);
-    //                 $pkm_move['move_id'] = $matches[0][1];
-    //                 $pkm_move['learn_type'] = $move->learn_type;
-    //                 $this->pokemon->add_pkm_move($pkm_move);
-    //                 // echo "PKM->Move: ";print_r($pkm_move);
+    //                 $pokemon_move['move_id'] = $matches[0][1];
+    //                 $pokemon_move['learn_type'] = $move->learn_type;
+    //                 $this->pokemon->add_pokemon_move($pokemon_move);
+    //                 // echo "pokemon->Move: ";print_r($pokemon_move);
                     
     //                 // For move_list table
-    //                 $moves['id'] = $pkm_move['move_id'];
+    //                 $moves['id'] = $pokemon_move['move_id'];
     //                 $moves['name'] = str_replace('-', ' ', $move->name);
     //                 $this->move->add_move($moves);
     //                 // echo "Move->detail: ";print_r($moves);

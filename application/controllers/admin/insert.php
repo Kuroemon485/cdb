@@ -27,7 +27,7 @@ class Insert extends CI_Controller {
         $this->option['admin_script'] = $this->load->view('admin/admin_script', null, true);
 
         $this->load->view('header', $this->option);
-        $this->load->view('/admin/insert_pkm');
+        $this->load->view('/admin/insert_pokemon');
         $this->load->view('footer');
     }
 
@@ -69,13 +69,12 @@ class Insert extends CI_Controller {
     }
     public function insert_data() {
         $data = $this->input->post();
-        // print_r($this->option);
         $model = $data['model'];
         $table = $data['table'];
+        $insert_table = "insert_".$table;
         $insert_data = $data['data'];
         $this->load->model($model);
-        // print_r($insert_this->option);
-        $response = $this->$model->$table($insert_data);
+        $response = $this->$model->$insert_table($insert_data);
         echo json_encode($response);
     }
 }

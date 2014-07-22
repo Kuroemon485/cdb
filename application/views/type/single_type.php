@@ -50,20 +50,20 @@ $name = $detail->name
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($pokemon_list as $pkm): ?>
+                            <?php foreach ($pokemon_list as $pokemon): ?>
                                 <?php
-                                $species_id = $pkm->species_id;
-                                $species = $pkm->species;
+                                $species_id = $pokemon->species_id;
+                                $species = $pokemon->species;
                                 $species_uri = base_url()."pokemon/".$species_id;
-                                $dex_id = $pkm->dex_id;
-                                $types = $pkm->types;
-                                $abilities = $pkm->abilities;
-                                $hp = $pkm->hp;
-                                $atk = $pkm->atk;
-                                $def = $pkm->def;
-                                $sp_atk = $pkm->sp_atk;
-                                $sp_def = $pkm->sp_def;
-                                $spd = $pkm->spd;
+                                $dex_id = $pokemon->dex_id;
+                                $types = $pokemon->types;
+                                $abilities = $pokemon->abilities;
+                                $hp = $pokemon->hp;
+                                $atk = $pokemon->atk;
+                                $def = $pokemon->def;
+                                $sp_atk = $pokemon->sp_atk;
+                                $sp_def = $pokemon->sp_def;
+                                $spd = $pokemon->spd;
                                 $sprite_uri = base_url()."public/images/minisprites/".$species.".png";
                                 ?>
                                 <tr>

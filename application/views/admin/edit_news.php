@@ -3,12 +3,12 @@
 <section class="content-header">
     <h1>
         Admin
-        <small>Post News</small>
+        <small>Edit News / Annoucement</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="<?php echo base_url(); ?>"><i class="fa fa-user"></i> Admin</a></li>
-        <li class="active">Post News</li>
+        <li><a href="<?php echo base_url(); ?>admin/control_panel/database"><i class="fa fa-user"></i> Admin</a></li>
+        <li class="active">Edit News</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -18,9 +18,16 @@
 	        <!-- Primary box -->
 	        <div class="box box-solid box-primary">
 	            <div class="box-header">
-	                <h3 class="box-title">Post News</h3>
+	                <h3 class="box-title">Contents</h3>
 	            </div>
 	            <div class="box-body">
+	            	<label for="" class="control-label">News list</label>
+	            	<select name="" id="news-list" class="form-control">
+	            		<option value="">Pick a News</option>
+	            		<?php foreach ($news_list as $news): ?>
+	            			<option value="<?php echo $news->id ?>"><?php echo $news->title ?></option>
+	            		<?php endforeach ?>
+	            	</select>
 	            	<label class="control-label" for="">Title</label>
 	            	<input type="text" name="" id="news-title" class="form-control">
 	            	<!-- div.row>div.col-md-4*3 -->
@@ -28,7 +35,7 @@
 	            	<textarea name="" id="news-content" cols="30" rows="10" class="form-control wysihtml5"></textarea>
 	            </div><!-- /.box-body -->
 	            <div class="box-footer">
-	            	<button id="submit-news-btn" class="btn btn-primary btn-block center-block">Submit</button>
+	            	<button id="update-news-btn" class="btn btn-primary btn-block center-block">Submit</button>
 	            	<br>
 	            </div>
 	        </div><!-- /.box -->

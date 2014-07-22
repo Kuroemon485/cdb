@@ -34,7 +34,7 @@ class Move extends CI_Controller {
 		$this->option['sub-selected'] = 'view_move';
     	$this->option['main_script'] = $this->load->view('scripts/main_script', null, true);
     	$move['info'] = $this->move_model->get_move_by_id($move_id);
-    	$move['pokemon_list'] = $this->pokemon_model->get_pkm_by_move($move_id);
+    	$move['pokemon_list'] = $this->pokemon_model->get_pokemon_by_move($move_id);
     	$this->load->view('header', $this->option);
     	$this->load->view('attackdex/single_move', $move);
     	$this->load->view('footer');

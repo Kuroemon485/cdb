@@ -74,7 +74,7 @@ $stats_list = array('hp' => 'HP', 'atk' => 'Attack', 'def' => 'Defense', 'sp_atk
                             </div>
                             <div class="col-md-6">
                                 <label class="control-label" for="pkm-form">Base Species</label>
-                                <select class="form-control input-sm" id="pkm-base_species" placeholder="">
+                                <select class="form-control input-sm selectpicker" id="pkm-base_species" placeholder="">
                                     <option value="0">Select a species</option>
                                     <?php foreach ($pkm_list as $pkm): ?>
                                         <option value="<?php echo $pkm->species_id ?>" <?php if(isset($base_species) && $base_species == $pkm->species_id) echo "selected" ?>><?php echo $pkm->dex_id.". ".$pkm->species ?></option>
@@ -143,19 +143,9 @@ $stats_list = array('hp' => 'HP', 'atk' => 'Attack', 'def' => 'Defense', 'sp_atk
                             </div>
                             <div class="col-md-3 col-xs-4">
                                 <label for="" class="label-control"><i class="fa fa-gift"></i> Ability</label>
-                                <select name="" id="strategy-ability" class="form-control input-sm">
-                                    <option value="0">Select ab ability</option>
-                                    <?php foreach ($abilities as $pkm_ab): ?>
-                                        <option value="<?php echo $pkm_ab->ability_id ?>"><?php echo $pkm_ab->ability_name ?></option>
-                                    <?php endforeach ?>
-                                </select>
+                                <input type="text" name="" data-toggle="modal" data-input="ability" id="strategy-ability" class="form-control input-sm" data-species-id="<?php if (isset($species_id)) echo $species_id ?>"></input>
                                 <label for="" class="label-control"><i class="fa fa-key"></i> Item</label>
-                                <select name="" id="strategy-item" class="form-control input-sm">
-                                    <option value="0">Select an item</option>
-                                    <?php foreach ($items_list as $item): ?>
-                                        <option value="<?php echo $item->id ?>"><?php echo $item->name ?></option>
-                                    <?php endforeach ?>
-                                </select>
+                                <input name="" type="text" data-toggle="modal" data-input="item" id="strategy-item" class="form-control input-sm"></input>
                             </div>
                             <div class="col-md-3 col-xs-4">
                                 <label for="" class="label-control">Level</label>
@@ -176,47 +166,19 @@ $stats_list = array('hp' => 'HP', 'atk' => 'Attack', 'def' => 'Defense', 'sp_atk
                         <div class="row">
                             <div class="col-md-3  col-xs-3">
                                 <label for="" class="label-control">Move 1</label>
-                                <select name="" id="strategy-move-1" class="form-control input-sm">
-                                    <option value="">Select a move</option>
-                                    <?php if (isset($learn_set)): ?>
-                                            <?php foreach ($learn_set as $pkm_move): ?>
-                                                    <option value="<?php echo $pkm_move->move_id ?>"><?php echo $pkm_move->move_id ?></option>
-                                            <?php endforeach ?>
-                                    <?php endif ?>
-                                </select>
+                                <input type="text" data-toggle="modal" data-input="learn_set" name="" id="strategy-move-1" class="form-control input-sm" data-species-id="<?php if (isset($species_id)) echo $species_id ?>"></input>
                             </div>
                             <div class="col-md-3  col-xs-3">
                                 <label for="" class="label-control">Move 2</label>
-                                <select name="" id="strategy-move-2" class="form-control input-sm">
-                                    <option value="">Select a move</option>
-                                    <?php if (isset($learn_set)): ?>
-                                            <?php foreach ($learn_set as $pkm_move): ?>
-                                                    <option value="<?php echo $pkm_move->move_id ?>"><?php echo $pkm_move->move_id ?></option>
-                                            <?php endforeach ?>
-                                    <?php endif ?>
-                                </select>
+                                <input type="text" data-toggle="modal" data-input="learn_set" name="" id="strategy-move-2" class="form-control input-sm" data-species-id="<?php if (isset($species_id)) echo $species_id ?>"></input>
                             </div>
                             <div class="col-md-3  col-xs-3">
                                 <label for="" class="label-control">Move 3</label>
-                                <select name="" id="strategy-move-3" class="form-control input-sm">
-                                    <option value="">Select a move</option>
-                                    <?php if (isset($learn_set)): ?>
-                                            <?php foreach ($learn_set as $pkm_move): ?>
-                                                    <option value="<?php echo $pkm_move->move_id ?>"><?php echo $pkm_move->move_id ?></option>
-                                            <?php endforeach ?>
-                                    <?php endif ?>
-                                </select>
+                                <input type="text" data-toggle="modal" data-input="learn_set" name="" id="strategy-move-3" class="form-control input-sm" data-species-id="<?php if (isset($species_id)) echo $species_id ?>"></input>
                             </div>
                             <div class="col-md-3  col-xs-3">
                                 <label for="" class="label-control">Move 4</label>
-                                <select name="" id="strategy-move-4" class="form-control input-sm">
-                                    <option value="">Select a move</option>
-                                    <?php if (isset($learn_set)): ?>
-                                            <?php foreach ($learn_set as $pkm_move): ?>
-                                                    <option value="<?php echo $pkm_move->move_id ?>"><?php echo $pkm_move->move_id ?></option>
-                                            <?php endforeach ?>
-                                    <?php endif ?>
-                                </select>
+                                <input type="text" data-toggle="modal" data-input="learn_set" name="" id="strategy-move-4" class="form-control input-sm" data-species-id="<?php if (isset($species_id)) echo $species_id ?>"></input>
                             </div>
                         </div><!-- .row for Moves-->
                         <div class="row">

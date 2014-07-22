@@ -45,8 +45,20 @@ class Ability_Model extends CI_Model {
 		   	return false;
 		}
 	}
-	function edit_ability($data) {
-		
+	function edit_ability($condition, $data) {
+		$response = new stdClass();
+		$this->db->where($condition);
+		$this->db->update('abilities_dex', $data);
+		if ($this->db->affected_rows() == 1) {
+			$response->status = "success";
+			$response->title = "Success";
+			$response->message = "Ability #{$condition['id']} has been updated successfully.";
+		} else {
+			$response->status = "fail";
+			$response->title = "Fail";
+			$response->message = "Something went wrong. Ability #{$condition['id']} has not been updated. Please try again later.";
+		}
+		return $response;
 	}
 	// import from pokemonshowdown' database
 	function add_ability($data) {

@@ -43,27 +43,27 @@ class Common extends CI_Controller {
 		} else echo "Cant find any description for this ability";
 	}
 	public function rename_m_sprites() {
-		// $pkm_list = $this->pokemon_model->get_pkm_list();
-  //       foreach ($pkm_list as $pkm) {
-  //       	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'.png')) {
-  //       		$fn = './public/images/minisprites/'.$pkm->dex_id.'.png';
-		// 		$new_fn = './public/images/minisprites/'.$pkm->species.'.png';
+		// $pokemon_list = $this->pokemon_model->get_pokemon_list();
+  //       foreach ($pokemon_list as $pokemon) {
+  //       	if (file_exists ('./public/images/minisprites/'.$pokemon->dex_id.'.png')) {
+  //       		$fn = './public/images/minisprites/'.$pokemon->dex_id.'.png';
+		// 		$new_fn = './public/images/minisprites/'.$pokemon->species.'.png';
 		// 		rename($fn, $new_fn);
 		// 	}
 			
-		// 	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-m.png')) {
-		// 		$fn = './public/images/minisprites/'.$pkm->dex_id.'-m.png';
-		// 		$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega.png';
+		// 	if (file_exists ('./public/images/minisprites/'.$pokemon->dex_id.'-m.png')) {
+		// 		$fn = './public/images/minisprites/'.$pokemon->dex_id.'-m.png';
+		// 		$new_fn = './public/images/minisprites/'.$pokemon->species.'-Mega.png';
 		// 		rename($fn, $new_fn);
 		// 	}
-		// 	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-mx.png')) {
-		// 		$fn = './public/images/minisprites/'.$pkm->dex_id.'-mx.png';
-		// 		$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega-X.png';
+		// 	if (file_exists ('./public/images/minisprites/'.$pokemon->dex_id.'-mx.png')) {
+		// 		$fn = './public/images/minisprites/'.$pokemon->dex_id.'-mx.png';
+		// 		$new_fn = './public/images/minisprites/'.$pokemon->species.'-Mega-X.png';
 		// 		rename($fn, $new_fn);
 		// 	}
-		// 	if (file_exists ('./public/images/minisprites/'.$pkm->dex_id.'-my.png')) {
-		// 		$fn = './public/images/minisprites/'.$pkm->dex_id.'-my.png';
-		// 		$new_fn = './public/images/minisprites/'.$pkm->species.'-Mega-Y.png';
+		// 	if (file_exists ('./public/images/minisprites/'.$pokemon->dex_id.'-my.png')) {
+		// 		$fn = './public/images/minisprites/'.$pokemon->dex_id.'-my.png';
+		// 		$new_fn = './public/images/minisprites/'.$pokemon->species.'-Mega-Y.png';
 		// 		rename($fn, $new_fn);
 		// 	}
 		// }

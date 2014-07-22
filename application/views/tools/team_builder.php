@@ -24,7 +24,7 @@ function rc() {
 <section class="content">
 	<div class="row">
 	 	<div class="col-xs-3" id="">
-            <div class="box box-info" id="team-builder">
+            <div class="box box-danger" id="team-builder">
                 <div class="box-header">
                     <input type="text" name="" id="input-team-name" class="form-control borderless" placeholder="Team Name">
                 </div><!-- /.box-header -->
@@ -52,7 +52,7 @@ function rc() {
 	    </div><!-- /.col -->
 
         <div class="col-xs-9" id="">
-            <div class="box box-info" id="team-preview">
+            <div class="box box-primary" id="team-preview">
                 <div class="box-header">
                     <h3 class="box-title text-green" id="team-name">Team Name</h3>
                     <div class="box-tools pull-right">
@@ -130,9 +130,9 @@ function rc() {
                                                 <tr>
                                                     <th>Base</th>
                                                     <th colspan="2" id="p<?php echo $i ?>-tbs"></th>
-                                                    <th colspan="2">EVs</th>
-                                                    <th>IV</th>
-                                                    <th></th>
+                                                    <th colspan="">EVs</th>
+                                                    <th>IVs</th>
+                                                    <th>Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -140,14 +140,14 @@ function rc() {
                                                 <tr>
                                                     <th><?php echo $value ?></th>
                                                     <td><span id="p<?php echo $i ?>-base-<?php echo $key ?>" class="badge">--</span></td>
-                                                    <td class="col-md-3 col-sm-3 col-xs-0">
+                                                    <td class="col-md-6 col-sm-6 col-xs-0">
                                                         <div class="progress sm progress-striped">
                                                             <div class="progress-bar" id="p<?php echo $i ?>-base-<?php echo $key ?>-bar" style="width: 0%"></div>
                                                         </div>
                                                     </td>
-                                                    <td class="col-md-3 col-sm-3 col-xs-0">
-                                                        <input class="ev-range" id="p<?php echo $i ?>-ev-<?php echo $key ?>" type="text" name="ev-range-<?php echo $key ?>" value="" />
-                                                    </td>
+                                                    <!-- <td class="col-md-3 col-sm-3 col-xs-0">
+                                                        <input class="ev-range" id="p<?php #echo $i ?>-ev-<?php #echo $key ?>" type="text" name="ev-range-<?php #echo $key ?>" value="" />
+                                                    </td> -->
                                                     <td class="col-md-1 col-sm-1 col-xs-1">
                                                         <input type="text" min="0" max="252" maxlength="3" size="3" class="form-control input-sm input-ev" id="p<?php echo $i ?>-ev-<?php echo $key ?>" value="0">
                                                     </td>

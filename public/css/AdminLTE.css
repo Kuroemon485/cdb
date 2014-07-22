@@ -1,5 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,300italic,400italic,600italic);
+@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic);
+@import url(//fonts.googleapis.com/css?family=Kaushan+Script);
 /*! 
  *   AdminLTE v1.2
  *   Author: AlmsaeedStudio.com
@@ -2567,11 +2567,10 @@ Component: timeline
 /* skin-black navbar */
 .skin-black .navbar {
   background-color: #ffffff;
-  background-color: #3c8dbc;
   border-bottom: 1px solid #eee;
 }
 .skin-black .navbar .nav a {
-  color: rgba(255, 255, 255, 0.8);
+  color: #333333;
 }
 .skin-black .navbar .nav > li > a:hover,
 .skin-black .navbar .nav > li > a:active,
@@ -2579,17 +2578,17 @@ Component: timeline
 .skin-black .navbar .nav .open > a,
 .skin-black .navbar .nav .open > a:hover,
 .skin-black .navbar .nav .open > a:focus {
-  background: rgba(0, 0, 0, 0.1);
-  color: #f6f6f6;
+  background: #ffffff;
+  color: #999999;
 }
 .skin-black .navbar .navbar-right > .nav {
   margin-right: 10px;
 }
 .skin-black .navbar .sidebar-toggle .icon-bar {
-  background: rgba(255, 255, 255, 0.8);
+  background: #333333;
 }
 .skin-black .navbar .sidebar-toggle:hover .icon-bar {
-  background: #f6f6f6 !important;
+  background: #999999 !important;
 }
 /* skin-black logo */
 .skin-black .logo {

@@ -58,7 +58,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="skin-blue fixed">
+<body class="skin-black fixed">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
     <a href="<?php echo base_url(); ?>" class="logo">
@@ -192,7 +192,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                 </li>
                 <li <?php echo (($selected == "team_builder") ? 'class="active treeview"' : 'class=""') ?>>
                     <a href="<?php echo site_url('teambuilder') ?>">
-                        <i class="fa fa-fire text-red"></i> <span>Team Builder</span>
+                        <i class="glyphicon glyphicon-fire text-red"></i> <span>Team Builder</span>
                     </a>
                 </li>
                 <?php if ($is_logged_in): ?>

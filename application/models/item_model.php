@@ -52,8 +52,20 @@ class Item_Model extends CI_Model {
 		}
 		return $response;
 	}
-	function edit_item($id, $data) {
-		
+	function edit_item($condition, $data) {
+		$response = new stdClass();
+		$this->db->where($condition);
+		$this->db->update('items_dex', $data);
+		if ($this->db->affected_rows() == 1) {
+			$response->status = "success";
+			$response->title = "Success";
+			$response->message = "Item #{$condition['id']} has been updated successfully.";
+		} else {
+			$response->status = "fail";
+			$response->title = "Fail";
+			$response->message = "Something went wrong. Item #{$condition['id']} has not been updated. Please try again later.";
+		}
+		return $response;
 	}
 }
 

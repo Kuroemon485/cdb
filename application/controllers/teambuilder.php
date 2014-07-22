@@ -21,7 +21,7 @@ class Teambuilder extends CI_Controller {
 		$this->load->view('header', $this->option);
 
 		$builder_data = array();
-		$builder_data['pkm_list'] = $this->pokemon_model->get_pkm_list();
+		$builder_data['pokemon_list'] = $this->pokemon_model->get_pokemon_list();
 		$this->load->view('tools/team_builder.php', $builder_data);
 		$this->load->view('footer');
 	}
@@ -34,28 +34,28 @@ class Teambuilder extends CI_Controller {
 
 	public function get_modal_data() {
 		$response = new stdClass();
-		$pkm = array();
+		$pokemon = array();
 		$species_id = $this->input->post('species_id');
 		$property = $this->input->post('property');
 		switch ($property) {
 			case 'learn_set':
-				$pkm['learn_set'] = $this->pokemon_model->get_pkm_learnset($species_id);
+				$pokemon['learn_set'] = $this->pokemon_model->get_pokemon_learnset($species_id);
 				$response->title = "Posible moves";
-				$response->html = $this->load->view('tools/learn_set_modal', $pkm, true);
+				$response->html = $this->load->view('tools/learn_set_modal', $pokemon, true);
 				break;
 			case 'ability':
-				$pkm['ability_set'] = array();
-				$temp = $this->pokemon_model->get_pkm_abilities($species_id);
+				$pokemon['ability_set'] = array();
+				$temp = $this->pokemon_model->get_pokemon_abilities($species_id);
 				foreach ($temp as $key) {
-					$pkm['ability_set'][$key->id] = $this->ability_model->get_ability_by_id($key->ability_id);
+					$pokemon['ability_set'][$key->id] = $this->ability_model->get_ability_by_id($key->ability_id);
 				}
 				$response->title = "Posible abilities";
-				$response->html = $this->load->view('tools/ability_set_modal', $pkm, true);
+				$response->html = $this->load->view('tools/ability_set_modal', $pokemon, true);
 				break;
 			case 'item':
-				$pkm['item_list'] = $this->item_model->get_item();
+				$pokemon['item_list'] = $this->item_model->get_item();
 				$response->title = "Items";
-				$response->html = $this->load->view('tools/item_modal', $pkm, true);
+				$response->html = $this->load->view('tools/item_modal', $pokemon, true);
 				break;
 			default:
 				

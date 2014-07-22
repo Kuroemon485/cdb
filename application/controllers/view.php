@@ -19,7 +19,7 @@ class View extends CI_Controller {
         $model = $data['model'];
         $edit_what = $data['function'];
         $edit_data = array(
-                'pkm_id' => $data['pkm_id'],
+                'pokemon_id' => $data['pokemon_id'],
                 'info' => $data['info']
             );
         $this->load->model($model);

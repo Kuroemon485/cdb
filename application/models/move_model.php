@@ -10,7 +10,7 @@ class Move_Model extends CI_Model {
 	function get_move() {
 		$this->db->select('id, name, type, category, base_power, pp, accuracy, short_desc');
 		$query = $this->db->get('attack_dex');
-		if (count($query->result()) > 0) {
+		if ($query->num_rows() > 0) {
 			return $query->result();
 		} else {
 			return false;
@@ -65,14 +65,20 @@ class Move_Model extends CI_Model {
 		}
 		return $response;
 	}
-	function edit_move($data) {
-		$this->db->where('id', $data['id']);
-		$query = $this->db->update('move_list', $data);
-		if ($query == 1) {
-			return array('success'=>true, 'message' => "Move {$data['name']} has been updated");
+	function edit_move($condition, $data) {
+		$response = new stdClass();
+		$this->db->where($condition);
+		$query = $this->db->update('attack_dex', $data);
+		if ($this->db->affected_rows() == 1) {
+			$response->status = "success";
+			$response->title = "Success";
+			$response->message = "Move #{$condition['id']} has been updated";
 		} else {
-			return array('success'=>false, 'message' => "Move can not be updated");
+			$response->status = "fail";
+			$response->title = "Fail";
+			$response->message = "Something went wrong. Move #{$condition['id']} can not be updated";
 		}
+		return $response;
 	}
 	// import from PokeAPI
 	// function add_move_pokeAPI($data) {

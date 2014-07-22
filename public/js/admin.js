@@ -38,77 +38,88 @@
 		$(checkbox).prop('checked', false);
 		$(checkbox).parent().removeClass('checked');
 	}
-	var call_success_modal = function() {
-		success_modal.modal('show');
-		window.setTimeout(function() { success_modal.modal('hide') }, 1000);
-	}
-	var call_fail_modal = function() {
-		fail_modal.modal('show');
-	}
-	var import_log = function(message) {
-		log_window.empty().append(message);
-	}
-	var result_log = function(message) {
-		result_window.append(message+'<br>');
-	}
-	var empty_result_log = function () {
-		result_window.empty();
-	}
-	var init_progress_bar = function(max) {
-		progress_bar.attr('aria-valuemax', max);
-		progress_bar.attr('aria-valuenow', 0);
-		progress_bar.css('width', '0%');
-	}
-	var iterate_progress_bar = function(max, current) {
-		progress_bar.attr('aria-valuenow', (current*1)+1);
-		progress_bar.css('width', ((current*1+1)/max)*100+'%');
-		progress_number.empty().append(current+"/"+max);
-	}
+	
 	//database related actions
-	var get_object = function(object, id) {
+	var get_object = function(m, t, c) { //model, table, condition
 		return $.ajax({
-			url: base_url+'admin/edit/get/'+object+'/'+id,
+			url: base_url+'admin/edit/get/'+m+'/'+t+'/'+c,
 			type: 'post',
 			dataType: 'json',
 		});	
 	}
     // get data for data modal
-    var get_modal_data = function(data_type) {
+    var get_modal_data = function(id, data_type) {
         return $.ajax({
-            url: base_url+'admin/edit/get_modal_data/'+data_type,
+            url: base_url+'admin/edit/get_modal_data/',
             type: 'post',
             dataType: 'json',
+            data: {
+                id: id,
+                data_type: data_type,
+            }
         });
     }
-    var set_modal_title = function(t) {
-        mt.empty().append(t);
+    function init_response_modal(r) { //response
+        $('#response-title').text(r.title);
+        $('#response-message').text(r.message);
+        $('#response-modal').modal('show');
+        window.setTimeout(function() {$('#response-modal').modal('hide')}, 1000);
     }
-	var update_data = function(model, object, id, data) {
+	function update_data(m, t, c, d) { //model, table, condition, id
 		return $.ajax({
-			url: base_url+'admin/edit/update',
+			url: base_url+'admin/edit/update_data',
 			type: 'post',
 			dataType: 'json',
 			data: {
-				model: model,
-                object: object,
-                id: id,
-				data: data,
+				model: m,
+                table: t,
+                condition: c,
+				data: d,
 			}
-		});
+		}).success(function(response) {
+            init_response_modal(response);
+        });
 	}
-	var insert_data = function(model, func, data) {
+	var insert_data = function(m, t, d) { //model, table, data
 		return $.ajax({
 			url: base_url+'admin/insert/insert_data',
 			type: 'post',
 			dataType: 'json',
-			// async: false,
 			data: {
-                model: model,
-                func: func,
-                data: data,
+                model: m,
+                table: t,
+                data: d,
             }
-		});
+		}).success(function(response) {
+            init_response_modal(response);
+        });
 	}
+    var init_progress_bar = function(max) {
+        progress_bar.attr('aria-valuemax', max);
+        progress_bar.attr('aria-valuenow', 0);
+        progress_bar.css('width', '0%');
+    }
+    var iterate_progress_bar = function(max, current) {
+        progress_bar.attr('aria-valuenow', (current*1)+1);
+        progress_bar.css('width', ((current*1+1)/max)*100+'%');
+        progress_number.empty().append(current+"/"+max);
+    }
+    var call_success_modal = function() {
+        success_modal.modal('show');
+        window.setTimeout(function() { success_modal.modal('hide') }, 1000);
+    }
+    var call_fail_modal = function() {
+        fail_modal.modal('show');
+    }
+    var import_log = function(message) {
+        log_window.empty().append(message);
+    }
+    var result_log = function(message) {
+        result_window.append(message+'<br>');
+    }
+    var empty_result_log = function () {
+        result_window.empty();
+    }
 	var import_js_data = function(table, object, data) {
 		return $.ajax({
 			url: base_url+'admin/import/process_js_data',
@@ -145,6 +156,10 @@
 			},
 		})
 	}
+    var set_modal_title = function(t) { //title
+        mt.empty().append(t);
+    }
+
 
 	$(function(){
         pkm_list.on('change', function() {
@@ -172,7 +187,8 @@
         });
         $('.selectpicker').selectpicker({
             style: 'btn-sm btn-primary',
-            size: 8
+            size: 8,
+            liveSearch: true,
         });
         enableBtn.click(function() {
         	importBtn.prop('disabled', false);
@@ -183,7 +199,7 @@
 		
         $('#move-id').on('change', function() {
         	var id = $('#move-id').val();
-        	get_object('_move', id).done(function(data) {
+        	get_object('move_model', 'move', id).done(function(data) {
         		console.log(data);
         		$.each(data, function(index, val) {
         			$('#move-'+index).val(val);
@@ -191,15 +207,33 @@
         	})
         });
 
-        $('#ab-id').on('change', function() {
+        $('#ab-list').on('change', function() {
         	var id = $('#ab-id').val();
-        	get_object('_ability', id).done(function(data) {
+        	get_object('ability_model', 'ability', id).done(function(data) {
         		$.each(data, function(index, val) {
         			$('#ab-'+index).val(val);
         		});
         	})
         });
-
+        $('#item-list').on('change', function() {
+            var id = $('#item-list').val();
+            get_object('item_model', 'item', id).done(function(data) {
+                $.each(data, function(index, val) {
+                    $('#item-'+index).val(val);
+                });
+            })
+        });
+        $('#news-list').on('change', function(event) {
+            event.preventDefault();
+            id = $(this).val();
+            if (id != "") {
+                get_object("news_model", "news", id).done(function(response) {
+                    console.log(response);
+                    $('#news-title').val(response.title);
+                    $('#news-content').data("wysihtml5").editor.setValue(response.content);
+                })
+            };
+        });
         $('#pkm-pkdx_id').on('change', function () {
         	var id = $('#pkm-pkdx_id').val();
         	get_object('_pokemon', id).done(function(data) {
@@ -227,24 +261,56 @@
     			});
         	})
         });
-        $('#ab-edit-submit').on('click', function() {
-        	var data = new Object();
-        	var key = '';
-        	$('#ab-section .form-control').each(function() {
-        		key = $(this).attr('id').replace('ab-', '');
-        		data[key] = $(this).val();
-        	});
-        	update_data('ability', data).done(function(data) {
-        		if (data.success) {
-        			$('#success-message').empty().append(data.message);
-        			call_success_modal();
-        		} else {
-        			$('#fail-message').empty().append(data.message);
-        			call_fail_modal();
-        		};
-        	});
+        $('#update-ability-btn').on('click', function() {
+        	var data = {};
+            var condition = {};
+        	collums = ['rating', 'desc', 'short_desc'];
+            $.each(collums, function(index, val) {
+                data[val] = $('#ab-'+val).val();
+            });
+            condition.id = $('#ab-id').val();
+        	update_data('ability_model', 'ability', condition, data);
         });
-
+        $('#submit-news-btn').on('click', function(event) {
+            event.preventDefault();
+            var data = new Object();
+            data.title = $('#news-title').val();
+            data.content = $('#news-content').val();
+            if (data.title != "" && data.content != "")
+            insert_data('news_model', 'news', data);
+        });
+        $('#update-move-btn').on('click', function(event) {
+            event.preventDefault();
+            var data = {};
+            var condition = {};
+            collums = ['type', 'category', 'base_power', 'pp', 'accuracy', 'desc', 'short_desc'];
+            $.each(collums, function(index, val) {
+                data[val] = $('#move-'+val).val();
+            });
+            condition.id = $('#move-id').val();
+            update_data('move_model', 'move', condition, data);
+        });
+        $('#update-news-btn').on('click', function(event) {
+            event.preventDefault();
+            var data = {};
+            var condition = {};
+            data.title = $('#news-title').val();
+            data.content = $('#news-content').val();
+            condition.id = $('#news-list').val();
+            if (data.title != "" && data.content != "") {
+                update_data('news_model', 'news', condition, data);
+            }
+        });
+        $('#update-item-btn').on('click', function(event) {
+            event.preventDefault();
+            var data = {};
+            var condition = {};
+            data.desc = $('#item-desc').val();
+            condition.id = $('#item-list').val();
+            if (data.desc != "") {
+                update_data('item_model', 'item', condition, data);
+            }
+        });
         $('#extract').on('click', function() {
 			console.log(pokedex());
         });
@@ -484,7 +550,7 @@
             var strategy_id = $(this).val();
             // console.log(strategy_id);
             if (strategy_id != '') {
-                get_object('_strategy', strategy_id).done(function(data) {
+                get_object('pokemon_model', 'strategy', strategy_id).done(function(data) {
                     console.log(data)
                     $('#strategy-name').val(data.name);
                     $('#strategy-ability').val(data.ability_id);
@@ -522,7 +588,11 @@
         bi.on('focus', function() {
             property = $(this).attr('data-input');
             f2f = $(this);
-            get_modal_data(property).success(function(response) {
+            s_id = false;
+            if ($(this).attr('data-species-id')) {
+                s_id = $(this).attr('data-species-id');
+            };
+            get_modal_data(s_id, property).success(function(response) {
                 console.log(response);
                 dmc.empty().append(response.html);
                 set_modal_title(response.title);

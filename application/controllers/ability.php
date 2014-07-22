@@ -29,7 +29,7 @@ class Ability extends CI_Controller {
 			$this->load->model('pokemon_model');
 			$ability = array();
 			$ability['info'] = $this->ability_model->get_ability_by_id($ab_id);
-			$ability['pokemon_list'] = $this->pokemon_model->get_pkm_by_ability($ab_id);
+			$ability['pokemon_list'] = $this->pokemon_model->get_pokemon_by_ability($ab_id);
 			$this->option['title'] = ucwords($ab_id);
 			$this->option['selected'] = 'view';
 			$this->option['sub_selected'] = 'view_ability';
