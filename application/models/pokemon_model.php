@@ -279,7 +279,7 @@ class Pokemon_Model extends CI_Model {
         }
     }
     // add data to "pokedex" table
-    function add_pokemon($data) {
+    function insert_pokedex($data) {
         $response = new stdClass();
         $query = $this->db->get_where('pokedex', array('dex_id' => $data['dex_id'], 'species_id' => $data['species_id']));
         if ($query->num_rows() > 0) {
@@ -297,7 +297,7 @@ class Pokemon_Model extends CI_Model {
         }
         return $response;
     }
-    function add_pokemon_type($species_id, $data) {
+    function insert_type_sets($species_id, $data) {
         $response = new stdClass();
         $response->message = "";
         foreach ($data as $type) {
@@ -319,8 +319,10 @@ class Pokemon_Model extends CI_Model {
             }
         }
         return $response;
+    }function delete_type_sets($condition) {
+        
     }
-    function add_pokemon_ability($species_id, $data) {
+    function insert_ability_sets($species_id, $data) {
         $response = new stdClass();
         $response->message = "";
         foreach ($data as $key => $value) {
@@ -344,8 +346,10 @@ class Pokemon_Model extends CI_Model {
         }
         return $response;
     }
-
-    function add_pokemon_learnset($species_id, $data) {
+    function delete_ability_sets($condition) {
+        
+    }
+    function insert_learn_sets($species_id, $data) {
         $response = new stdClass();
         $response->message = "";
         foreach ($data as $move_id) {
@@ -354,22 +358,22 @@ class Pokemon_Model extends CI_Model {
             $query = $this->db->get('learn_sets');
             if ($query->num_rows() > 0) {
                 $response->success = false;
-                $response->message .= "Move {$move_id} had already been assigned for {$species_id}. Skip.<br>";
+                $response->message .= "Move #{$move_id} had already been assigned for #{$species_id}. Skip.<br>";
             } else {
                 $this->db->insert('learn_sets', array('species_id' => $species_id, 'move_id' => $move_id));
                 if ($this->db->affected_rows() > 0) {
                     $response->success = true;
-                    $response->message .= "Move {$move_id} has been assigned for {$species_id} successfully.<br>";
+                    $response->message .= "Move #{$move_id} has been assigned for #{$species_id} successfully.<br>";
                 } else {
                     $response->success = false;
-                    $response->message .= "Move {$move_id} has not been assigned for {$species_id}. Fail.<br>";
+                    $response->message .= "Move #{$move_id} has not been assigned for #{$species_id}. Fail.<br>";
                 }
             }
         }
         return $response;
     }
 
-    function add_pokemon_strategy($data) {
+    function insert_strategy_dex($data) {
         $response = new stdClass();
         $response->message = "";
         $this->db->insert('strategy_dex', $data);
@@ -382,19 +386,19 @@ class Pokemon_Model extends CI_Model {
         }
         return $response;
     }
-	function edit_pokemon_basic($data) {
+	function edit_pokedex($condition, $data) {
         
     }
-    function edit_pokemon_ability($data) {
+    function edit_ability_sets($condition, $data) {
         
     }
-    function edit_pokemon_type($data) {
+    function edit_learn_sets($condition, $data) {
         
     }
-    function delete_pokemon_move($data) {
+    function delete_learn_sets($condition, $data) {
        
     }
-    function edit_pokemon_strategy($id, $data) {
+    function edit_strategy_dex($condition, $data) {
         $response = new stdClass();
         $response->message = "";
         $this->db->where('id', $id);

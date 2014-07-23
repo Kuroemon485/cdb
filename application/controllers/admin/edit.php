@@ -15,7 +15,8 @@ class Edit extends CI_Controller {
             $this->load->model('item_model');
             $this->load->model('news_model');
         } else {
-            show_404();
+            $this->output->set_status_header('404');
+            show_404('404');
         }
     }
 
@@ -116,53 +117,7 @@ class Edit extends CI_Controller {
         $values = $this->input->post('values');
         $response = $this->pokemon_model->$what($where, $values);
         echo json_encode($response);
-    }
-    
-    
-    public function get_modal_data() {
-        $response = new stdClass();
-        $temp = array();
-        $data_type = $this->input->post('data_type');
-        $species_id = $this->input->post('id');
-        switch ($data_type) {
-            case 'type':
-                $response->title = "Types list";
-                $response->html = $this->load->view('admin/type_modal', '', true);
-                break;
-            case 'ability':
-                if ($species_id) {
-                    $pokemon['ability_set'] = array();
-                    $temp = $this->pokemon_model->get_pokemon_abilities($species_id);
-                    foreach ($temp as $key) {
-                        $pokemon['ability_set'][$key->id] = $this->ability_model->get_ability_by_id($key->ability_id);
-                    }
-                    $response->title = "Posible Abilities";
-                } else {
-                    $temp['ability_set'] = $this->ability_model->get_ability();
-                    $response->title = "Abilities list";
-                }
-                $response->html = $this->load->view('tools/ability_set_modal', $pokemon, true);
-                break;
-            case 'item':
-                $pokemon['item_list'] = $this->item_model->get_item();
-                $response->title = "Items";
-                $response->html = $this->load->view('tools/item_modal', $pokemon, true);
-                break;
-            case 'learn_set':
-                if ($species_id) {
-                    $temp['learn_set'] = $this->pokemon_model->get_pokemon_learnset($species_id);
-                    $response->title = "Posible moves";
-                } else {
-                    $temp['learn_set'] = $this->move_model->get_move();
-                    $response->title = "Moves list";
-                }
-                $response->html = $this->load->view('tools/learn_set_modal', $temp, true);
-                break;
-            default:
-                
-                break;
-        }
-        echo json_encode($response);
-    }
+    } 
+   
     // GET functions - END
 }

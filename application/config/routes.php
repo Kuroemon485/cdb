@@ -45,6 +45,6 @@ $route['move/([a-z]+)'] = "move/id/$1";
 $route['item/([a-z]+)'] = "item/id/$1";
 $route['ability/([a-z]+)'] = "ability/id/$1";
 $route['type/([a-z]+)'] = "type/id/$1";
-
+$route['404_override'] = 'custom404';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

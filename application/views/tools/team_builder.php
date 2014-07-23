@@ -74,7 +74,7 @@ function rc() {
                                     <div class="col-md-3 col-xs-3">
                                         <select name="" id="p<?php echo $i ?>-species" class="form-control input-sm pkm-list selectpicker" data-placeholder="Pick a Pokemon" data-live-search="true">
                                             <option value="">Pick a Pokemon</option>
-                                            <?php foreach ($pkm_list as $pkm): ?>
+                                            <?php foreach ($pokemon_list as $pkm): ?>
                                                 <option value="<?php echo $pkm->species_id ?>"><?php echo $pkm->species ?></option>
                                             <?php endforeach ?>
                                         </select>

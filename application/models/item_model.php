@@ -33,6 +33,18 @@ class Item_Model extends CI_Model {
 			return false;
 		}
 	}
+	function get_strategy_for_item($id) {
+		$this->db->select('id, name, strategy_dex.species_id, item_id, pokedex.species');
+		$this->db->from('strategy_dex');
+		$this->db->join('pokedex', 'strategy_dex.species_id = pokedex.species_id', 'left');
+		$this->db->where('item_id', $id);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 	function add_item($data) {
 		$response = new stdClass();
 		$this->db->where('id', $data['id']);

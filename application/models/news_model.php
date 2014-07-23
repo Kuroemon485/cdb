@@ -3,9 +3,20 @@ class News_Model extends CI_Model {
 
 	function __construct() {
 		parent::__construct();
-    	$this->load->database();
+		$this->load->database();
 	}
 	function get_news() {
+		$this->db->order_by('post_date', 'desc');
+		$query = $this->db->get('news');
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	function get_news_by_date() {
+		$this->db->order_by('post_date', 'desc');
+		$this->db->group_by('post_date');
 		$query = $this->db->get('news');
 		if ($query->num_rows() > 0) {
 			return $query->result();
@@ -14,6 +25,7 @@ class News_Model extends CI_Model {
 		}
 	}
 	function get_news_list() {
+		$this->db->order_by('post_date', 'desc');
 		$this->db->select('id, title');
 		$query = $this->db->get('news');
 		if ($query->num_rows() > 0) {
@@ -62,4 +74,4 @@ class News_Model extends CI_Model {
 	}
 }
 
- ?>
+?>

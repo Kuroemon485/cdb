@@ -1,5 +1,5 @@
 <?php 
-#print_r($ability_set);
+// print_r($ability_set);
  ?>
 <table class="table table-condensed">
 <thead>
@@ -13,7 +13,7 @@
 <?php foreach ($ability_set as $key => $value) : ?>
 	<?php 
 	$name = $value->name;
-	$desc = $value->desc;
+	$desc = $value->short_desc;
 	$rating = $value->rating;
 	switch ($rating) {
 	    case 5:

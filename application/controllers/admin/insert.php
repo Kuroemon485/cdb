@@ -14,6 +14,7 @@ class Insert extends CI_Controller {
             $this->load->model('move_model');
             $this->load->model('item_model');
         } else {
+            $this->output->set_status_header('404');
             show_404();
         }
     }

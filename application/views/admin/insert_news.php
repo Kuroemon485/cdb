@@ -24,6 +24,11 @@
 	            	<label class="control-label" for="">Title</label>
 	            	<input type="text" name="" id="news-title" class="form-control">
 	            	<!-- div.row>div.col-md-4*3 -->
+	            	<label class="control-label" for="">Post type</label>
+	            	<select type="text" name="" id="news-post_type" class="form-control">
+	            		<option value="1">News</option>
+	            		<option value="0">Annoucement</option>
+	            	</select>
 	            	<label for="" class="control-label ">Content</label>
 	            	<textarea name="" id="news-content" cols="30" rows="10" class="form-control wysihtml5"></textarea>
 	            </div><!-- /.box-body -->

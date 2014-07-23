@@ -64,13 +64,13 @@
 	}
 	var get_modal_data = function(s_id, ppt) {
 		return $.ajax({
-			url: base_url+'teambuilder/get_modal_data',
+			url: base_url+'common/get_modal_data',
 			type: 'post',
 			dataType: 'json',
 			async: false,
 			data: {
 				species_id: s_id,
-				property: ppt,
+				data_type: ppt,
 			},
 		});
 	}

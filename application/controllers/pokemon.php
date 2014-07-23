@@ -34,7 +34,7 @@ class Pokemon extends CI_Controller {
                 $top_data['dex_id'] = $basic->dex_id;
                 $top_data['species_id'] = $basic->species_id;
                 $top_data['pokemon_list'] = $this->pokemon_model->get_pokemon_list();
-                $this->load->view('pokedex/single_pokemon_top', $top_data);
+                $this->load->view('pokedex/single_pkm_top', $top_data);
                 // load top section - done
 
                 // data for basic section
@@ -65,12 +65,12 @@ class Pokemon extends CI_Controller {
                 }
                 $basic_data['types'] = $basic->types;
                 $basic_data['abilities'] = $basic->abilities;
-                $this->load->view('pokedex/single_pokemon_basic', $basic_data);
+                $this->load->view('pokedex/single_pkm_basic', $basic_data);
                 // load basic section - done
 
                 // data for move section
                 $move_data['learn_set'] = $this->pokemon_model->get_pokemon_learnset($species_id);
-                $this->load->view('pokedex/single_pokemon_move', $move_data);
+                $this->load->view('pokedex/single_pkm_move', $move_data);
                 // load move section - done
 
                 // data for strategy section
@@ -104,10 +104,10 @@ class Pokemon extends CI_Controller {
                         $strategy_data['strategies'][] = $strategy;
                     }
                 }
-                $this->load->view('pokedex/single_pokemon_strategy', $strategy_data);
+                $this->load->view('pokedex/single_pkm_strategy', $strategy_data);
                 // load strategy section - done
 
-                $this->load->view('pokedex/single_pokemon_bottom');
+                $this->load->view('pokedex/single_pkm_bottom');
                 $this->load->view('footer');
             } else {
                 show_404();

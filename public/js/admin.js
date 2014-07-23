@@ -50,7 +50,7 @@
     // get data for data modal
     var get_modal_data = function(id, data_type) {
         return $.ajax({
-            url: base_url+'admin/edit/get_modal_data/',
+            url: base_url+'common/get_modal_data/',
             type: 'post',
             dataType: 'json',
             data: {
@@ -186,7 +186,7 @@
             size: "3px"
         });
         $('.selectpicker').selectpicker({
-            style: 'btn-sm btn-primary',
+            style: 'btn-sm btn-default',
             size: 8,
             liveSearch: true,
         });
@@ -276,6 +276,7 @@
             var data = new Object();
             data.title = $('#news-title').val();
             data.content = $('#news-content').val();
+            data.post_type = $('#news-post_type').val();
             if (data.title != "" && data.content != "")
             insert_data('news_model', 'news', data);
         });

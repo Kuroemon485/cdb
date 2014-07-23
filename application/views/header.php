@@ -224,7 +224,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                     </a>
                 </li>
             </ul>
-            <span class="col-md-12" style="text-align: center;">
+            <span class="col-md-12 copyright">
                 <p class="text-muted">©<?php echo '2014'; if(date('Y') > 2014) echo " - ".date('Y'); ?> Wildcat</p>
             </span>
         </section>
