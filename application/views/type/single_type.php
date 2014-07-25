@@ -26,7 +26,7 @@ $name = $detail->name
                     <!-- <li class=""><a href="#type-description" data-toggle="tab">Type Match up</a></li> -->
                     <li class=""><a href="#move-list" data-toggle="tab">Move</a></li>
                     <li class="active"><a href="#pokemon_list" data-toggle="tab">Pokemon</a></li>
-                    <li class="pull-left header"><i class="fa fa-fire"></i><?php echo $name ?></li>
+                    <li class="pull-left header"><i class="glyphicon glyphicon-fire"></i><?php echo $name ?></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane" id="type-description">
@@ -37,6 +37,7 @@ $name = $detail->name
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Ability</th>
@@ -68,6 +69,7 @@ $name = $detail->name
                                 ?>
                                 <tr>
                                     <td><?php echo $dex_id?></td>
+                                    <td><img src="<?php echo base_url() ?>public/images/minisprites/<?php echo $species ?>.png" alt=""></td>
                                     <td><a href="<?php echo $species_uri ?>" title=""><?php echo $species ?></a></td>
                                     <td class="col-sm-2">
                                     <?php foreach ($types as $type): ?>
@@ -79,18 +81,20 @@ $name = $detail->name
                                     <?php endforeach ?>
                                     </td>
                                     <td class="col-sm-3">
-                                    <?php $i = 0; foreach ($abilities as $ab) : if ($i > 0) echo " / "?>
+                                    <?php $i = 0; foreach ($abilities as $ab) : if ($i > 0) echo " - "?>
                                         <?php 
                                         $ab_name = $ab->ability_name;
                                         $ab_id = $ab->ability_id;
                                         $ab_uri = base_url()."ability/".$ab_id;
                                         $id = $ab->id;
                                         ?>
+                                        <a class="ability" data-toggle="tooltip" data-original-title="" data-ab-id="<?php echo $ab_id ?>" data-content="" href="<?php echo $ab_uri ?>">
                                         <?php if ($id == "H"): ?>
-                                            <i><a class="text-red ability" data-toggle="tooltip" data-original-title="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a></i>
+                                            <i class="text-red"><?php echo $ab_name ?></i>
                                         <?php else: ?>
-                                            <a class="ability" data-toggle="tooltip" data-original-title="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a>
+                                            <?php echo $ab_name ?>
                                         <?php endif; $i++ ?>
+                                        </a>
                                     <?php endforeach; ?>
                                     </td>
                                     <td><?php echo $hp ?></td>

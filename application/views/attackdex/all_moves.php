@@ -2,12 +2,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        View
-        <small>Attackdex</small>
+        Attackdex
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Home</a></li>
-        <li class="active"><i class="fa fa-ge"></i> Attackdex</li>
+        <li class="active">Attackdex</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -17,7 +16,7 @@
 	        <!-- Primary box -->
 	        <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-ge"></i> Attackdex</h3>                                    
+                    <h3 class="box-title">Attackdex</h3>                                    
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive">
                     <table id="master-list" class="table table-bordered table-condensed table-striped data-table-full">

@@ -14,7 +14,7 @@ class Home extends CI_Controller{
 	public function index() {
 		$this->option['title']  = 'Dashboard';
 		$this->option['selected'] = 'homepage';
-		$this->option['news'] = $this->news_model->get_news_by_date();
+		$this->option['news'] = $this->news_model->get_news();
 		$this->load->view('header', $this->option);
 		$this->load->view('homepage');
 		$this->load->view('footer');

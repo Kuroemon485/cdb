@@ -24,22 +24,37 @@ $types_list = array('Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting', 'F
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <a href="<?php echo base_url() ?>pokedex/masterlist" class="btn btn-block btn-xs btn-success">Master List</a>
+                            <a href="<?php echo base_url() ?>pokedex/masterlist" class="btn btn-block btn-sm btn-success">Master List</a>
                         </div>
                         <br><br>
                         <div class="col-sm-4">
-                            <select name="" id="" class="selectpicker">
+                            <select name="" id="" class="pkm-by-alphabet" data-toggle="change-pokemon">
                                 <option value="">A-G</option>
+                                <?php if ($a_g): ?>
+                                    <?php foreach ($a_g as $pkm): ?>
+                                        <option value="<?php echo base_url().'pokemon/'.$pkm->species_id ?>"><?php echo $pkm->species ?></option>
+                                    <?php endforeach ?>
+                                <?php endif ?>
                             </select>
                         </div>
                         <div class="col-sm-4">
-                            <select name="" id="" class="selectpicker">
+                            <select name="" id="" class="pkm-by-alphabet" data-toggle="change-pokemon">
                                 <option value="">H-R</option>
+                                <?php if ($h_r): ?>
+                                    <?php foreach ($h_r as $pkm): ?>
+                                        <option value="<?php echo base_url().'pokemon/'.$pkm->species_id ?>"><?php echo $pkm->species ?></option>
+                                    <?php endforeach ?>
+                                <?php endif ?>
                             </select>
                         </div>
                         <div class="col-sm-4">
-                            <select name="" id="" class="selectpicker">
+                            <select name="" id="" class="pkm-by-alphabet" data-toggle="change-pokemon">
                                 <option value="">S-Z</option>
+                                <?php if ($s_z): ?>
+                                    <?php foreach ($s_z as $pkm): ?>
+                                        <option value="<?php echo base_url().'pokemon/'.$pkm->species_id ?>"><?php echo $pkm->species ?></option>
+                                    <?php endforeach ?>
+                                <?php endif ?>
                             </select>
                         </div>
                     </div>
@@ -69,6 +84,7 @@ $types_list = array('Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting', 'F
 	</div>
     <?php #echo '<pre>';print_r($all); echo '</pre>' ?>
     <?php echo "<pre>{elapsed_time}/{memory_usage}</pre>";?>
+    <?php //echo "<pre>";print_r($a_g);echo"</pre>";?>
 	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="notice-modal">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">

@@ -4,11 +4,14 @@
 	var data_table = $('.data-table');
 	stats = ['hp', 'atk', 'def', 'sp_atk', 'sp_def', 'spd'];
 	var i_s = $('.item-strategy'); //item strategy
-    var dmc = $('#data-container');
-    var data_modal = $('.data-modal');
-    var mt = $('.modal-title');
-
-	var nmod_calc = function(nature, stat) {
+	var dmc = $('#data-container');
+	var data_modal = $('.data-modal');
+	var mt = $('.modal-title');
+	var ability_link = $('.ability');
+	var move_link = $('.move');
+	var item_link = $('.item');
+	var change_pokemon = $('[data-toggle="change-pokemon"]');
+	nmod_calc = function(nature, stat) {
 		var natures = {
 			Adamant:{atk:1.1,sp_atk:0.9},
 			Bashful:{all:1}, 
@@ -34,16 +37,17 @@
 			Relaxed:{def:1.1,spd:0.9}, 
 			Sassy:{sp_def:1.1,spd:0.9}, 
 			Serious:{all:1}, 
-			Timid:{spd:1.1,atk:0.9}}
-			if (natures[nature].hasOwnProperty(stat)) {
-				return natures[nature][stat];
-			} else {
-				return 1;
-			};
+			Timid:{spd:1.1,atk:0.9}
 		}
-		var stat_calc = function() {
-			$.each(stats, function(index, val) {
-				var base = $('#'+val).text()*1;
+		if (natures[nature].hasOwnProperty(stat)) {
+			return natures[nature][stat];
+		} else {
+			return 1;
+		};
+	}
+	var stat_calc = function() {
+		$.each(stats, function(index, val) {
+			var base = $('#'+val).text()*1;
 			// console.log(base);
 			if (val == 'hp') {
 				var min = Math.floor(base * 2  + 110);
@@ -61,76 +65,91 @@
 				$('#max_p_'+val).text(max_p);
 			}
 		});
-		}
-		var stat_calc_by_lv = function(lv) {
-			$.each($('.str-stat'), function() {
-				var stat_table = $(this);
-				var stat = 0;
-				var nature = $(this).attr('data-nature');
-				$.each(stats, function(index, val) {
-					var base_stat = stat_table.find('#base_'+val).text()*1;
-					var ev = stat_table.find('#ev_'+val).text()*1;
-					var iv = stat_table.find('#iv_'+val).text()*1;
-					var nmod = nmod_calc(nature, val);
-					if (val == 'hp') {
-						stat = Math.floor((base_stat * 2 + iv + (ev/4)) * lv / 100 + 10 + lv*1)
-						stat_table.find('#total-'+val).text(stat)
-					} else {
-						stat = Math.floor(((base_stat * 2 + iv + (ev/4)) * lv / 100 + 5) * nmod)
-						stat_table.find('#total-'+val).text(stat);
-					}
-				});
-			});
-		}
-		var load_strategy_dex = function(species_id) {
-			return $.ajax({
-				url: base_url+'pokemon/get_strategy',
-				type: 'post',
-				dataType: 'html',
-				data: {
-					species_id: species_id
-				}
-			})		
-		}
-		var get_modal_data = function(id, data_type) {
-			return $.ajax({
-				url: base_url+'common/get_modal_data/',
-				type: 'post',
-				dataType: 'json',
-				data: {
-					id: id,
-					data_type: data_type,
+	}
+	var stat_calc_by_lv = function(lv) {
+		$.each($('.str-stat'), function() {
+			var stat_table = $(this);
+			var stat = 0;
+			var nature = $(this).attr('data-nature');
+			$.each(stats, function(index, val) {
+				var base_stat = stat_table.find('#base_'+val).text()*1;
+				var ev = stat_table.find('#ev_'+val).text()*1;
+				var iv = stat_table.find('#iv_'+val).text()*1;
+				var nmod = nmod_calc(nature, val);
+				if (val == 'hp') {
+					stat = Math.floor((base_stat * 2 + iv + (ev/4)) * lv / 100 + 10 + lv*1)
+					stat_table.find('#total-'+val).text(stat)
+				} else {
+					stat = Math.floor(((base_stat * 2 + iv + (ev/4)) * lv / 100 + 5) * nmod)
+					stat_table.find('#total-'+val).text(stat);
 				}
 			});
-		}
-		var get_ab_desc = function(ab_id) {
-			return $.ajax({
-				url: base_url+'common/get_ab_desc',
-				type: 'post',
-				dataType: 'html',
-				async: false,
-				data: {ab_id: ab_id},
-			});
-		}
-
-		$(function() {
-		// $('.select2').select2();
+		});
+	}
+	var load_strategy_dex = function(species_id) {
+		return $.ajax({
+			url: base_url+'pokemon/get_strategy',
+			type: 'post',
+			dataType: 'html',
+			data: {
+				species_id: species_id
+			}
+		})		
+	}
+	var get_modal_data = function(id, data_type) {
+		return $.ajax({
+			url: base_url+'common/get_modal_data/',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				id: id,
+				data_type: data_type,
+			}
+		}).success(function(response) {
+			data_modal.modal('show');
+			dmc.empty().append(response.html);
+			set_modal_title(response.title);
+		});
+	}
+	var set_modal_title = function(t) {
+		mt.empty().append(t);
+	}
+	var get_ab_desc = function(ab_id) {
+		return $.ajax({
+			url: base_url+'common/get_ab_desc',
+			type: 'post',
+			dataType: 'html',
+			async: false,
+			data: {ab_id: ab_id},
+		});
+	}
+	$(function() {
 		$('.selectpicker').selectpicker({
 			style: 'btn-sm btn-default',
-			size: 8,
+			size: 'auto',
+			// width: '100%',
+			liveSearch: true,
+			width: 'auto',
+		});
+		$('.pkm-by-alphabet').selectpicker({
+			style: 'btn-sm btn-default',
+			size: 'auto',
 			width: '100%',
+			liveSearch: true,
+		});
+		data_table_full.dataTable({
+			"orderMulti": true,
+			"pageLength": 50,
+		});
+		data_table.dataTable({
+			"bPaginate": false,
+			"bLengthChange": false,
+			"bFilter": false,
+			"bSort": true,
+			"bInfo": true,
 		});
 		$(document).on('click', 'a[href="#"]', function(event) {
 			event.preventDefault();
-		});
-		$('.ability').hover(function() {
-			if ($(this).attr('data-content') == "") {
-				var desc = "";
-				desc = get_ab_desc($(this).attr('data-ab-id')).done(function(response) {
-					desc = response;
-				})
-				$(this).attr('data-content', desc.responseText);
-			};
 		});
 		var poptions = {
 			placement: 'top',
@@ -140,7 +159,25 @@
 			delay: 0,
 			html: true,
 		};
-		$('.ability').popover(poptions);
+		ability_link.hover(function() {
+			if ($(this).attr('data-content') == "") {
+				var desc = "";
+				desc = get_ab_desc($(this).attr('data-ab-id')).done(function(response) {
+					desc = response;
+				})
+				$(this).attr('data-content', desc.responseText);
+			};
+		}).popover(poptions);
+		move_link.popover(poptions);
+		item_link.popover(poptions).click(function(event) {
+			var item_id = $(this).attr('data-item-id');
+			var data_type = $(this).attr('data-input');
+			get_modal_data(item_id, data_type);
+		});
+		change_pokemon.on('change', function(event) {
+			event.preventDefault();
+			window.location.replace($(this).val());
+		});
 		stat_calc();
 		stat_calc_by_lv(100);
 		$.each($('.str-stat'), function() {
@@ -156,42 +193,15 @@
 				};
 			});
 		});
-		
-		var set_modal_title = function(t) {
-			mt.empty().append(t);
-		}
 		i_s.on('click', function(event) {
 			event.preventDefault();
 			var item_id = $(this).attr('data-item-id');
-			get_modal_data(item_id, 'item_strategy').success(function(response) {
-				dmc.empty().append(response.html);
-				set_modal_title(response.title);
-			});
-			data_modal.modal('show');
+			get_modal_data(item_id, 'item_strategy');
 		});
 		$('.calc-stats').on('click', function() {
 			var lv = $(this).attr('data-lv');
 			stat_calc_by_lv(lv)
 		});
-		
-		//SLIMSCROLL FOR CHAT WIDGET
-	    // $(".pkm-list").slimscroll({
-	    // 	width: "200px",
-	    //     height: "350px",
-	    //     alwaysVisible: false,
-	    //     wheelStep:1,
-	    // });
-data_table_full.dataTable({
-	"orderMulti": true,
-	"pageLength": 50,
-});
-data_table.dataTable({
-	"bPaginate": false,
-	"bLengthChange": false,
-	"bFilter": false,
-	"bSort": true,
-	"bInfo": true,
-});
-});
+	});
 }(window.jQuery, window, document));
 

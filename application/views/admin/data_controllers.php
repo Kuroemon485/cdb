@@ -21,7 +21,7 @@
 	                <h3 class="box-title">Add Data</h3>
 	            </div>
 	            <div class="box-body">
-	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/insert/news"><i class="fa fa-plus"></i> Post News/Announcement</a>
+	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/insert/news"><i class="fa fa-plus"></i> Post Announcement</a>
 	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/insert/pokemon"><i class="fa fa-plus"></i> Add Pokemon</a>
 	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/insert/move"><i class="fa fa-plus"></i> Add Move</a>
 	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/insert/ability"><i class="fa fa-plus"></i> Add Ability</a>
@@ -36,7 +36,7 @@
 	                <h3 class="box-title">Modify Data</h3>
 	            </div>
 	            <div class="box-body">
-	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/edit/news"><i class="fa fa-pencil"></i> Edit News/Announcement</a>
+	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/edit/news"><i class="fa fa-pencil"></i> Edit Announcement</a>
 	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/edit/pokemon"><i class="fa fa-pencil"></i> Edit Pokemon</a>
 	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/edit/move"><i class="fa fa-pencil"></i> Edit Move</a>
 	            	<a class="btn btn-app" href="<?php echo base_url() ?>admin/edit/ability"><i class="fa fa-pencil"></i> Edit Ability</a>

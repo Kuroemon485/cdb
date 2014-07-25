@@ -164,7 +164,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                         <li <?php echo((isset($sub_selected) && $sub_selected == 'view_type') ? 'class="active"' : ""); ?>>
                             <a href="<?php echo site_url('type') ?>">
                                 <?php echo((isset($sub_selected) && $sub_selected == 'view_type') ? $amii : $imii); ?>
-                                <span>Types</span>
+                                <span>Types Matchup</span>
                             </a>
                         </li>
                     </ul>

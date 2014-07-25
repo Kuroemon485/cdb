@@ -35,6 +35,26 @@ class Move_Model extends CI_Model {
 			return false;
 		}
 	}
+	function get_move_name($id) {
+		$this->db->select('id, name');
+		$this->db->where('id', $id);
+		$query = $this->db->get('attack_dex');
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+	function get_move_desc($id) {
+		$this->db->select('id, desc');
+		$this->db->where('id', $id);
+		$query = $this->db->get('attack_dex');
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 	function get_move_list() {
 		$this->db->order_by('name', 'asc');
 		$this->db->select('id, name, type');		

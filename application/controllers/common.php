@@ -43,20 +43,27 @@ class Common extends CI_Controller {
 			echo $ability->desc;
 		} else echo "Cant find any description for this ability";
 	}
+	public function get_move_desc() {
+		$ab_id = $this->input->post('move_id');
+		$move = $this->move_model->get_move_desc($move_id);
+		if ($move) {
+			echo $move->desc;
+		} else echo "Cant find any description for this ability";
+	}
 	public function get_modal_data() {
 		$response = new stdClass();
 		$temp = array();
 		$data_type = $this->input->post('data_type');
-		$species_id = $this->input->post('id');
+		$id = $this->input->post('id');
 		switch ($data_type) {
 			case 'type':
 			$response->title = "Types list";
 			$response->html = $this->load->view('admin/type_modal', '', true);
 			break;
 			case 'ability':
-			if ($species_id != "false") {
+			if ($id != "false") {
 				$pokemon['ability_set'] = array();
-				$temp = $this->pokemon_model->get_pokemon_abilities($species_id);
+				$temp = $this->pokemon_model->get_pokemon_abilities($id);
 				foreach ($temp as $key) {
 					$pokemon['ability_set'][$key->id] = $this->ability_model->get_ability_by_id($key->ability_id);
 				}
@@ -73,8 +80,8 @@ class Common extends CI_Controller {
 			$response->html = $this->load->view('modals/item_modal', $pokemon, true);
 			break;
 			case 'learn_set':
-			if ($species_id != "false") {
-				$temp['learn_set'] = $this->pokemon_model->get_pokemon_learnset($species_id);
+			if ($id != "false") {
+				$temp['learn_set'] = $this->pokemon_model->get_pokemon_learnset($id);
 				$response->title = "Posible moves";
 			} else {
 				$temp['learn_set'] = $this->move_model->get_move();
@@ -83,7 +90,7 @@ class Common extends CI_Controller {
 			$response->html = $this->load->view('modals/learn_set_modal', $temp, true);
 			break;
 			case 'item_strategy':
-			$temp['strategies'] = $this->item_model->get_strategy_for_item($species_id);
+			$temp['strategies'] = $this->item_model->get_strategy_for_item($id);
 			$response->title = "Strategy using this item";
 			$response->html = $this->load->view('modals/item_strategy_modal', $temp, true);
 			break;

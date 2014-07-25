@@ -1,6 +1,6 @@
 					<div class="tab-pane active" id="pkm-detail">
 			            <div class="row">
-				            <div class="col-sm-4">
+				            <div class="col-md-4">
 				            	<div class="row">
 				            		<div class="col-md-12 col-xs-6">
 						            	<i class="fa fa-image"></i>
@@ -34,7 +34,7 @@
 								                    $ab_type = $ability->id;
 								                    ?>
 								                    	<?php if ($i > 0) echo ' - ' ?>
-								                    	<a href="<?php echo $ab_uri ?>" class="ability" data-toggle="tooltip" data-original-title="" data-ab-id="<?php echo $ab_id ?>">
+								                    	<a href="<?php echo $ab_uri ?>" class="ability" data-toggle="popover" data-original-title="" data-content="" data-ab-id="<?php echo $ab_id ?>">
 								                    		<?php if ($ab_type == "H"): ?>
 								                    			<i class="text-red"><?php echo $ab_name ?></i>
 								                    		<?php else: ?>
@@ -61,7 +61,7 @@
 						            </div>
 				            	</div>
 				            </div>				            
-				            <div class="col-sm-8">
+				            <div class="col-md-8">
 				            	<table class="table table-hover">
 				            		<tbody>
 				            			<tr>

@@ -8,7 +8,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Home</a></li>
-        <li class=""><a href="<?php echo base_url(); ?>pokedex"><i class="fa fa-bug"></i> Pokedex</a></li>
+        <li class=""><a href="<?php echo base_url(); ?>pokedex"> Pokedex</a></li>
         <li class="active"></i> Master List</li>
     </ol>
 </section>
@@ -19,7 +19,7 @@
 	        <!-- Primary box -->
 	        <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-bug"></i> Master List</h3>
+                    <h3 class="box-title">Master List</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive">
                     <table id="master-list" class="table table-bordered table-condensed table-striped data-table-full">
@@ -71,18 +71,21 @@
                                 <?php endforeach ?>
                                 </td>
                                 <td>
-                                <?php $i = 0; foreach ($abilities as $ab) : if ($i > 0) echo " / "?>
+                                <?php $i = 0; foreach ($abilities as $ab) : if ($i > 0) echo " - "?>
                                     <?php 
                                     $ab_name = $ab->ability_name;
                                     $ab_id = $ab->ability_id;
                                     $ab_uri = base_url()."ability/".$ab_id;
                                     $id = $ab->id;
                                     ?>
+                                    <a class="ability" data-toggle="popover" data-content="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>">
                                     <?php if ($id == "H"): ?>
-                                        <i><a class="text-red" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a></i>
+                                        <i class="text-red"><?php echo $ab_name ?></i>
                                     <?php else: ?>
-                                        <a href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a>
-                                    <?php endif; $i++ ?>
+                                        <?php echo $ab_name ?>
+                                    <?php endif ?>
+                                    </a>
+                                    <?php $i++ ?>
                                 <?php endforeach; ?>
                                 </td>
                                 <td><?php echo $hp ?></td>

@@ -19,12 +19,14 @@ $no = $info->no;
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        View
-        <small>Move ~ <?php echo $name ?></small>
+        Move
+        <small>
+            <?php echo $name ?>
+        </small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="<?php echo base_url(); ?>move"><i class="fa fa-ge"></i> Move</a></li>
+        <li><a href="<?php echo base_url(); ?>move"> Move</a></li>
         <li class="active"><?php echo $name ?></li>
     </ol>
 </section>
@@ -35,10 +37,10 @@ $no = $info->no;
 	        <!-- Primary box -->
 	        <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                    <li><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                    <!-- <li><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li> -->
                     <li><a href="#pokemon_list" data-toggle="tab">Pokemon</a></li>
                     <li class="active"><a href="#move-description" data-toggle="tab">Description</a></li>
-                    <li class="pull-left header"><i class="fa fa-ge"></i><?php echo $name ?></li>
+                    <li class="pull-left header"><?php echo $name ?></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="move-description">
@@ -57,6 +59,7 @@ $no = $info->no;
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Ability</th>
@@ -88,6 +91,7 @@ $no = $info->no;
                                 ?>
                                 <tr>
                                     <td><?php echo $dex_id?></td>
+                                    <td><img src="<?php echo base_url() ?>public/images/minisprites/<?php echo $species ?>.png" alt=""></td>
                                     <td><a href="<?php echo $species_uri ?>" title=""><?php echo $species ?></a></td>
                                     <td  class="col-sm-2">
                                     <?php foreach ($types as $type): ?>

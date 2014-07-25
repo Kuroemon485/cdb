@@ -17,6 +17,9 @@ class Pokedex extends CI_Controller {
                 $this->option['sub_selected'] = 'view_pokedex';
                 $this->option['main_script'] = $this->load->view('scripts/main_script', null, true);
                 $pokemon = array();
+                $pokemon['a_g'] = $this->pokemon_model->get_pokemon_list_by_alphabet('a', 'g');
+                $pokemon['h_r'] = $this->pokemon_model->get_pokemon_list_by_alphabet('h', 'r');
+                $pokemon['s_z'] = $this->pokemon_model->get_pokemon_list_by_alphabet('s', 'z');
                 $this->option['title'] = 'Pokedex';
                 $this->load->view('header', $this->option);
                 $this->load->view('pokedex/main', $pokemon);

@@ -13,6 +13,44 @@ class Pokemon_Model extends CI_Model {
         $query = $this->db->get('pokedex');
         return $query->result();
     }
+    function get_pokemon_list_by_alphabet($start, $end) {
+        $this->db->select('dex_id, species_id, species');
+        $this->db->where('substr(species_id, 1, 1) >=',$start);
+        $this->db->where('substr(species_id, 1, 1) <=', $end);
+        $this->db->order_by('species_id', 'asc');
+        $query = $this->db->get('pokedex');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
+    function test1($species_id) {
+        $querystr = 'SELECT
+                        pokedex.*,
+                        GROUP_CONCAT(ability_id) AS abilities
+                    FROM
+                        pokedex,
+                        ability_sets
+                    where
+                        pokedex.species_id=ability_sets.species_id
+                    GROUP BY
+                        pokedex.species_id
+                    having
+                        pokedex.species_id = "'.$species_id.'"';
+
+        // $this->db->select('pokedex.*, ability_sets.ability_id');
+        // $this->db->from('pokedex');
+        // $this->db->group_by('pokedex.species_id');
+        // $this->db->join('ability_sets', 'ability_sets.species_id = pokedex.species_id', 'left');
+        // $this->db->where('pokedex.species_id', $species_id);
+        $query = $this->db->query($querystr);
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
 	function get_pokedex(/*$limit, $offset*/) {
         $this->db->select('dex_id, species_id, species, hp, atk, def, sp_atk, sp_def, spd');
         $this->db->order_by('dex_id', 'asc');
@@ -45,7 +83,7 @@ class Pokemon_Model extends CI_Model {
         $this->db->where('species_id', $species_id);
         $query = $this->db->get('pokedex');
         if ($query->num_rows() > 0) {
-            $pokemon = $query->result()[0];
+            $pokemon = $query->row();
             $pokemon->types = $this->get_pokemon_type($pokemon->species_id);
             $pokemon->abilities = $this->get_pokemon_abilities($pokemon->species_id);
             return $pokemon;
@@ -60,7 +98,7 @@ class Pokemon_Model extends CI_Model {
         if ($query->num_rows() > 0) {
             $pokemon = array();
             foreach ($query->result() as $pkm) {
-                $pokemon[] = $this->get_pkm_by_species($pkm->species_id);
+                $pokemon[] = $this->get_pokemon_by_species($pkm->species_id);
             }
             return $pokemon;
         } else {
@@ -74,7 +112,7 @@ class Pokemon_Model extends CI_Model {
         if ($query->num_rows() > 0) {
             $pokemon_list = array();
             foreach ($query->result() as $pkm) {
-                $pokemon = $this->get_pkm_by_species($pkm->species_id);
+                $pokemon = $this->get_pokemon_by_species($pkm->species_id);
                 foreach ($pokemon as $key => $value) {
                     $pkm->$key = $value;
                 }
@@ -102,9 +140,9 @@ class Pokemon_Model extends CI_Model {
         if ($query->num_rows() > 0) {
             $pokemon_list = array();
             foreach ($query->result() as $pkm) {
-                $pokemon = $this->get_pkm_by_species($pkm->species_id);
+                $pokemon = $this->get_pokemon_by_species($pkm->species_id);
                 $pokemon_list[] = $pokemon;
-                $forms = $this->get_pkm_form($pkm->species_id);
+                $forms = $this->get_pokemon_form($pkm->species_id);
                 if ($forms) {
                     foreach ($forms as $pokemon) {
                         $pokemon_list[] = $pokemon;
@@ -131,7 +169,7 @@ class Pokemon_Model extends CI_Model {
         $this->db->where('species_id', $species_id);
         $query = $this->db->get('pokedex');
         if ($query->num_rows() > 0) {
-            return $query->result()[0];
+            return $query->row();
         } else {
             return false;
         }
@@ -143,7 +181,7 @@ class Pokemon_Model extends CI_Model {
         if ($query->num_rows() > 0) {
             $forms = array();
             foreach ($query->result() as $form_id) {
-                $forms[] = $this->get_pkm_by_species($form_id->species_id);
+                $forms[] = $this->get_pokemon_by_species($form_id->species_id);
             }
             return $forms;
         } else {
@@ -165,19 +203,19 @@ class Pokemon_Model extends CI_Model {
         }
     }
     function get_pokemon_ability($species_id, $ability_id) {
-        $this->db->select('id, ability_name, ability_id');
+        // $this->db->select('id, ability_name, ability_id');
         $this->db->where('species_id', $species_id);
         $this->db->where('ability_id', $ability_id);
         $query = $this->db->get('ability_sets');
         if ($query->num_rows() > 0) {
-            $abilities = $query->result()[0];
+            $abilities = $query->row();
             return $abilities;
         } else {
             return false;
         }
     }
     function get_pokemon_abilities($species_id) {
-        $this->db->select('id, ability_name, ability_id');
+        // $this->db->select('id, ability_name, ability_id');
         $this->db->where('species_id', $species_id);
         $query = $this->db->get('ability_sets');
         if ($query->num_rows() > 0) {
@@ -226,8 +264,37 @@ class Pokemon_Model extends CI_Model {
     function get_pokemon_strategies($species_id) {
         $this->db->where('species_id', $species_id);
         $query = $this->db->get('strategy_dex');
+        $strategies = array();
         if ($query->num_rows() > 0) {
-            return $query->result();
+            $basic = $this->get_pokemon_by_species($species_id);
+            // return $query->result();
+            foreach ($query->result() as $str) {
+                $strategy = new stdClass();
+                $strategy->id = $str->id;
+                $strategy->name = $str->name;
+                $strategy->base_hp = $basic->hp;
+                $strategy->base_atk = $basic->atk;
+                $strategy->base_def = $basic->def;
+                $strategy->base_sp_atk = $basic->sp_atk;
+                $strategy->base_sp_def = $basic->sp_def;
+                $strategy->base_spd = $basic->spd;
+                $strategy->species = $this->pokemon_model->get_pokemon_species($str->species_id);
+                $strategy->ability = $this->pokemon_model->get_pokemon_ability($str->species_id, $str->ability_id);
+                $strategy->nature = $str->nature;
+                $strategy->item = $this->item_model->get_item_by_id($str->item_id);
+                $strategy->happiness = $str->happiness;
+                for ($i=1; $i <= 4; $i++) { 
+                    $strategy->{'move_'.$i} = $this->move_model->get_move_by_id($str->{'move_'.$i.'_id'});
+                }
+                $stats = array('hp', 'atk', 'def', 'sp_atk', 'sp_def', 'spd');
+                foreach ($stats as $stat) {
+                    $strategy->{'ev_'.$stat} = $str->{'ev_'.$stat};
+                    $strategy->{'iv_'.$stat} = $str->{'iv_'.$stat};
+                }
+                $strategy->description = $str->description;
+                $strategies[] = $strategy;
+            }
+            return $strategies;
         } else {
             return false;
         }
@@ -246,7 +313,7 @@ class Pokemon_Model extends CI_Model {
         $this->db->where('id', $id);
         $query = $this->db->get('strategy_dex');
         if ($query->num_rows() > 0) {
-            return $query->result()[0];
+            return $query->row();
         } else {
             return false;
         }

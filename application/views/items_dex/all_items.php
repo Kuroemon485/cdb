@@ -3,8 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        View
-        <small>Item Dex</small>
+        Items Dex
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Home</a></li>

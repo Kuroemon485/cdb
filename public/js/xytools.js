@@ -9,6 +9,11 @@
 		});
 		$('#cld').on('click', function () {
 			cleardata();
+			$('#approve-modal').modal('hide');
+		});
+		$('[data-toggle="tooltip"]').tooltip({
+			trigger: "hover",
+			placement: "top",
 		});
 		$('#faqs-modal .modal-body').slimscroll({
             height: "400px",
@@ -18,12 +23,13 @@
             size: "3px",
         });
         $('#result').slimscroll({
-            height: "345px",
+            height: "325px",
             size: "5px",
             alwaysVisible: true,
             wheelStep:1,
             size: "3px"
         });
+        render_boxes_list();
         if (check_localStorage()) {
         	// console.log(check_last_box())
         	if (check_last_box()) {
@@ -32,6 +38,9 @@
         		switchbox(1);
         	}
         };
+        $('.box-num').on('click', function () {
+        	$('#boxes-list-modal').modal('show');
+        });
 		$('#cim').on('click', function () {
 			$('#import-modal').modal('show');
 		});
@@ -79,6 +88,11 @@
 			if (rawdata != '') {
 				process_boxes_data(rawdata, format);
 				render_box($('.poke-box').attr('data-box-num'));
+				if ($('#search-input').val().length >= 1) {
+					attrts = $('[name="search-type"]:checked').val();
+					render_result(search(attrts, $('#search-input').val()));
+				}
+				render_boxes_list();
 				$('#import-modal').modal('hide');
 			} else {
 				return;
@@ -93,6 +107,7 @@
 		$(document).on('click','.switch-box', function () {
 			id = $(this).attr('data-to-box');
 			switchbox(id);
+			$('#boxes-list-modal').modal('hide');
 		});
 		$('#search-input').on('keyup', function() {
 			if ($(this).val().length >= 1) {
@@ -102,26 +117,39 @@
 				clear_result();
 			}
 		});
+		$('[name="format"]').on('ifToggled', function() {
+			switch ($(this).prop('id')) {
+				case 'csv':
+					console.log('aaa');
+					$('#get-csv-file').show();
+					break;
+				default:
+					$('#get-csv-file').hide();
+					break;
+			}
+		});
 	});
 	var base_url = '/cdb/';
 	var stats = ['hp', 'atk', 'def', 'satk', 'sdef', 'spd'];
 	var search_result = {};
 	var rawdata = '';
-	var all_boxes = $.parseJSON(localStorage.getItem('boxesData'));
+	all_boxes = $.parseJSON(localStorage.getItem('boxesData'));
 	var pkmdm = '#pkm-detail-modal';
 
 	var reset_boxes = function() {
-		$('.show-info img').attr('src', base_url+'public/images/favicon.ico');
+		$('.show-info img').attr('src', base_url+'public/images/empty-slot.png');
 		$('.show-info').removeClass('btn-danger btn-success btn-warning btn-primary');
 		$('.show-info').attr('data-original-title', 'Empty slot').attr('data-content', '-').removeClass('has-pkm');
-		$('#approve-modal').modal('hide');
+		$('#boxes-list-modal .switch-box img').attr('src', base_url+'public/images/empty-box.png');
 	}
 	var reset_detail_modal = function() {
 		$('.detail', pkmdm).html('-');
 	}
 	var cleardata = function() {
 		localStorage.removeItem('boxesData');
+		delete all_boxes;
 		reset_boxes();
+		clear_result();
 	}
 
 	function process_boxes_data(str, format) {
@@ -291,6 +319,35 @@
 		// console.log(boxes);
 		return boxes;
 	}
+	function handleCSVFile(evt) {
+	    evt.stopPropagation();
+	    evt.preventDefault();
+
+	    var file = evt.target.files[0]; // FileList object.
+
+	    // files is a FileList of File objects. List some properties.
+	    var r = new FileReader();
+		r.onload = function(e) { 
+			var contents = e.target.result;
+			$('#import-modal textarea').val(contents);
+		}
+		r.readAsText(file);
+	}
+	// temp - for local use only
+	// function readCSVFile() {
+	//     var rawFile = new XMLHttpRequest();
+	//     rawFile.open("GET", "file:///E:/Dropbox/asda.csv", false);
+	//     console.log(rawFile)
+	//     rawFile.onreadystatechange = function () {
+	//         if(rawFile.readyState === 4) {
+	//             if(rawFile.status === 200 || rawFile.status == 0) {
+	//             	console.log(rawFile.responseText)
+	//                 $('#import-modal textarea').val(rawFile.responseText);
+	//             }
+	//         }
+	//     }
+	// }
+	document.getElementById('get-csv-file').addEventListener('change', handleCSVFile, false);
 	function switchbox(b_n) {
 		switch (b_n) {
 			case "1":
@@ -307,7 +364,24 @@
 				break;
 		}
 		render_box(b_n);
+		render_boxes_list();
 		localStorage.setItem('last_box', b_n);
+	}
+	function render_boxes_list() {
+		if ( all_boxes == undefined) {
+			console.log('undefined');
+			return;
+		};
+		// console.log('defined')
+		$.each(all_boxes, function(index, val) {
+			// console.log(index)
+			$('#boxes-list-modal [data-to-box="'+index+'"]').empty().append('<img src="'+base_url+'public/images/filled-box.png"/>');
+		});
+		if (!$.isEmptyObject(search_result)) {
+			$.each(search_result, function(index, val) {
+				$('#boxes-list-modal [data-to-box="'+index+'"]').empty().append('<img src="'+base_url+'public/images/result-box.png"/>');
+			});
+		};
 	}
 	function render_box(b_n) {
 		boxname = 'Box '+b_n;
@@ -330,12 +404,15 @@
 			image = '<img src="'+base_url+'public/images/minisprites/'+species+'.png" alt="">';
 			$('#'+pos+' button').empty().append(image).addClass('has-pkm');
 		});
-		if (!$.isEmptyObject(search_result) && (b_n in search_result)) {
-			$.each(search_result[b_n], function(index, val) {
-				// console.log(val)
-				$('#'+val+' button').addClass('btn-primary');
-			});
+		if (!$.isEmptyObject(search_result) ) {
+			if (b_n in search_result) {
+				$.each(search_result[b_n], function(index, val) {
+					// console.log(val)
+					$('#'+val+' button').addClass('btn-primary');
+				});
+			}
 		}
+		render_boxes_list();
 	}
 	function render_info(box, position) {
 		if ( all_boxes == undefined || all_boxes[box] == undefined || all_boxes[box][position] == undefined) {
@@ -368,10 +445,10 @@
 		data = "<table class='table-condensed'><tr><td>Nature</td><th>"+nature+"</th><td>HP</td><th>"+hp+"</th></tr><tr><td>Ability</td><th colspan='2'>"+ability+"</th></tr><tr><td>IVs Spread</td><th colspan='2'>"+iv+"</th></tr>";
 		if (pkm.is_egg) {
 			data+="<tr><td>ESV</td><th colspan='2'>"+esv+"</th></tr>";
-			title = '<span class="label label-success">EGG</span> '+species+' '+gender;
+			title = '<span class="label label-success">egg</span> '+species+' '+gender;
 		};
 		if (pkm.is_shiny) {
-			title = '<span class="label label-danger">SHINY</span> '+species+' '+gender;
+			title = '<span class="label label-danger">Shiny</span> '+species+' '+gender;
 		};
 		data += "</table>";
 		$('#'+position+' button').attr('data-content', data).attr('data-original-title', title);
@@ -380,11 +457,6 @@
 		reset_detail_modal();
 		pkm = all_boxes[box][position];
 		// console.log(pkm);
-		switch(pkm.gender)  {
-			
-			default:
-			break;
-		}
 		icon = '<img src="'+base_url+'public/images/minisprites/'+pkm.species+'.png" alt="">';
 		pos = "Box "+box+"["+position+"]";
 		modal_title = icon+[pkm.species, pos].join(" - ");
@@ -406,22 +478,23 @@
 					break;
 				case '(None)':
 					$("."+index, pkmdm).html('-');
-				case "♀":
+					break;
+				case "\u2640":
 					$('.gender', pkmdm).html('<b class="text-red">'+pkm.gender+'</b>');
-				break;
-				case "♂":
+					break;
+				case "\u2642":
 					$('.gender', pkmdm).html('<b class="text-blue">'+pkm.gender+'</b>');
-				break;
+					break;
 				default:
 					$("."+index, pkmdm).html(val);
 					break;
 			}
 		});
 		if (pkm.is_egg) {
-			$('.egg', pkmdm).html('<span class="label label-success">EGG</span>');
+			$('.egg', pkmdm).html('<span class="label label-success">egg</span>');
 		};
 		if (pkm.is_shiny) {
-			$('.shiny', pkmdm).html('<span class="label label-danger">SHINY</span>');
+			$('.shiny', pkmdm).html('<span class="label label-danger">shiny</span>');
 		};
 	}
 	function check_localStorage() {
@@ -440,19 +513,21 @@
 	}
 	function search(ats, keyword) {
 		var result = {};
-		$.each(all_boxes, function(index, val) {
-			// console.log("box:"+index)
-			$.each(val, function(key, value) {
-				// console.log(value);
-				// console.log("slot:"+key);
-				if (value[ats].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
-					if (result[index] == undefined) {
-						result[index] = [];
+		if (all_boxes != undefined) {
+			$.each(all_boxes, function(index, val) {
+				// console.log("box:"+index)
+				$.each(val, function(key, value) {
+					// console.log(value);
+					// console.log("slot:"+key);
+					if (value[ats].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
+						if (result[index] == undefined) {
+							result[index] = [];
+						};
+						result[index].push(key);
 					};
-					result[index].push(key);
-				};
+				});
 			});
-		});
+		}
 		return result;
 	}
 	var render_result = function(res) {
@@ -463,7 +538,7 @@
 				result_html+='<button class="btn btn-primary btn-sm btn-block switch-box" data-to-box="'+index+'" type="button">Box '+index+'</button>';
 			});
 		} else {
-			result_html = "Pokemon not found.";
+			result_html = '<b class="text-red">Pokemon not found.</b>';
 		}
 		// console.log(result);
 		$('#result').empty().html(result_html);
@@ -471,7 +546,8 @@
 		// render_box($('poke-box').attr('data-box-num'));
 	}
 	function clear_result() {
-		$('.show-info').removeClass('btn-primary')
+		$('.show-info').removeClass('btn-primary');
+		$('#boxes-list-modal [src*="result-box.png"]').prop('src', base_url+"public/images/filled-box.png");
 		$('#result').empty();
 	}
 }(window.jQuery, window, document));

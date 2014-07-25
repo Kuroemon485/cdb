@@ -11,7 +11,7 @@ $stats = array(
 					<div class="tab-pane" id="strategy">
                     	<div class="box-group" id="accordion">
 						    <!-- I'm adding the .panel class so bootstrap.js collapse plugin detects it -->
-						    <?php if (isset($strategies)): ?>
+						    <?php if ($strategies): ?>
 						    <?php foreach ($strategies as $strategy): ?>
 						    <?php
 						    $ab_id = $strategy->ability->ability_id;
@@ -55,7 +55,7 @@ $stats = array(
 						            				<tr>
 						            					<th>Item</th>
 						            					<td>
-						            						<a href="#" data-toggle="tooltip" data-original-title="<?php echo $item_desc ?>"><?php echo $item_name ?></a>
+						            						<a href="#" class="item" data-toggle="popover" data-original-title="" data-input="item_strategy" data-content="<?php echo $item_desc ?>" data-item-id="<?php echo $item_id ?>"><?php echo $item_name ?></a>
 						            					</td>
 						            					<th>Happiness</th>
 						            					<td><?php echo $happiness ?></td>
@@ -75,7 +75,7 @@ $stats = array(
 						            						$move_type = strtolower($strategy->{'move_'.$i}->type);
 						            						?>
 						            						<tr>
-						            							<td>- <a href="<?php echo $move_uri ?>" data-toggle="tooltip" data-original-title="<?php echo $move_desc ?>"><?php echo $move_name ?></a></td>
+						            							<td>- <a class="move" href="<?php echo $move_uri ?>" data-toggle="popover" data-original-title="" data-move-id="<?php echo $move_id ?>" data-content="<?php echo $move_desc ?>"><?php echo $move_name ?></a></td>
 						            							<td><span class="type-icon-flat type-<?php echo $move_type ?>"><?php echo $move_type ?></span></td>
 						            							<td><small class="text-muted">Power </small><?php echo $move_power ?></td>
 						            							<td><small class="text-muted">Acc. </small><?php echo $move_acc ?></td>
@@ -135,6 +135,7 @@ $stats = array(
 						    <?php endforeach ?>
 						    
 						    <?php else: ?>
+						    	Nothing's here yet! May be you can help out?
 						    <?php endif ?>
 						    
 						</div>

@@ -34,12 +34,12 @@ switch ($rating) {
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        View
-        <small>Ability ~ <?php echo $info->name ?></small>
+        <?php echo $info->name ?>
+        <small>Ability</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="<?php echo base_url(); ?>ability"><i class="fa fa-gift"></i> Ability</a></li>
+        <li><a href="<?php echo base_url(); ?>ability"> Ability</a></li>
         <li class="active"><?php echo $info->name ?></li>
     </ol>
 </section>
@@ -53,7 +53,7 @@ switch ($rating) {
                     <li><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                     <li><a href="#pokemon-list" data-toggle="tab">Pokemon</a></li>
                     <li class="active"><a href="#ability-description" data-toggle="tab">Description</a></li>
-                    <li class="pull-left header"><i class="fa fa-gift"></i><?php echo $info->name ?></li>
+                    <li class="pull-left header"><?php echo $info->name ?></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="ability-description">
@@ -66,6 +66,7 @@ switch ($rating) {
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Ability</th>
@@ -97,6 +98,7 @@ switch ($rating) {
                                 ?>
                                 <tr>
                                     <td><?php echo $dex_id?></td>
+                                    <td><img src="<?php echo base_url() ?>public/images/minisprites/<?php echo $species ?>.png" alt=""></td>
                                     <td><a href="<?php echo $species_uri ?>" title=""><?php echo $species ?></a></td>
                                     <td class="col-sm-2">
                                     <?php foreach ($types as $type): ?>
@@ -108,18 +110,21 @@ switch ($rating) {
                                     <?php endforeach ?>
                                     </td>
                                     <td class="col-sm-3">
-                                    <?php $i = 0; foreach ($abilities as $ab) : if ($i > 0) echo " / "?>
+                                    <?php $i = 0; foreach ($abilities as $ab) : if ($i > 0) echo " - "?>
                                         <?php 
                                         $ab_name = $ab->ability_name;
                                         $ab_id = $ab->ability_id;
                                         $ab_uri = base_url()."ability/".$ab_id;
                                         $id = $ab->id;
                                         ?>
+                                        <a class="ability"  data-toggle="popover" data-content="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>">
                                         <?php if ($id == "H"): ?>
-                                            <i><a class="text-green ability"  data-toggle="popover" data-content="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a></i>
+                                            <i class="text-red"><?php echo $ab_name ?></i>
                                         <?php else: ?>
-                                            <a class="ability"  data-toggle="popover" data-content="" data-ab-id="<?php echo $ab_id ?>" href="<?php echo $ab_uri ?>"><?php echo $ab_name ?></a>
-                                        <?php endif; $i++ ?>
+                                            <?php echo $ab_name ?>
+                                        <?php endif ?>
+                                        </a>
+                                        <?php $i++ ?>
                                     <?php endforeach; ?>
                                     </td>
                                     <td><?php echo $hp ?></td>

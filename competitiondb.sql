@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2014 at 12:00 PM
+-- Generation Time: Jul 23, 2014 at 12:15 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -51455,7 +51455,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `title` text NOT NULL,
   `content` text NOT NULL,
-  `post_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `post_date` date NOT NULL,
   `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `post_type` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
@@ -51466,10 +51466,10 @@ CREATE TABLE IF NOT EXISTS `news` (
 --
 
 INSERT INTO `news` (`id`, `title`, `content`, `post_date`, `modify_date`, `post_type`) VALUES
-(7, 'Pokémon Link Battle - European Price Drop', '<img title="Image: http://serebii.net/battletrozei/title2eng.jpg" src="http://serebii.net/battletrozei/title2eng.jpg"><span><br>For those \nof you in Europe, Pokémon Link Battle is to be on sale on the Nintendo \n3DS eShop. From July 24th 2014 until July 31st 2014, the game will only \ncost £4.49/€4.99 as opposed to the usual £7.19/€7.99 that it costs as \nstandard. We covered this game in full upon its release back in March so\n click the image to go to the page.<br></span><br>', '2014-07-22 06:28:49', '2014-07-23 09:13:06', 1),
-(8, 'Pokémon X & Y - Battle Competition', '<img title="Image: http://serebii.net/xy/battleoflegends.jpg" src="http://serebii.net/xy/battleoflegends.jpg" alt=""><br><span>Registration for the next Battle Competition has begun. This battle competition is the <b>Battle of Legends</b>\n and runs for all regions at the same time. This competition  runs \nspecial rules. This is a Double Battle and you can use any Pokémon \nexcept Diancie, including ones that have been transferred. The Pokémon \nare raised to Level 100 for the competition and you can have 10 battles a\n day. Registration runs until  July 24th while the competition itself \nruns from July 25th to July 27th. All people who participate will \nreceive 1,000 PokéMile Points</span>.<br><br>', '2014-07-22 06:30:44', '2014-07-23 09:13:08', 1),
-(9, 'Pokémon Omega Ruby & Alpha Sapphire - Details', '<span><img title="Image: http://serebii.net/omegarubyalphasapphire/3.jpg" src="http://serebii.net/omegarubyalphasapphire/3.jpg" alt=""><br>Following \nthe news that came this past week, the official Japanese arm of Pokémon \nhas posted a special trailer that details the concept of Super-Secret \nBases, and how you run them. Not much new is given within the trailer, \nbut it helps show all the concepts of it</span>.<br>', '2014-07-23 07:19:03', '2014-07-23 09:13:11', 1),
-(10, 'Scheduled maintenance', 'Maintenance will take place from 1:00 to 2:00 07/24/2014 GMT+7, in this mean time, website will be temporary down.<br>We apologise for this inconvenient.<br>', '2014-07-23 09:20:40', '2014-07-23 09:27:07', 0);
+(7, 'Pokémon Link Battle - European Price Drop', '<img title="Image: http://serebii.net/battletrozei/title2eng.jpg" src="http://serebii.net/battletrozei/title2eng.jpg"><span><br>For those \nof you in Europe, Pokémon Link Battle is to be on sale on the Nintendo \n3DS eShop. From July 24th 2014 until July 31st 2014, the game will only \ncost £4.49/€4.99 as opposed to the usual £7.19/€7.99 that it costs as \nstandard. We covered this game in full upon its release back in March so\n click the image to go to the page.<br></span><br>', '2014-07-22', '2014-07-23 09:13:06', 1),
+(8, 'Pokémon X & Y - Battle Competition', '<img title="Image: http://serebii.net/xy/battleoflegends.jpg" src="http://serebii.net/xy/battleoflegends.jpg" alt=""><br><span>Registration for the next Battle Competition has begun. This battle competition is the <b>Battle of Legends</b>\n and runs for all regions at the same time. This competition  runs \nspecial rules. This is a Double Battle and you can use any Pokémon \nexcept Diancie, including ones that have been transferred. The Pokémon \nare raised to Level 100 for the competition and you can have 10 battles a\n day. Registration runs until  July 24th while the competition itself \nruns from July 25th to July 27th. All people who participate will \nreceive 1,000 PokéMile Points</span>.<br><br>', '2014-07-22', '2014-07-23 09:13:08', 1),
+(9, 'Pokémon Omega Ruby & Alpha Sapphire - Details', '<span><img title="Image: http://serebii.net/omegarubyalphasapphire/3.jpg" src="http://serebii.net/omegarubyalphasapphire/3.jpg" alt=""><br>Following \nthe news that came this past week, the official Japanese arm of Pokémon \nhas posted a special trailer that details the concept of Super-Secret \nBases, and how you run them. Not much new is given within the trailer, \nbut it helps show all the concepts of it</span>.<br>', '2014-07-23', '2014-07-23 09:13:11', 1),
+(10, 'Scheduled maintenance', 'Maintenance will take place from 1:00 to 2:00 07/24/2014 GMT+7, in this mean time, website will be temporary down.<br>We apologise for this inconvenient.<br>', '2014-07-23', '2014-07-23 09:27:07', 0);
 
 -- --------------------------------------------------------
 

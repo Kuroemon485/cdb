@@ -18,19 +18,27 @@
 	        <!-- Primary box -->
 	        <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                    <li></li>
-                    <li class="dropdown">
+                    <!-- <li class="dropdown">
                         <a href="#" class="text-muted" data-toggle="dropdown"><i class="fa fa-gear"></i></a>
                         <ul class="dropdown-menu drop-right pkm-list" role="menu" aria-labelledby="dLabel">
-                            <?php foreach ($pkm_list as $pkm): ?>
-                                <?php $pkm_uri = base_url()."pokemon/".$pkm->species_id ?>
-                                <li><a href="<?php echo $pkm_uri ?>"><?php echo $pkm->dex_id.'. '.$pkm->species; ?></a></li>
-                            <?php endforeach ?>
+                            <?php //foreach ($pokemon_list as $pkm): ?>
+                                <?php //$pkm_uri = base_url()."pokemon/".$pkm->species_id ?>
+                                <li><a href="<?php //echo $pkm_uri ?>"><?php// echo $pkm->dex_id.'. '.$pkm->species; ?></a></li>
+                            <?php //endforeach ?>
                         </ul>
-                    </li>
+                    </li> -->
                     <li><a href="#strategy" data-toggle="tab">Strategy</a></li>
                     <li><a href="#move-list" data-toggle="tab">Learn Set</a></li>
                     <li class="active"><a href="#pkm-detail" data-toggle="tab">Basic Details</a></li>
-                    <li class="pull-left header"><img src="<?php echo base_url()."public/images/minisprites/{$species}.png" ?>" alt=""> <?php echo $species ?></li>
+                    <li class="pull-left header">
+                        <img src="<?php echo base_url()."public/images/minisprites/{$species}.png" ?>" alt="">
+                        <select name="" id="" class="selectpicker" data-toggle="change-pokemon">
+                            <!-- <option value=""><i class="fa fa-caret-square-o-down"></i></option> -->
+                            <?php foreach ($pokemon_list as $pkm): ?>
+                                <?php $pkm_uri = base_url()."pokemon/".$pkm->species_id ?>
+                                <option value="<?php echo $pkm_uri ?>" <?php if ($pkm->species == $species) echo "selected" ?>><?php echo $pkm->dex_id.'. '.$pkm->species; ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </li>
                 </ul>
                 <div class="tab-content">

@@ -26,7 +26,8 @@ function rc() {
 	 	<div class="col-xs-3" id="">
             <div class="box box-danger" id="team-builder">
                 <div class="box-header">
-                    <input type="text" name="" id="input-team-name" class="form-control borderless" placeholder="Team Name">
+                    <h3 class="box-title" id="team-name">Preview</h3>
+                    <!-- <input type="text" name="" id="input-team-name" class="form-control borderless" placeholder="Team Name"> -->
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="row">
@@ -54,7 +55,7 @@ function rc() {
         <div class="col-xs-9" id="">
             <div class="box box-primary" id="team-preview">
                 <div class="box-header">
-                    <h3 class="box-title text-green" id="team-name">Team Name</h3>
+                    <h3 class="box-title" id="team-name">Detail</h3>
                     <div class="box-tools pull-right">
                         <!-- reserved -->
                     </div>
@@ -72,7 +73,7 @@ function rc() {
                                 <label for="" class="label-control">Pokemon</label>
                                 <div class="row">
                                     <div class="col-md-3 col-xs-3">
-                                        <select name="" id="p<?php echo $i ?>-species" class="form-control input-sm pkm-list selectpicker" data-placeholder="Pick a Pokemon" data-live-search="true">
+                                        <select name="" id="p<?php echo $i ?>-species" class="form-control input-sm pkm-list selectpicker input-pkm" data-placeholder="Pick a Pokemon" data-live-search="true">
                                             <option value="">Pick a Pokemon</option>
                                             <?php foreach ($pokemon_list as $pkm): ?>
                                                 <option value="<?php echo $pkm->species_id ?>"><?php echo $pkm->species ?></option>
@@ -94,13 +95,13 @@ function rc() {
                                     </div>
                                     <div class="col-md-3 col-xs-4">
                                         <label for="" class="label-control">Level</label>
-                                        <input type="number" id="p<?php echo $i ?>-lv" name="" id="" min="1" max="100" value="100" class="form-control input-sm">
+                                        <input type="number" id="p<?php echo $i ?>-lv" name="" id="" min="1" max="100" value="100" class="form-control input-sm input-lv">
                                         <label for="" class="label-control">Happiness</label>
                                         <input type="number" id="p<?php echo $i ?>-happiness" name="" id="" min="0" max="255" value="255" class="form-control input-sm">
                                     </div>
                                     <div class="col-md-3 col-xs-4">
                                         <label for="" class="label-control">Nature</label>
-                                        <select name="" id="p<?php echo $i ?>-nature" class="form-control input-sm nature-list">
+                                        <select name="" id="p<?php echo $i ?>-nature" class="form-control input-sm nature-list input-nature">
                                             <?php foreach ($natures as $nature): ?>
                                                 <option value="<?php echo $nature ?>"><?php echo $nature ?></option>
                                             <?php endforeach ?>
@@ -139,7 +140,7 @@ function rc() {
                                                 <?php foreach ($stats_list as $key => $value): ?>
                                                 <tr>
                                                     <th><?php echo $value ?></th>
-                                                    <td><span id="p<?php echo $i ?>-base-<?php echo $key ?>" class="badge">--</span></td>
+                                                    <td><span id="p<?php echo $i ?>-base-<?php echo $key ?>" class="badge">0</span></td>
                                                     <td class="col-md-6 col-sm-6 col-xs-0">
                                                         <div class="progress sm progress-striped">
                                                             <div class="progress-bar" id="p<?php echo $i ?>-base-<?php echo $key ?>-bar" style="width: 0%"></div>
@@ -155,7 +156,7 @@ function rc() {
                                                         <input type="text"  min="0" max="31" maxlength="2" size="3" id="p<?php echo $i ?>-iv-<?php echo $key ?>" class="form-control input-sm input-iv" value="31">
                                                     </td>
                                                     <td class="col-md-1 col-sm-1 col-xs-1">
-                                                        <span class="text-green" id="p<?php echo $i ?>-total-<?php echo $key ?>" readonly=""></span>
+                                                        <b class="text-green" id="p<?php echo $i ?>-total-<?php echo $key ?>" readonly=""></b>
                                                     </td>
                                                 </tr>
                                                 <?php endforeach ?>

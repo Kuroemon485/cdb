@@ -9,6 +9,8 @@ class Pokemon extends CI_Controller {
         $this->load->model('item_model');
         $this->load->model('move_model');
         $this->option['is_logged_in'] = is_logged_in();
+        $this->option['selected'] = 'view';
+        $this->option['sub_selected'] = 'view_pokedex';
         if (is_logged_in()) {
             $this->option['current_user'] = current_user();
         }
@@ -22,8 +24,6 @@ class Pokemon extends CI_Controller {
             $basic = $this->pokemon_model->get_pokemon_by_species($species_id);
             if ($basic) {
                 // this->option data for header
-                $this->option['selected'] = 'view';
-                $this->option['sub_selected'] = 'view_pokemon';
                 $this->option['main_script'] = $this->load->view('scripts/main_script', null, true);
                 $this->option['title'] = $basic->species;
                 $this->load->view('header', $this->option);
@@ -50,6 +50,7 @@ class Pokemon extends CI_Controller {
                 $basic_data['stats'] = $stats;
                 $basic_data['height_m'] = $basic->height_m;
                 $basic_data['weight_kg'] = $basic->weight_kg;
+                $basic_data['test_data'] = $this->pokemon_model->test1($species_id);
                 if ($basic->weight_kg<10) {
                     $basic_data['grass_knot_power'] = 20;
                 } else if ($basic->weight_kg<25) {
@@ -74,36 +75,8 @@ class Pokemon extends CI_Controller {
                 // load move section - done
 
                 // data for strategy section
-                $strategy_data = array(); //array to send to view
-                $strategies_data = $this->pokemon_model->get_pokemon_strategies($species_id); // data for processing data before sending
-                if ($strategies_data) {
-                    foreach ($strategies_data as $str) {
-                        $strategy = new stdClass();
-                        $strategy->id = $str->id;
-                        $strategy->name = $str->name;
-                        $strategy->base_hp = $basic->hp;
-                        $strategy->base_atk = $basic->atk;
-                        $strategy->base_def = $basic->def;
-                        $strategy->base_sp_atk = $basic->sp_atk;
-                        $strategy->base_sp_def = $basic->sp_def;
-                        $strategy->base_spd = $basic->spd;
-                        $strategy->species = $this->pokemon_model->get_pokemon_species($str->species_id);
-                        $strategy->ability = $this->pokemon_model->get_pokemon_ability($str->species_id, $str->ability_id);
-                        $strategy->nature = $str->nature;
-                        $strategy->item = $this->item_model->get_item_by_id($str->item_id);
-                        $strategy->happiness = $str->happiness;
-                        for ($i=1; $i <= 4; $i++) { 
-                            $strategy->{'move_'.$i} = $this->move_model->get_move_by_id($str->{'move_'.$i.'_id'});
-                        }
-                        $stats = array('hp', 'atk', 'def', 'sp_atk', 'sp_def', 'spd');
-                        foreach ($stats as $stat) {
-                            $strategy->{'ev_'.$stat} = $str->{'ev_'.$stat};
-                            $strategy->{'iv_'.$stat} = $str->{'iv_'.$stat};
-                        }
-                        $strategy->description = $str->description;
-                        $strategy_data['strategies'][] = $strategy;
-                    }
-                }
+                // $strategy_data = array();
+                $strategy_data['strategies'] = $this->pokemon_model->get_pokemon_strategies($species_id); //
                 $this->load->view('pokedex/single_pkm_strategy', $strategy_data);
                 // load strategy section - done
 
