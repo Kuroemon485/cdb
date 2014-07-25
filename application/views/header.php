@@ -101,7 +101,7 @@ $amii = '<img src="'.base_url().'public/img/active.png" alt="">'
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="<?php echo base_url() ?>admin/control_panel/database" class="btn btn-default btn-flat">Manage</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="<?php echo base_url() ?>admin/account/logout" class="btn btn-default btn-flat">Sign out</a>

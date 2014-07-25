@@ -350,15 +350,18 @@ class Pokemon_Model extends CI_Model {
         $response = new stdClass();
         $query = $this->db->get_where('pokedex', array('dex_id' => $data['dex_id'], 'species_id' => $data['species_id']));
         if ($query->num_rows() > 0) {
-            $response->success = false;
+            $response->status = 'fail';
+            $response->title = 'Fail';
             $response->message = "{$data['species']} has already been added. Skipped";
         } else {
             $query = $this->db->insert('pokedex', $data);
             if ($this->db->affected_rows() > 0) {
-                $response->success = true;
+                $response->status = 'success';
+                $response->title = 'Success';
                 $response->message = "Success. {$data['species']} has been added";
             } else {
-                $response->success = false;
+                $response->status = 'fail';
+                $response->title = 'Fail';
                 $response->message = "Fail. {$data['species']} has not been added.";
             }
         }

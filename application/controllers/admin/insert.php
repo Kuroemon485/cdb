@@ -28,7 +28,9 @@ class Insert extends CI_Controller {
         $this->option['admin_script'] = $this->load->view('admin/admin_script', null, true);
 
         $this->load->view('header', $this->option);
-        $this->load->view('/admin/insert_pokemon');
+        $pokemon = new stdClass;
+        $pokemon->pkm_list = $this->pokemon_model->get_pokemon_list();
+        $this->load->view('/admin/insert_pkm', $pokemon);
         $this->load->view('footer');
     }
 

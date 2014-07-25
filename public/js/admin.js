@@ -261,6 +261,24 @@
     			});
         	})
         });
+        $('#submit-news-btn').on('click', function(event) {
+            event.preventDefault();
+            var data = new Object();
+            data.title = $('#news-title').val();
+            data.content = $('#news-content').val();
+            data.post_type = $('#news-post_type').val();
+            if (data.title != "" && data.content != "")
+            insert_data('news_model', 'news', data);
+        });
+        $('#submit-pokemon-btn').on('click', function(event) {
+            event.preventDefault();
+            var data = {};
+            collums = ['dex_id', 'species_id', 'species', 'base_species', 'hp', 'def', 'sp_atk', 'sp_def', 'spd', 'weight_kg', 'height_m'];
+            $.each(collums, function(index, val) {
+                data[val] = $('#pkm-'+val).val();
+            });
+            insert_data('pokemon_model', 'pokedex', data);
+        });
         $('#update-ability-btn').on('click', function() {
         	var data = {};
             var condition = {};
@@ -270,15 +288,6 @@
             });
             condition.id = $('#ab-id').val();
         	update_data('ability_model', 'ability', condition, data);
-        });
-        $('#submit-news-btn').on('click', function(event) {
-            event.preventDefault();
-            var data = new Object();
-            data.title = $('#news-title').val();
-            data.content = $('#news-content').val();
-            data.post_type = $('#news-post_type').val();
-            if (data.title != "" && data.content != "")
-            insert_data('news_model', 'news', data);
         });
         $('#update-move-btn').on('click', function(event) {
             event.preventDefault();
