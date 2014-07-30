@@ -387,7 +387,7 @@
 		boxname = 'Box '+b_n;
 		$('.poke-box').attr('data-box-num', b_n);
 		$('.box-title').text(boxname);
-		$('.box-num').text(b_n);
+		// $('.box-num').text(b_n);
 		reset_boxes();
 		if ( all_boxes == undefined || all_boxes[b_n] == undefined) {
 			reset_boxes();
@@ -448,7 +448,7 @@
 			title = '<span class="label label-success">egg</span> '+species+' '+gender;
 		};
 		if (pkm.is_shiny) {
-			title = '<span class="label label-danger">Shiny</span> '+species+' '+gender;
+			title = '<i class="fa fa-star text-red"></i> '+species+' '+gender;
 		};
 		data += "</table>";
 		$('#'+position+' button').attr('data-content', data).attr('data-original-title', title);
@@ -491,10 +491,10 @@
 			}
 		});
 		if (pkm.is_egg) {
-			$('.egg', pkmdm).html('<span class="label label-success">egg</span>');
+			$('.egg', pkmdm).html('<span class="label label-success">EGG</span>');
 		};
 		if (pkm.is_shiny) {
-			$('.shiny', pkmdm).html('<span class="label label-danger">shiny</span>');
+			$('.shiny', pkmdm).html('<span class="label label-danger"><i class="fa fa-star"></i> SHINY</span>');
 		};
 	}
 	function check_localStorage() {

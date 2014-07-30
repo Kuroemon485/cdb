@@ -76,7 +76,7 @@
                                         </select>
                                     </div> <!-- .col-md-2 -->
                                     <div class="col-md-3 col-xs-6">
-                                        <label class="label-control text-blue" data-original-title="Optional. Ask the Hidden Power psychic in Anistar City, second house to the East, starting from the Pokémon Center. Mistralton City).">Hidden Power <i class="fa fa-star"></i></label>
+                                        <label class="label-control" title="Optional. Ask the Hidden Power psychic in Anistar City, second house to the East, starting from the Pokémon Center. Mistralton City).">Hidden Power *</label>
                                         <select class="form-control input-sm" name="hpt" id="hpt">
                                             <option value="-1">Select a type</option>
                                             <option value="5">Bug</option>
@@ -101,7 +101,7 @@
                                 </div> <!-- .row -->
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <label class="label-control" data-original-title="Optional: (Diamond/Pearl onwards).">Characteristic *</label>
+                                        <label class="label-control" title="Optional: (Diamond/Pearl onwards).">Characteristic *</label>
                                         <div class="row">
                                             <div class="col-md-6 col-xs-6">
                                                 <input type="text" id="charn" name="charn" class="form-control input-sm" />
@@ -149,7 +149,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="label-control" data-original-title="Optional. Ask the Stat Judge inside the Pokémon Center in Kiloude City.">Overall Potential *</label>
+                                        <label class="label-control" title="Optional. Ask the Stat Judge inside the Pokémon Center in Kiloude City.">Overall Potential *</label>
                                         <select class="form-control input-sm" name="pot0" id="pot0">
                                             <option value="-1">Select a potential</option>
                                             <option value="0">Decent all around [0-90]</option>
@@ -159,7 +159,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="label-control text-blue">Best Stat(s) <i class="fa fa-star"></i></label>
+                                        <label class="label-control">Best Stat(s) *</label>
                                         <div class="row">
                                             <div class="col-md-6 col-xs-6">
                                                 <select class="form-control input-sm" name="pot1" id="pot1" size="1" multiple="multiple">
@@ -272,7 +272,7 @@
                                     <tbody>
                                         <tr id="statrow-0">
                                             <td>
-                                                <input type="radio" class="radio" name="act" id="act-0" value="0" checked="checked" data-original-title="(De)Activate this row." style="display: none"/>
+                                                <input type="radio" class="radio" name="act" id="act-0" value="0" checked="checked" title="(De)Activate this row." style="display: none"/>
                                                 <span id="btn-addrow" class="btn btn-primary btn-sm" title="Add new row."><i class="fa fa-plus"></i></span>
                                             </td>
                                             <td><input class="form-control input-sm" type="text"  id="level-0" name="level-0" maxlength="3" size="3"/></td>

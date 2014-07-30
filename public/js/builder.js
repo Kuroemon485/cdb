@@ -134,7 +134,7 @@
 				data_modal.modal('show');
 			}
 		});
-		$(document).on('click', '[data-toggle="fill-data"]', function(){
+		data_modal.on('click', '[data-toggle="fill-data"]', function(){
 			var d2f = $(this).attr('data-name');
 			f2f.val(d2f).trigger('change');
 			data_modal.modal('hide');

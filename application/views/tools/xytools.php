@@ -32,13 +32,13 @@
                       <div class="btn-group">
                         <button class="btn btn-success switch-box to-prev-box" data-to-box="31"><i class="fa fa-angle-left"></i></button>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-success box-num">1</button>
+                          <button type="button" class="btn btn-success box-num"><i class="fa fa-refresh"></i></button>
                         </div>
                         <button class="btn btn-success switch-box to-next-box" data-to-box="2"><i class="fa fa-angle-right"></i></button>
                       </div>
                       <div class="btn-group">
                         <button class="btn btn-success" id="cim"><i class="fa fa-upload"></i></button>
-                        <button class="btn btn-danger" id="ccm"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-success" id="ccm"><i class="fa fa-times"></i></button>
                         <button class="btn btn-success" id="cfm"><i class="fa fa-question"></i></button>
                       </div>
                     </div>
@@ -260,7 +260,7 @@ B31,2,1,Ditto,-,Brave,Limber,31,31,31,31,31,0,Ice,,2268,Trick,ズキ,Quick Ball,
 B31,3,1,Ditto,-,Modest,Limber,31,31,31,31,31,31,Dark,,2268,Babymaker,ズキ,Heavy Ball,34497,02830,252,51,51,51,51,51,Transform,(None),(None),(None),(None),(None),(None),(None),★,
             </pre>
             - Click <button class="btn btn-sm btn-success">Submit</button>, your boxes are ready to view. <br>
-            - If you think you get stuck or some thing. Click  <button class="btn btn-danger btn-sm" id=""><i class="entypo-erase"></i></button> then confirm to start over. <br>
+            - If you think you get stuck or some thing. Click  <button class="btn btn-success btn-sm" id=""><i class="fa fa-times"></i></button> then confirm to start over. <br>
             - I will try to add more format supporting as soon as I have time.
           </p>
         </div>
