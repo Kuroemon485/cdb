@@ -140,3 +140,4 @@ $stats = array(
 						    
 						</div>
                     </div>
+                    <!-- <pre><?php #print_r($strategies) ?></pre> -->

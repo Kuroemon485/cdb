@@ -267,8 +267,7 @@
             data.title = $('#news-title').val();
             data.content = $('#news-content').val();
             data.post_type = $('#news-post_type').val();
-            if (data.title != "" && data.content != "")
-            insert_data('news_model', 'news', data);
+            if (data.title != "" && data.content != "") insert_data('news_model', 'news', data);
         });
         $('#submit-pokemon-btn').on('click', function(event) {
             event.preventDefault();
@@ -542,18 +541,11 @@
             data['iv_sp_def'] = $('#iv-sp_def').val();
             data['iv_spd'] = $('#iv-spd').val();
             data['description'] = $('#strategy-desc').val();
-            // if (isShiny.prop('checked') == true) {
-            //     data['is_shiny'] = 1;
-            // } else {
-            //     data['is_shiny'] = 0;
-            // };
             console.log(data);
-            if (data['species_id'] != '') {
-                if (current_strategy == '') {
-                    insert_data('pokemon_model', 'add_pkm_strategy', data);
-                } else {
-                    update_data('pokemon_model', 'pkm_strategy', current_strategy, data);
-                }
+            if (data['species_id'] != '' && current_strategy == '') {
+                insert_data('pokemon_model', 'add_pkm_strategy', data);
+            } else {
+                update_data('pokemon_model', 'pkm_strategy', current_strategy, data);
             }
         });
         $('#strategy_list').on('change', function() {
