@@ -10,8 +10,6 @@
 	var f2f = '';
 	var dl = $('#data-container [data-toggle="fill-data"]');
 	var mt = $('.modal-title');
-	var save_notify_message = $('#save-notify');
-	var delete_notify_message = $('#delete-notify');
 	team = new Object();
 
     // functions 
@@ -20,12 +18,9 @@
     		url: base_url+'teambuilder/get_species_info',
     		type: 'post',
     		dataType: 'json',
-    		async: false,
     		data: {
     			species_id: species_id,
     		},
-    	}).success(function(data) {
-    		init_builder_info(current_team_position(), data);
     	});
     }
     var current_team_position = function() {
@@ -34,94 +29,77 @@
     var current_species = function() {
     	return $('[data-tab-number="'+current_team_position()+'"]').find('select.pkm-list').val();
     }
-    var change_team_member = function(t) {
-    	$('#team-tab a[href="#'+t+'"]').tab('show');
-    }
-    var init_builder_info = function(tn, data) {
-    	var tbs = 0;
-    	var ct = $('#pkm-'+tn);
-    	$.each(stats, function(index, val) {
-    		$('#p'+tn+'-base-'+val, ct).removeClass();
-    		$('#p'+tn+'-base-'+val+'-bar', ct).removeClass();
-    		var stat = data['base_'+val]*1;
-    		var color = '';
-    		var bbg = 'badge bg-';
-    		var pbg = 'progress-bar progress-bar-';
-    		tbs+=stat;
-    		if ( stat < 90 ) {
-    			color = "yellow";
-    		}
-    		else if ( stat >= 90 && stat <= 110 ) {
-    			color = "green";
-    		}
-    		else if ( stat > 110 && stat < 150 ) {
-    			color = "blue";
-    		}
-    		else if ( stat >= 150 ) {
-    			color = "red";
-    		}
-    		bbg += color;
-    		pbg += color;
-    		$('#p'+tn+'-base-'+val, ct).text(stat).addClass(bbg);
-    		$('#p'+tn+'-base-'+val+'-bar', ct).css('width', stat/250*100+'%').addClass(pbg);
-    	});
-    	$('#p'+tn+'-tbs', ct).text(tbs);
-    }
-    var stat_calc = function(param) {
-    	var result = {};
-    	$.each(stats, function(index, val) {
-    		var base_stat = param['base'+val]*1;
-    		var ev = param['ev'+val]*1;
-    		var iv = param['iv'+val]*1;
-    		var nmod = nmod_calc(param.nature, val);
-    		var lv = param.lv;
-    		if (val == 'hp') {
-    			stat = Math.floor((base_stat*2 + iv + ev/4) * lv/100 + 10 + lv*1);
-    		} else {
-    			stat = Math.floor(((base_stat*2 + iv + ev/4) * lv/100 + 5) * nmod);
-    		}
-    		result[val] = stat;
-    	});
-    	return result;
-    }
-    var init_team_data = function(td) {
-    	$.each(td, function(index, val) {
-    		/* iterate through array or object */
-    		$('#'+index).val(val);
-
-    	});
-    	for (i = 1; i < 7; i++) {
-    		change_team_member('pkm-'+i);
-    		$('#p'+i+'-species').trigger('change');
-    		$('#p'+i+'-ev-hp').trigger('change');
-    	}
-    	change_team_member('pkm-1');
-    }
-    var set_modal_title = function(t) {
-    	mt.empty().append(t);
-    }
-    var get_modal_data = function(s_id, ppt) {
-    	return $.ajax({
-    		url: base_url+'common/get_modal_data',
-    		type: 'post',
-    		dataType: 'json',
-    		async: false,
-    		data: {
-    			id: s_id,
-    			data_type: ppt,
-    		},
-    	});
-    }
-    var save_notify = function() {
-    	save_notify_message.show();
-    	window.setTimeout(function() {save_notify_message.fadeOut()}, 3000);
-    }
-    var delete_notify = function() {
-    	delete_notify_message.show();
-    	window.setTimeout(function() {delete_notify_message.fadeOut()}, 3000);
-    }
+	var change_team_member = function(t) {
+		$('#team-tab a[href="#'+t+'"]').tab('show');
+	}
+	var init_builder_info = function(tn, data) {
+		var tbs = 0;
+		var ct = $('#pkm-'+tn);
+		$.each(stats, function(index, val) {
+			$('#p'+tn+'-base-'+val, ct).removeClass();
+			$('#p'+tn+'-base-'+val+'-bar', ct).removeClass();
+			var stat = data['base_'+val]*1;
+			var color = '';
+			var bbg = 'badge bg-';
+			var pbg = 'progress-bar progress-bar-';
+			tbs+=stat;
+			if ( stat < 90 ) {
+				color = "yellow";
+			}
+			else if ( stat >= 90 && stat <= 110 ) {
+				color = "green";
+			}
+			else if ( stat > 110 && stat < 150 ) {
+				color = "blue";
+			}
+			else if ( stat >= 150 ) {
+				color = "red";
+			}
+			bbg += color;
+			pbg += color;
+			$('#p'+tn+'-base-'+val, ct).text(stat).addClass(bbg);
+			$('#p'+tn+'-base-'+val+'-bar', ct).css('width', stat/250*100+'%').addClass(pbg);
+		});
+		$('#p'+tn+'-tbs', ct).text(tbs);
+	}
+	var stat_calc = function(param) {
+		var result = {};
+		$.each(stats, function(index, val) {
+			var base_stat = param['base'+val]*1;
+			var ev = param['ev'+val]*1;
+			var iv = param['iv'+val]*1;
+			var nmod = nmod_calc(param.nature, val);
+			var lv = param.lv;
+			if (val == 'hp') {
+				stat = Math.floor((base_stat*2 + iv + ev/4) * lv/100 + 10 + lv*1);
+			} else {
+				stat = Math.floor(((base_stat*2 + iv + ev/4) * lv/100 + 5) * nmod);
+			}
+			result[val] = stat;
+		});
+		return result;
+	}
+	var set_modal_title = function(t) {
+		mt.empty().append(t);
+	}
+	var get_modal_data = function(s_id, ppt) {
+		return $.ajax({
+			url: base_url+'common/get_modal_data',
+			type: 'post',
+			dataType: 'json',
+			async: false,
+			data: {
+				id: s_id,
+				data_type: ppt,
+			},
+		});
+	}
 	// Document's ready!
 	$(function() {
+		$("#p1-species").val('bulbasaur');
+		if(localStorage.getItem('teamdata')) {
+			console.log(process_team_str(localStorage.getItem('teamdata')));
+		}
 		$('.selectpicker').selectpicker({
 			style: 'btn-sm btn-primary',
 			size: 8
@@ -167,7 +145,9 @@
 			var pl = $(this);
 			var spn = $('option:selected', pl).text();
 			var spid = pl.val();
-			get_builder_pkm_info(spid);
+			get_builder_pkm_info(spid).success(function(data) {
+				init_builder_info(tn, data);
+			});
 			if(pl.val() != '') {
 				$('#p'+tn+'-img').attr('src', base_url+'public/images/f-sprite/'+spn+'.gif');
 				$('#p'+tn+'-ico').attr('src', base_url+'public/images/minisprites/'+spn+'.png');
@@ -188,7 +168,7 @@
 			data.lv = $('#p'+cp+'-lv').val();
 			console.log(data);
 			var result = stat_calc(data);
-			// console.log(result);
+			console.log(result);
 			$.each(stats, function(index, val) {
 				$('#p'+cp+'-total-'+val).text(result[val]);
 			});
@@ -197,51 +177,28 @@
 			$('.ie-modal textarea').val('');
 			$('.ie-modal').modal('show');
 		});
-		$('#import-btn').on('click', function() {
+		$('#import-btn').on('click', function () {
 			rawdata = $('.ie-modal textarea').val();
 			if (rawdata != "") {
-				localStorage.setItem('teamData', rawdata);
-				init_team_data($.parseJSON(rawdata))
+				localStorage.setItem('teamdata', rawdata);
+				console.log(process_team_str(rawdata));
 			} else {
 				return;
 			}
 			$('.ie-modal').modal('hide');
 		});
-		$('#save-team-btn').on('click', function(event) {
-			var teamData = {};
-			event.preventDefault();
-			$.each($('.form-control'), function(index, val) {
-				teamData[$(this).prop('id')] = $(this).val();
-				/* iterate through array or object */
-			});
-			console.log(teamData);
-			localStorage.setItem('teamData', JSON.stringify(teamData));
-			save_notify();
+		isShiny.on('ifChecked', function() { // change Pokemon's color scheme
+			var current_pkm = $(this).attr('data-species');
+			if (current_pkm != '') {
+				$('.pkm-sprite').attr('src', base_url+'public/images/f-sprite-shiny/'+current_pkm+'.gif');
+			};
 		});
-		$('#delete-team-btn').on('click', function(event) {
-			localStorage.clear('teamData');
-			delete_notify();
-			location.reload();
+		isShiny.on('ifUnchecked', function() {
+			var current_pkm = $(this).attr('data-species');
+			if (current_pkm != '') {
+				$('.pkm-sprite').attr('src', base_url+'public/images/f-sprite/'+current_pkm+'.gif');
+			};
 		});
-		if(localStorage.getItem('teamData')) {
-			// data = process_team_str(localStorage.getItem('teamdata'));
-			// console.log(data);
-			// fill_data(data);
-			var teamData = $.parseJSON(localStorage.getItem('teamData'));
-			init_team_data(teamData);
-		}
-		// isShiny.on('ifChecked', function() { // change Pokemon's color scheme
-		// 	var current_pkm = $(this).attr('data-species');
-		// 	if (current_pkm != '') {
-		// 		$('.pkm-sprite').attr('src', base_url+'public/images/f-sprite-shiny/'+current_pkm+'.gif');
-		// 	};
-		// });
-		// isShiny.on('ifUnchecked', function() {
-		// 	var current_pkm = $(this).attr('data-species');
-		// 	if (current_pkm != '') {
-		// 		$('.pkm-sprite').attr('src', base_url+'public/images/f-sprite/'+current_pkm+'.gif');
-		// 	};
-		// });
         // $(".ev-range").ionRangeSlider({ // EV slider events
         //     min: 0,
         //     max: 252,
@@ -263,7 +220,5 @@
         //     });
         // });
 		// Events - END
-
-		
 	});
 }(window.jQuery, window, document));

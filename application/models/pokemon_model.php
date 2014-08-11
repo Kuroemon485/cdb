@@ -309,6 +309,15 @@ class Pokemon_Model extends CI_Model {
             return false;
         }
     }
+    function get_strategy_list() {
+        $this->db->select('id, name');
+        $query = $this->db->get('strategy_dex');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
     function get_strategy_by_id($id) {
         $this->db->where('id', $id);
         $query = $this->db->get('strategy_dex');
@@ -445,14 +454,15 @@ class Pokemon_Model extends CI_Model {
 
     function insert_strategy_dex($data) {
         $response = new stdClass();
-        $response->message = "";
         $this->db->insert('strategy_dex', $data);
         if ($this->db->affected_rows() > 0) {
             $response->success = true;
-            $response->message .= "Strategy {$data['name']} has been assigned for {$data['species_id']} successfully.<br>";
+            $response->title = '<b class="text-success">Success</b>';
+            $response->message = "Strategy {$data['name']} has been assigned for {$data['species_id']} successfully.<br>";
         } else {
             $response->success = false;
-            $response->message .= "Strategy {$data['name']} has not been assigned for {$data['species_id']}. Fail.<br>";
+            $response->title = '<b class="text-red">Fail</b>';
+            $response->message = "Strategy {$data['name']} has not been assigned for {$data['species_id']}. Fail.<br>";
         }
         return $response;
     }
@@ -471,13 +481,15 @@ class Pokemon_Model extends CI_Model {
     function edit_strategy_dex($condition, $data) {
         $response = new stdClass();
         $response->message = "";
-        $this->db->where('id', $id);
+        $this->db->where('id', $condition);
         $this->db->update('strategy_dex', $data);
         if ($this->db->affected_rows() > 0) {
             $response->success = true;
+            $response->title = '<b class="text-success">Success</b>';
             $response->message .= "Strategy {$data['name']} has been updated successfully.<br>";
         } else {
             $response->success = false;
+            $response->title = '<b class="text-red">Fail</b>';
             $response->message .= "Strategy {$data['name']} has not been updated. Fail.<br>";
         }
         return $response;

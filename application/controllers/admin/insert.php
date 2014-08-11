@@ -70,6 +70,15 @@ class Insert extends CI_Controller {
         $this->load->view('/admin/insert_news');
         $this->load->view('footer');
     }
+    public function strategy() {
+        $this->option['title'] = 'Strategy';
+        $this->option['admin_script'] = $this->load->view('admin/admin_script', null, true);
+        $data = new stdClass();
+        $data->pkm_list = $this->pokemon_model->get_pokemon_list();
+        $this->load->view('header', $this->option);
+        $this->load->view('/admin/insert_strategy', $data);
+        $this->load->view('footer');
+    }
     public function insert_data() {
         $data = $this->input->post();
         $model = $data['model'];

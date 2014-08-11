@@ -46,8 +46,11 @@ function rc() {
                     </div> <!-- /.row -->
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                    <button id="ie-button" class="btn btn-primary btn-sm"><i class="fa fa-download"></i> Import/Export</button>
-                    <button id="save-button" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</button>
+                    <button id="ie-button" class="btn btn-primary btn-xs"><i class="fa fa-download"></i> Import/Export</button>
+                    <button id="save-team-btn" class="btn btn-primary btn-xs"><i class="fa fa-save"></i> Save</button>
+                    <button id="delete-team-btn" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Delete</button>
+                    <i class="text-blue" id="save-notify" style="display: none"><i class="fa fa-check"></i> Saved!</i>
+                    <i class="text-red" id="delete-notify" style="display: none"><i class="fa fa-check"></i> Deleted!</i>
                 </div>
             </div><!-- /.box -->
 	    </div><!-- /.col -->
@@ -73,7 +76,7 @@ function rc() {
                                 <label for="" class="label-control">Pokemon</label>
                                 <div class="row">
                                     <div class="col-md-3 col-xs-3">
-                                        <select name="" id="p<?php echo $i ?>-species" class="form-control input-sm pkm-list selectpicker input-pkm" data-placeholder="Pick a Pokemon" data-live-search="true">
+                                        <select name="" id="p<?php echo $i ?>-species" class="form-control input-sm pkm-list input-pkm" data-placeholder="Pick a Pokemon" data-live-search="true">
                                             <option value="">Pick a Pokemon</option>
                                             <?php foreach ($pokemon_list as $pkm): ?>
                                                 <option value="<?php echo $pkm->species_id ?>"><?php echo $pkm->species ?></option>

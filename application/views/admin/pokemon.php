@@ -17,8 +17,8 @@ $stats_list = array('hp' => 'HP', 'atk' => 'Attack', 'def' => 'Defense', 'sp_atk
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="<?php echo base_url(); ?>move"><i class="fa fa-wrench"></i> <?php echo $work_mode ?></a></li>
-        <li class="active"><i class="fa fa-bug"></i> <?php echo (isset($species) ? $species : "Pokémon") ?></li>
+        <li><a href="<?php echo base_url(); ?>admin/control_panel/database"><i class="fa fa-user"></i> Admin</a></li>
+        <li class="active"><?php echo $work_mode ?> <?php echo (isset($species) ? $species : "Pokémon") ?></li>
     </ol>
 </section>
 <!-- Main content -->
@@ -130,7 +130,7 @@ $stats_list = array('hp' => 'HP', 'atk' => 'Attack', 'def' => 'Defense', 'sp_atk
                                 <input type="text" id="strategy-name" class="form-control input-sm" placeholder="Strategy name">
                             </div>
                             <div class="col-md-4 col-xs-4">
-                                <button class="btn btn-danger btn-sm"><i class="fa fa-eraser"></i> Reset</button>
+                                <!-- <button class="btn btn-danger btn-sm"><i class="fa fa-eraser"></i> Reset</button> -->
                                 <button id="submit-strategy" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Submit</button>
                             </div>
                         </div><!-- .row for Build Name-->

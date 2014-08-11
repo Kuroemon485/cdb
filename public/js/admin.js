@@ -60,8 +60,8 @@
         });
     }
     function init_response_modal(r) { //response
-        $('#response-title').text(r.title);
-        $('#response-message').text(r.message);
+        $('#response-title').html(r.title);
+        $('#response-message').html(r.message);
         $('#response-modal').modal('show');
         window.setTimeout(function() {$('#response-modal').modal('hide')}, 1000);
     }
@@ -159,7 +159,49 @@
     var set_modal_title = function(t) { //title
         mt.empty().append(t);
     }
+    var get_strategy_pkm_info = function(species_id) {
+            return $.ajax({
+                url: base_url+'teambuilder/get_species_info',
+                type: 'post',
+                dataType: 'json',
+                async: false,
+                data: {
+                    species_id: species_id,
+                },
+            }).success(function(data) {
+                init_strategy_info(data);
+            });
+        }
+    var init_strategy_info = function(data) {
+            var tbs = 0;
+            $.each(stats, function(index, val) {
+                $('#base-'+val).removeClass();
+                $('#base-'+val+'-bar').removeClass();
+                var stat = data['base_'+val]*1;
+                var color = '';
+                var bbg = 'badge bg-';
+                var pbg = 'progress-bar progress-bar-';
+                tbs+=stat;
+                if ( stat < 90 ) {
+                    color = "yellow";
+                }
+                else if ( stat >= 90 && stat <= 110 ) {
+                    color = "green";
+                }
+                else if ( stat > 110 && stat < 150 ) {
+                    color = "blue";
+                }
+                else if ( stat >= 150 ) {
+                    color = "red";
+                }
+                bbg += color;
+                pbg += color;
+                $('#base-'+val).text(stat).addClass(bbg);
+                $('#base-'+val+'-bar').css('width', stat/250*100+'%').addClass(pbg);
+            });
+            $('#tbs').text(tbs);
 
+        }
 
 	$(function(){
         pkm_list.on('change', function() {
@@ -483,18 +525,32 @@
 
 
         // Events on strategy build
-        isShiny.on('ifChecked', function() {
-            var current_pkm = $(this).attr('data-species');
-            if (current_pkm != '') {
-                $('.pkm-sprite').attr('src', base_url+'public/images/f-sprite-shiny/'+current_pkm+'.gif');
-            };
+        $('#strategy-species-id').on('change', function() { // change Pokemon
+            var pl = $(this);
+            var spn = $('option:selected', pl).text();
+            var spid = pl.val();
+            $('[data-toggle="modal"]').attr('data-species-id', spid)
+            get_strategy_pkm_info(spid);
+            if(pl.val() != '') {
+                $('#pkm-img').attr('src', base_url+'public/images/f-sprite/'+spn+'.gif');
+                $('#ico').attr('src', base_url+'public/images/minisprites/'+spn+'.png');
+            } else {
+                $('#pkm-img').attr('src', base_url+'public/images/f-sprite/egg.png');
+                $('#ico').attr('src', base_url+'public/images/minisprites/ani-egg.png');
+            }
         });
-        isShiny.on('ifUnchecked', function() {
-            var current_pkm = $(this).attr('data-species');
-            if (current_pkm != '') {
-                $('.pkm-sprite').attr('src', base_url+'public/images/f-sprite/'+current_pkm+'.gif');
-            };
-        });
+        // isShiny.on('ifChecked', function() {
+        //     var current_pkm = $(this).attr('data-species');
+        //     if (current_pkm != '') {
+        //         $('.pkm-sprite').attr('src', base_url+'public/images/f-sprite-shiny/'+current_pkm+'.gif');
+        //     };
+        // });
+        // isShiny.on('ifUnchecked', function() {
+        //     var current_pkm = $(this).attr('data-species');
+        //     if (current_pkm != '') {
+        //         $('.pkm-sprite').attr('src', base_url+'public/images/f-sprite/'+current_pkm+'.gif');
+        //     };
+        // });
         $(".ev-range").ionRangeSlider({
             min: 0,
             max: 252,
@@ -516,24 +572,24 @@
             });
         });
         $('#submit-strategy').on('click', function() {
-            var current_strategy = $('#strategy_list').val();
+            var work_mode = $(this).data('work-mode');
             var data = new Object();
-            data['species_id'] = $('#strategy-species-id').attr('data-species-id');
+            data['species_id'] = $('#strategy-species-id').val();
             data['name'] = $('#strategy-name').val();
-            data['ability_id'] = $('#strategy-ability').val();
+            data['ability_id'] = $('#strategy-ability').val().toLowerCase().replace(' ', '');
             data['nature'] = $('#nature-list').val();
-            data['item_id'] = $('#strategy-item').val();
+            data['item_id'] = $('#strategy-item').val().toLowerCase().replace(' ', '');
             data['happiness'] = $('#strategy-happiness').val();
-            data['move_1_id'] = $('#strategy-move-1').val();
-            data['move_2_id'] = $('#strategy-move-2').val();
-            data['move_3_id'] = $('#strategy-move-3').val();
-            data['move_4_id'] = $('#strategy-move-4').val();
-            data['ev_hp'] = $('#input-ev-hp').val();
-            data['ev_atk'] = $('#input-ev-atk').val();
-            data['ev_def'] = $('#input-ev-def').val();
-            data['ev_sp_atk'] = $('#input-ev-sp_atk').val();
-            data['ev_sp_def'] = $('#input-ev-sp_def').val();
-            data['ev_spd'] = $('#input-ev-spd').val();
+            data['move_1_id'] = $('#strategy-move-1').val().toLowerCase().replace(' ', '');
+            data['move_2_id'] = $('#strategy-move-2').val().toLowerCase().replace(' ', '');
+            data['move_3_id'] = $('#strategy-move-3').val().toLowerCase().replace(' ', '');
+            data['move_4_id'] = $('#strategy-move-4').val().toLowerCase().replace(' ', '');
+            data['ev_hp'] = $('#ev-hp').val();
+            data['ev_atk'] = $('#ev-atk').val();
+            data['ev_def'] = $('#ev-def').val();
+            data['ev_sp_atk'] = $('#ev-sp_atk').val();
+            data['ev_sp_def'] = $('#ev-sp_def').val();
+            data['ev_spd'] = $('#ev-spd').val();
             data['iv_hp'] = $('#iv-hp').val();
             data['iv_atk'] = $('#iv-atk').val();
             data['iv_def'] = $('#iv-def').val();
@@ -542,12 +598,15 @@
             data['iv_spd'] = $('#iv-spd').val();
             data['description'] = $('#strategy-desc').val();
             console.log(data);
-            if (data['species_id'] != '' && current_strategy == '') {
-                insert_data('pokemon_model', 'add_pkm_strategy', data);
-            } else {
-                update_data('pokemon_model', 'pkm_strategy', current_strategy, data);
+            if (data['species_id'] != '' && work_mode == 'add') {
+                insert_data('pokemon_model', 'strategy_dex', data);
+                console.log('a')
+            } else if (data['species_id'] != '' && work_mode == 'edit') {
+                var strategy_id = $('#strategy_list').val()
+                update_data('pokemon_model', 'strategy_dex', strategy_id, data);
             }
         });
+
         $('#strategy_list').on('change', function() {
             var strategy_id = $(this).val();
             // console.log(strategy_id);
@@ -563,14 +622,15 @@
                     $('#strategy-move-2').val(data.move_2_id);
                     $('#strategy-move-3').val(data.move_3_id);
                     $('#strategy-move-4').val(data.move_4_id);
+                    $('#strategy-species-id').val(data.species_id).trigger('change')
                     $.each(stats, function(index, val) {
                         var ev_value = data['ev_'+val]
                         var iv_value = data['iv_'+val]
-                        $('#input-ev-'+val).val(ev_value);
+                        $('#ev-'+val).val(ev_value);
                         $('#iv-'+val).val(iv_value);
-                        $('#ev-'+val).ionRangeSlider("update", {
-                            from: ev_value,
-                        });
+                        // $('#ev-'+val).ionRangeSlider("update", {
+                        //     from: ev_value,
+                        // });
                     });
                     $("#strategy-desc").data("wysihtml5").editor.setValue(data.description);
                     // var current_pkm = isShiny.attr('data-species');

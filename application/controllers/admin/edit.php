@@ -86,6 +86,16 @@ class Edit extends CI_Controller {
         $this->load->view('/admin/edit_news', $news);
         $this->load->view('footer');
     }
+    function strategy() {
+        $this->option['title'] = 'Edit strategy';
+        $this->option['admin_script'] = $this->load->view('admin/admin_script', null, true);
+        $data = new stdClass();
+        $data->strategy_list = $this->pokemon_model->get_strategy_list();
+        $data->pkm_list = $this->pokemon_model->get_pokemon_list();
+        $this->load->view('header', $this->option);
+        $this->load->view('/admin/edit_strategy', $data);
+        $this->load->view('footer');
+    }
     // GET data
     public function get($model, $table, $id) {
         $get_object = "get_".$table."_by_id";

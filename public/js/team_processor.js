@@ -1,70 +1,3 @@
-// source: 
-/* 
-Smaug (Charizard) (M) @ Charizardite Y
-Ability: Solar Power
-EVs: 4 HP / 252 SAtk / 252 Spd
-Modest Nature
-- Solar Beam
-- Fire Blast
-- Focus Blast
-- Roost
-
-Lustrous (Aegislash) (M) @ Leftovers
-Ability: Stance Change
-Shiny: Yes
-EVs: 240 HP / 16 Atk / 252 SAtk
-Quiet Nature
-IVs: 30 Atk / 30 SAtk / 30 Spd
-- King's Shield
-- Pursuit
-- Shadow Ball
-- 
-
-Excalibur (Excadrill) @ Leftovers
-Ability: Mold Breaker
-Shiny: Yes
-EVs: 176 HP / 60 Atk / 252 SDef / 20 Spd
-Adamant Nature
-- Rapid Spin
-- Earthquake
-- Swords Dance
-- Rock Slide
-
-Goku (Infernape) @ Choice Band
-Ability: Iron Fist
-EVs: 4 HP / 252 Atk / 252 Spd
-Jolly Nature
-- Close Combat
-- Flare Blitz
-- U-turn
-- Mach Punch
-
-Ender (Tyranitar) (M) @ Choice Scarf
-Ability: Sand Stream
-Shiny: Yes
-EVs: 4 HP / 252 Atk / 252 Spd
-Jolly Nature
-IVs: 30 Atk / 30 Def
-- Pursuit
-- Crunch
-- Stone Edge
-- Earthquake
-
-Python (Garchomp) (F) @ Choice Scarf
-Ability: Rough Skin
-Shiny: Yes
-EVs: 4 HP / 252 Atk / 252 Spd
-Jolly Nature
-IVs: 30 Atk / 30 SAtk / 30 Spd
-- Stealth Rock
-- Outrage
-- Earthquake
-- Fire Blast
-*/
-
-//var stats = ["HP", "Atk", "Def", "SAtk", "SDef", "Spd"]
-//var myVariable = 'Smaug (Charizard) (M) @ Charizardite Y\nAbility: Solar Power\nShiny: No\nEVs: 4 HP \/ 252 SAtk \/ 252 Spd\nModest Nature\n- Solar Beam\n- Fire Blast\n- Focus Blast\n- Roost\n\nLustrous (Aegislash) (M) @ Leftovers\nAbility: Stance Change\nShiny: Yes\nEVs: 240 HP \/ 16 Atk \/ 252 SAtk\nQuiet Nature\nIVs: 30 Atk \/ 30 SAtk \/ 30 Spd\n- King\'s Shield\n- Pursuit\n- Shadow Ball\n- ';
-
 var process_team_str = function(str) {
 	var data = new Array();
 	temp = str.split("\n\n");
@@ -74,30 +7,37 @@ var process_team_str = function(str) {
 		var pointer = 0;
 		elem = temp[i];
 		indexs = elem.split("\n");
-console.log(indexs);
+
 		// indexs[0] = 'Smaug (Charizard) (M) @ Charizardite Y'
-		temp2 = indexs[0].split(" ");
+		temp2 = indexs[pointer].split(" ");
+		pointer++;
 
 		// name
-		name = temp2[0];
+		// name = temp2[0];
 
 		// species
-		species = temp2[1].substr(1, temp2[1].length - 2);
+		species = temp2[0];
 
 		// item
 		item = indexs[0].split("@");
 		item = item[1].substr(1, item[1].length);
 
 		// ability
-		ability = indexs[1].split(": ");
+		ability = indexs[pointer].split(": ");
 		ability = ability[1];
+		pointer++;
 
 		// shiny
-		shiny = indexs[2].split(": ");
-		shiny = shiny[1];
-
+		if(elem.indexOf("Shiny:")!= -1){
+			shiny = indexs[pointer].split(": ");
+			shiny = shiny[1];
+			pointer++;
+		}
+		else
+			shiny = "No";
+			
 		// evs
-		evs = indexs[3].split(": ");
+		evs = indexs[pointer].split(": ");
 		evs = evs[1].split(" / ");
 
 		_evs = {};
@@ -129,15 +69,17 @@ console.log(indexs);
 		};
 		
 		evs = _evs;
+		pointer++;
 
-		// nature
-		nature = indexs[4].split(" ");
-		nature = nature[1];
+		// nature		
+		nature = indexs[pointer].split(" ");
+		nature = nature[0];
+		console.log(nature)
+		pointer++;
 
 		// ivs
 		if(elem.indexOf("IVs")!= -1){
-			pointer = 5;
-			ivs = indexs[5].split(": ");
+			ivs = indexs[pointer].split(": ");
 			ivs = ivs[1].split(" / ");
 			_ivs = {};
 			for (var z = 0; z < ivs.length; z++) {
@@ -165,11 +107,10 @@ console.log(indexs);
 				}
 			};
 			
+			pointer++;
 			ivs = _ivs;
-		}else{
-			pointer = 4;
+		}else
 			ivs = {};
-		}
 			
 		// moves
 		moves = new Array();
@@ -180,7 +121,7 @@ console.log(indexs);
 		};
 
 		monster = {
-			name : name,
+			// name : name,
 			species : species,
 			item : item,
 			ability : ability,
@@ -195,4 +136,59 @@ console.log(indexs);
 	};
 
 	return data;
+}
+
+fill_data = function(data){
+	for (var i = 1; i <= data.length; i++) {
+		pkm = data[i-1];
+		$("#p"+i+"-ability").val(pkm.ability);
+		$("#p"+i+"-item").val(pkm.item);
+		$("#p"+i+"-species").val(pkm.species.toLowerCase().replace("-","")).trigger('change');
+		$("#p"+i+"-nature").val(pkm.nature);
+
+		for (var j = 0; j < pkm.moves.length; j++) {
+			move = pkm.moves[j];
+			$("#p"+i+"-m"+(j+1)).val(move);
+		};
+
+		if(pkm.evs){
+			if(pkm.evs.hp)
+				$("#p"+i+"-ev-hp").val(pkm.evs.hp);
+
+			if(pkm.evs.atk)
+				$("#p"+i+"-ev-atk").val(pkm.evs.atk);
+
+			if(pkm.evs.spd)
+				$("#p"+i+"-ev-spd").val(pkm.evs.spd);
+
+			if(pkm.evs.def)
+				$("#p"+i+"-ev-def").val(pkm.evs.def);
+
+			if(pkm.evs.satk)
+				$("#p"+i+"-ev-satk").val(pkm.evs.satk);
+
+			if(pkm.evs.sdef)
+				$("#p"+i+"-ev-sdef").val(pkm.evs.sdef);
+		}
+
+		if(pkm.ivs){
+			if(pkm.ivs.hp)
+				$("#p"+i+"-iv-hp").val(pkm.evs.hp);
+
+			if(pkm.ivs.atk)
+				$("#p"+i+"-iv-atk").val(pkm.evs.atk);
+
+			if(pkm.ivs.spd)
+				$("#p"+i+"-iv-spd").val(pkm.evs.spd);
+
+			if(pkm.ivs.def)
+				$("#p"+i+"-iv-def").val(pkm.evs.def);
+
+			if(pkm.ivs.satk)
+				$("#p"+i+"-iv-satk").val(pkm.evs.satk);
+
+			if(pkm.ivs.sdef)
+				$("#p"+i+"-iv-sdef").val(pkm.evs.sdef);
+		}
+	};
 }
